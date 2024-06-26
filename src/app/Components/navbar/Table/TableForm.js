@@ -1,23 +1,19 @@
-'use client'
-
 import { useState } from "react";
-import { SubmitToSupabase } from "./TableDataHandler";
 import TableInputs from "./TableInputs";
+import { NewEntry } from "./TableDataHandler";
 
-const TableForm = () => {
+const TableForm = ({setTableData}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState(''); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await SubmitToSupabase(username, email, phone);
+        await NewEntry(username, email, phone, setTableData);
         setUsername('');
         setEmail('');
         setPhone('');
     };
-
-     
 
     return (
         <form method="POST" onSubmit={handleSubmit} className="ml-36 my-5"> 

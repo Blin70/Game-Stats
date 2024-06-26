@@ -35,4 +35,9 @@ const FetchTableData = async () => {
     return renderedData;
 } 
 
-export { SubmitToSupabase, FetchTableData };
+const NewEntry = async (username, email, phone, setTableData) => {
+    await SubmitToSupabase(username, email, phone)
+    setTableData(await FetchTableData())
+}
+
+export { SubmitToSupabase, FetchTableData, NewEntry };

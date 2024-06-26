@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Navbar from "../Navbar";
-import TableForm from "./TableForm";
 import { FetchTableData } from "./TableDataHandler";
+import ServerTable from './ServerTable';
 
-const Table = () => {
+const ClientTable = () => {
     const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
@@ -17,27 +16,7 @@ const Table = () => {
         fetchData();
     }, []);
 
-    return (
-        <div className="h-screen">
-            <Navbar />
-            <TableForm />
-            <table className="bg-[#d5d7d8] w-2/5 mx-auto text-center">
-                <thead>
-                    <tr className='h-20 text-xl'>
-                        <th className="w-1/12">Id</th>
-                        <th className="w-3/12">Username</th>
-                        <th className="w-3/12">Email</th>
-                        <th className="w-3/12">Phone</th>
-                        <th className="w-2/12">Joined</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        {tableData}
-                   </tbody>
-            </table>
-            
-        </div>
-    );
+    return <ServerTable tableData={tableData} setTableData={setTableData} />
 };
 
-export default Table;
+export default ClientTable;
