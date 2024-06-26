@@ -1,5 +1,5 @@
 import Image from "next/image";
-import defaultProfilePic from "../icons/default_profile_pic.png"
+import defaultProfilePic from "../../icons/default_profile_pic.png"
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const ProfileMenu = () => {
