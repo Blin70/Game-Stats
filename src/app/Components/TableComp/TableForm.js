@@ -16,7 +16,7 @@ const TableForm = ({setTableData}) => {
     };
 
     return (
-        <form method="POST" onSubmit={handleSubmit} className="ml-36 my-5"> 
+        <form method="POST" onSubmit={handleSubmit} className="ml-96 my-5"> 
             <TableInputs name="Username" placeholder="Username" value={username} onChange={(e)=>setUsername(e.target.value)} />
             <TableInputs name="Email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
             <TableInputs name="Phone" placeholder="Phone number" value={phone} onChange={(e)=>setPhone(e.target.value)} />
