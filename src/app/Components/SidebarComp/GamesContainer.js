@@ -1,8 +1,8 @@
-import GamesList from "./GamesList";
-import csgoIcon from "../icons/csgoIcon.png"
-import apexIcon from "../icons/apexIcon.png"
-import division2Icon from "../icons/division2Icon.png"
-import splitgateIcon from "../icons/splitgateIcon.png"
+import csgoIcon from "@/app/icons/csgoIcon.png"
+import apexIcon from "@/app/icons/apexIcon.png"
+import division2Icon from "@/app/icons/division2Icon.png"
+import splitgateIcon from "@/app/icons/splitgateIcon.png"
+import Game from "./Game";
 
 const GamesContainer = () => {
     
@@ -13,9 +13,13 @@ const GamesContainer = () => {
         { icon:splitgateIcon, name:'Splitgate', altText:'Splitgate Icon' },
     ]
 
+    const renderedGames = games.map((game) => {
+        return  <Game key={game.name} icon={game.icon} name={game.name} altText={game.altText} />
+    });
+
     return(
         <div className="w-1/5 h-fit border-black border-2 rounded-3xl absolute top-1/4 left-10">
-            <GamesList games={games} />
+            {renderedGames}
         </div>
     );
 }

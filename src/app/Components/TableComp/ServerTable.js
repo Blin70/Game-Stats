@@ -1,10 +1,8 @@
-import Navbar from "../Navbar";
 import TableForm from "./TableForm";
 
 const ServerTable = ({tableData, setTableData}) => {
     return (
         <div className="h-screen">
-            <Navbar />
             <TableForm setTableData={setTableData}/>
             <table className="bg-[#d5d7d8] w-2/5 mx-auto text-center">
                 <thead>
