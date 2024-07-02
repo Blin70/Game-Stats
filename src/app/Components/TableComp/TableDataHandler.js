@@ -1,4 +1,6 @@
-import { supabase } from "@/app/Supabase/SupabaseClient";
+import { createClient } from "@/app/utils/supabase/client";
+
+const supabase = createClient();
 
 const SubmitToSupabase = async (username, email, phone) => {
     const { data, error } = await supabase
@@ -33,7 +35,7 @@ const FetchTableData = async () => {
     }
 
     return renderedData;
-} 
+}
 
 const NewEntry = async (username, email, phone, setTableData) => {
     await SubmitToSupabase(username, email, phone)

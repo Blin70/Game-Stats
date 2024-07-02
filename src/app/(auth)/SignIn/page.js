@@ -1,11 +1,13 @@
 import Link from "next/link";
 import AuthInput from "@/app/Components/auth/AuthInput";
+import { signin } from "@/app/Components/auth/AuthActions";
+
 
 const SignIn = () => {
 
     return (
         <div className="absolute h-1/2 w-1/3 inset-0 m-auto">
-            <form>
+            <form action={signin}>
                 <h1 className="m-6 text-center text-5xl">Sign In</h1>
                 <AuthInput type='text' name='Email' />
                 <AuthInput type='password' name='Password' />
