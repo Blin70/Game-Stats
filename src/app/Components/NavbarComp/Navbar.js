@@ -12,8 +12,8 @@ const Navbar = () => {
         <>
             { showGames && <GamesContainer />}
             <div className="h-44 relative">
-                <ProfileMenu setShowGames={setShowGames} />
                 <Link href="/Table" className="absolute border-2 border-black rounded-3xl w-fit p-3 mt-16 right-1/4 text-3xl" >Table</Link>
+                <ProfileMenu setShowGames={setShowGames} />
             </div>
         </>
     );
