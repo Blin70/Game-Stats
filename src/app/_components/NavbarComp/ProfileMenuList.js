@@ -24,20 +24,17 @@ const ProfileMenuList = () => {
     switch (item) {
       case 'Profile':
         router.push('/Profile');
-        setOpenList(false);
         break;
       case 'Settings':
-        //router.push('/Settings') to be created
-        setOpenList(false);
+        router.push('/Settings')
         break;
       case 'SignOut':
         await signOut();
-        setOpenList(false);
         break;
       default:
-        setOpenList(false);
         break;
     }
+    setOpenList(false);
   };
 
   const renderedProfileMenuItems = ["Profile", "Settings", "SignOut"].map((i) => {
