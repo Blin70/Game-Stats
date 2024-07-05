@@ -2,7 +2,7 @@ import { createClient } from "@/app/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import defaultProfilePic from "@/app/icons/default_profile_pic.png"
-import { games } from "@/app/Components/SidebarComp/GamesContainer";
+import { games } from "@/app/_components/SidebarComp/GamesContainer";
 
 const Profile = async () => {
     const supabase = createClient();

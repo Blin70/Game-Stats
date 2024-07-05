@@ -14,7 +14,12 @@ export function createClient() {
           return cookieStore.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options))
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options))
+          } catch {
+            // `setAll` method gets from a Server Component so it throws an error, but this 
+            // can be ignored because we have middleware refreshing the user sessions.
+          }
         },
       },
     }

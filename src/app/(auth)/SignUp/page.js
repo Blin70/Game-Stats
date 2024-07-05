@@ -1,12 +1,12 @@
 import Link from "next/link";
-import AuthInput from "@/app/Components/auth/AuthInput";
-import { signup } from "@/app/Components/auth/AuthActions";
+import AuthInput from "@/app/_components/auth/AuthInput";
+import { signUp } from "@/app/_components/auth/AuthActions";
 
 const SignUp = () => {
 
     return (
         <div className="absolute h-1/2 w-1/3 inset-0 m-auto">
-            <form action={signup}>
+            <form action={signUp}>
                 <h1 className="m-6 text-center text-5xl">Sign Up</h1>
                 <AuthInput type='text' name='Name' />
                 <AuthInput type='text' name='Email' />
