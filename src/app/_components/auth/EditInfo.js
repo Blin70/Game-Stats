@@ -5,6 +5,8 @@ import { FiXSquare } from "react-icons/fi";
 import { MdEdit } from "react-icons/md";
 import { useState } from "react";
 import { createClient } from "@/app/utils/supabase/client";
+import { resetPassword } from "./AuthActions";
+import { deleteOwnAccount } from "./AuthActions";
 
 function EditInfo({ user, info }){
     const supabase = createClient();
@@ -86,7 +88,7 @@ function EditInfo({ user, info }){
                 : (
                     <div className="ml-10">
                         <br/>
-                        <input onChange={handleInfoChange} value={newInfo} className="w-52 h-9 bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none" />
+                        <input onChange={handleInfoChange} value={newInfo} name={info} className="w-52 h-9 bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none" autoComplete="off" />
                         <FaRegCheckSquare onClick={handleInfoClick} className="text-green-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
                         <FiXSquare onClick={()=>{setNewInfoEdit(false);setNewInfo(dataToUpdate.getInfo())}} className="text-red-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
                     </div>
@@ -99,17 +101,10 @@ function EditInfo({ user, info }){
 const ResetPasswordModal = (email) => {
     const [openModal, setOpenModal] = useState(false);
     const [openReqSent, setOpenReqSent] = useState(false);
-    const supabase = createClient();
 
     const handleResetClick = async () => {
         setOpenReqSent(true);
-
-        
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email.email)
-
-    if(error){
-        console.error('Something went wrong with sending you the password reset link ', error);
-    }
+        resetPassword(email);
     }
 
     return (
@@ -120,7 +115,7 @@ const ResetPasswordModal = (email) => {
                     <>
                         <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
                             <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
-                                <h1 className="text-5xl">Password Reset</h1>
+                                <h1 className="text-5xl">Reset Password</h1>
                                 <br/><br/><br/>
                                 {openReqSent
                                     ? (
@@ -153,6 +148,43 @@ const ResetPasswordModal = (email) => {
     );
 }
 
+const DeleteAccountModal = (user) => {
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleDeleteAccount = async () => {
+        await deleteOwnAccount(user)
+        window.localStorage.clear();
+        alert('Your account has been deleted successfully')
+    }
+
+    return (
+        <>
+            {
+                openModal 
+                ? (
+                    <>
+                        <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
+                            <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
+                                <h1 className="text-5xl">Delete Account</h1>
+                                <br/><br/><br/>
+                                <h2 className="text-3xl">Are you sure you want to delete your account?</h2>
+                                <h2 className="text-3xl">This action is irreversible</h2>
+                                            <br/><br/><br/><br/>
+                                            <button onClick={handleDeleteAccount} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-green-800 hover:bg-green-900">Delete</button>
+                                            <button onClick={()=>setOpenModal(false)} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-gray-600 hover:bg-gray-700">Cancel</button>
+                            </div>
+                        </div>
+                        <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-red-500 hover:bg-red-900 rounded-xl mt-5 p-1 block mx-auto">Delete account</button>
+                    </>
+                )
+                : (
+                    <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-red-500 hover:bg-red-900 rounded-xl mt-5 p-1 block mx-auto">Delete account</button>
+                )
+            }
+        </>
+    );
+}
+
 
 export default EditInfo;
-export { ResetPasswordModal };
+export { ResetPasswordModal, DeleteAccountModal };

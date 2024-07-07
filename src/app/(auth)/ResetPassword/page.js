@@ -1,13 +1,10 @@
 'use client'
 
-import { createClient } from "@/app/utils/supabase/client"
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AuthInput from "@/app/_components/auth/AuthInput";
+import { changePassword } from "@/app/_components/auth/AuthActions";
 
 const ResetPassword = () => {
-    const supabase = createClient();
-    const router = useRouter();
     const [newPassword, setNewPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
 
@@ -21,17 +18,7 @@ const ResetPassword = () => {
 
     const handleChangePassword = async () => {
         if(newPassword.length > 8 || newPassword === repeatPassword){
-            const { data, error } = await supabase.auth.updateUser({
-                password: newPassword
-            })
-
-            if(error){
-                console.error('Please try again', error)
-            }
-            if(data){
-                alert('Password changed successfully')
-                router.push('/')
-            }
+            await changePassword(newPassword)
         }
     }
 
