@@ -4,6 +4,19 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/app/utils/supabase/server'
 
+export async function getTheUser() {
+  const supabase = createClient();
+
+    const { data, error } = await supabase.auth.getUser();
+
+    if(error){
+      console.error('Error while getting User', error)
+      return;
+    }
+
+    return data.user;
+}
+
 export async function signIn(formData) {
   const supabase = createClient()
 
@@ -19,7 +32,7 @@ export async function signIn(formData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/Profile')
+  redirect(`/user/${(await getTheUser()).user_metadata.first_name}/Profile`)
 }
 
 
@@ -43,7 +56,7 @@ export async function signUp(formData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/Profile')
+  redirect(`/user/${(await getTheUser()).user_metadata.first_name}/Profile`)
 }
 
 export async function signOut(){

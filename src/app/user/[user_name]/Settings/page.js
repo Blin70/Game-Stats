@@ -10,7 +10,7 @@ const Settings = async () => {
 
     const { data, error } = await supabase.auth.getUser();
     if(error || !data?.user){
-        redirect('/SignIn')
+        redirect('/user/SignIn')
     }
     
     return (

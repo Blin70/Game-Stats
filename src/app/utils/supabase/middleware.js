@@ -34,8 +34,8 @@ export async function updateSession(request) {
 
   const {data: { user }} = await supabase.auth.getUser()
 
-  if ( !user && request.nextUrl.pathname.startsWith('/Profile') ) {
-    NextResponse.redirect(new URL('/SignIn'))
+  if ( !user && request.nextUrl.pathname.startsWith('/user/') && !request.nextUrl.pathname.startsWith('/user/SignUp') ) {
+    NextResponse.redirect(new URL('/user/SignIn'))
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
