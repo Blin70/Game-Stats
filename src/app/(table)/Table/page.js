@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FetchTableData } from "@/app/Components/TableComp/TableDataHandler";
-import ServerTable from '@/app/Components/TableComp/ServerTable';
+import { FetchTableData } from "@/app/_components/TableComp/TableDataHandler";
+import ServerTable from '@/app/_components/TableComp/ServerTable';
 
 const ClientTable = () => {
     const [tableData, setTableData] = useState([]);
