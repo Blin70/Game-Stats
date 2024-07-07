@@ -96,5 +96,63 @@ function EditInfo({ user, info }){
     );
 }
 
+const ResetPasswordModal = (email) => {
+    const [openModal, setOpenModal] = useState(false);
+    const [openReqSent, setOpenReqSent] = useState(false);
+    const supabase = createClient();
+
+    const handleResetClick = async () => {
+        setOpenReqSent(true);
+
+        
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email.email)
+
+    if(error){
+        console.error('Something went wrong with sending you the password reset link ', error);
+    }
+    }
+
+    return (
+        <>
+            {
+                openModal 
+                ? (
+                    <>
+                        <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
+                            <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
+                                <h1 className="text-5xl">Password Reset</h1>
+                                <br/><br/><br/>
+                                {openReqSent
+                                    ? (
+                                        <>
+                                            <h2 className="text-3xl">A password reset link has been sent to your email</h2>
+                                            <br/><br/><br/>
+                                            <button onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-gray-600 hover:bg-gray-700">Alright</button>
+                                        </>
+                                      )
+                                    : (
+                                        <>
+                                            <h2 className="text-3xl">Are you sure you want to reset your password?</h2>
+                                            <br/><br/><br/><br/>
+                                            <button onClick={handleResetClick} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-green-800 hover:bg-green-900">Reset</button>
+                                            <button onClick={()=>setOpenModal(false)} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-gray-600 hover:bg-gray-700">Cancel</button>
+                                        </>
+                                      )
+                                }
+                                
+                            </div>
+                        </div>
+                        <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-1 block mx-auto">Reset Password</button>
+                    </>
+                )
+                : (
+                    <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-1 block mx-auto">Reset Password</button>
+                )
+            }
+        </>
+    );
+}
+
 
 export default EditInfo;
+export { ResetPasswordModal };
