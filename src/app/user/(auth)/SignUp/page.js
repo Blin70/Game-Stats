@@ -15,7 +15,7 @@ const SignUp = () => {
             </form>
             <div className="text-lg mx-auto h-fit w-fit block mt-2 space-x-2">
                 <label>Already have an account?</label>
-                <Link href='/SignIn'>SignIn</Link>
+                <Link href='/user/SignIn'>SignIn</Link>
             </div>
         </div>
     );

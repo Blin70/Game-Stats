@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
 import { signOut } from "../auth/AuthActions";
+import { getCurrentUser } from "../auth/AuthActions";
 
 const ProfileMenuList = () => {
   const supabase = createClient();
@@ -13,7 +14,7 @@ const ProfileMenuList = () => {
   const handleProfileClick = async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data?.user) {
-      router.push("/SignIn");
+      router.push("/user/SignIn");
       return;
     }
 
@@ -23,10 +24,10 @@ const ProfileMenuList = () => {
   const handleItemClick = async (item) => {
     switch (item) {
       case 'Profile':
-        router.push('/Profile');
+        router.push(`/user/${(await getCurrentUser()).user_metadata.first_name}/Profile`);
         break;
       case 'Settings':
-        router.push('/Settings')
+        router.push(`/user/${(await getCurrentUser()).user_metadata.first_name}/Settings`);
         break;
       case 'SignOut':
         await signOut();

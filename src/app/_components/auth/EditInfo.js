@@ -104,7 +104,7 @@ const ResetPasswordModal = (email) => {
 
     const handleResetClick = async () => {
         setOpenReqSent(true);
-        resetPassword(email);
+        resetPassword(`${window.location.protocol}//${window.location.host}`);
     }
 
     return (
