@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
+import { games } from '../_components/SidebarComp/GamesContainer';
 
 export async function checkUserAuthorization(request) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -43,6 +44,21 @@ export async function checkUserAuthorization(request) {
     }
     
   }
+
+  const gamesNames = games.map(game => game.name.replace(/\s/g, '').toLowerCase());
+if (pathname.startsWith('/games')) {
+  let isAuthorized = false;
+  for (const game of gamesNames) {
+    if (pathname.startsWith(`/games/${game}`)) {
+      isAuthorized = true;
+      break;
+    }
+  }
+
+  if (!isAuthorized) {
+    return NextResponse.redirect(new URL("/unauthorized", request.nextUrl));
+  }
+}
 
   return NextResponse.next();
 }

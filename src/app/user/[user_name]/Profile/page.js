@@ -2,13 +2,14 @@ import Image from "next/image";
 import defaultProfilePic from "@/app/icons/default_profile_pic.png"
 import { games } from "@/app/_components/SidebarComp/GamesContainer";
 import { getCurrentUser } from "@/app/_components/auth/AuthActions";
+import ClientImage from "@/app/_components/StatsComp/ClientImage";
 
 const Profile = async () => {
 
     const renderedGames = games.map((game)=>{
         return(
             <div key={game.name} className="inline-block cursor-pointer">
-                <Image  alt={game.name} src={game.icon} className="size-24" />
+                <ClientImage game={game} />
                 <label>{game.name}</label>
             </div>
         ); 
