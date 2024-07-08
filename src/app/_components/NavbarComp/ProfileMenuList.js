@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
 import { signOut } from "../auth/AuthActions";
-import { getTheUser } from "../auth/AuthActions";
+import { getCurrentUser } from "../auth/AuthActions";
 
 const ProfileMenuList = () => {
   const supabase = createClient();
@@ -24,10 +24,10 @@ const ProfileMenuList = () => {
   const handleItemClick = async (item) => {
     switch (item) {
       case 'Profile':
-        router.push(`/user/${(await getTheUser()).user_metadata.first_name}/Profile`);
+        router.push(`/user/${(await getCurrentUser()).user_metadata.first_name}/Profile`);
         break;
       case 'Settings':
-        router.push(`/user/${(await getTheUser()).user_metadata.first_name}/Settings`);
+        router.push(`/user/${(await getCurrentUser()).user_metadata.first_name}/Settings`);
         break;
       case 'SignOut':
         await signOut();

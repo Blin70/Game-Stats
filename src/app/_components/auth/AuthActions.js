@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/app/utils/supabase/server'
 
-export async function getTheUser() {
+export async function getCurrentUser() {
   const supabase = createClient();
 
     const { data, error } = await supabase.auth.getUser();
@@ -31,8 +31,11 @@ export async function signIn(formData) {
     console.error(error)
   }
 
+  if(!error){
+  redirect(`/user/${(await getCurrentUser()).user_metadata.first_name}/Profile`)
+  }
+  
   revalidatePath('/', 'layout')
-  redirect(`/user/${(await getTheUser()).user_metadata.first_name}/Profile`)
 }
 
 
@@ -56,7 +59,7 @@ export async function signUp(formData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect(`/user/${(await getTheUser()).user_metadata.first_name}/Profile`)
+  redirect(`/user/${(await getCurrentUser()).user_metadata.first_name}/Profile`)
 }
 
 export async function signOut(){
@@ -72,10 +75,12 @@ export async function signOut(){
   redirect('/')
 }
 
-export async function resetPassword(email){
+export async function resetPassword(baseUrl){
   const supabase = createClient();
 
-  const { error } = await supabase.auth.resetPasswordForEmail(email.email)
+  const { error } = await supabase.auth.resetPasswordForEmail(((await getCurrentUser()).email), {
+    redirectTo: `${baseUrl}/user/${(await getCurrentUser()).user_metadata.first_name}/ResetPassword`
+  })
 
     if(error){
         console.error('Something went wrong with sending you the password reset link ', error);
