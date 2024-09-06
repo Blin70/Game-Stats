@@ -1,5 +1,5 @@
 import Image from "next/image";
-import defaultProfilePic from "@/app/icons/default_profile_pic.png";
+import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";

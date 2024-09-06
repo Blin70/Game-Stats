@@ -1,7 +1,7 @@
-import csgoIcon from "@/app/icons/csgoIcon.png"
-import apexIcon from "@/app/icons/apexIcon.png"
-import division2Icon from "@/app/icons/division2Icon.png"
-import splitgateIcon from "@/app/icons/splitgateIcon.png"
+import csgoIcon from "/public/icons/csgoIcon.png"
+import apexIcon from "/public/icons/apexIcon.png"
+import division2Icon from "/public/icons/division2Icon.png"
+import splitgateIcon from "/public/icons/splitgateIcon.png"
 import Game from "./Game";
 
 const games = [

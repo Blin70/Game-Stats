@@ -1,5 +1,5 @@
 import Image from "next/image";
-import defaultProfilePic from "@/app/icons/default_profile_pic.png"
+import defaultProfilePic from "/public/icons/default_profile_pic.png"
 import { games } from "@/app/_components/SidebarComp/GamesContainer";
 import { getCurrentUser } from "@/app/_components/auth/AuthActions";
 import ClientImage from "@/app/_components/StatsComp/ClientImage";
