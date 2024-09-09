@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signUp } from "@/app/_components/auth/AuthActions";
+import { signUp } from "@/app/utils/auth/AuthActions";
 import { Input } from "@/components/ui/input"
 
 const SignUp = () => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { changePassword } from "@/app/_components/auth/AuthActions";
+import { changePassword } from "@/app/utils/auth/AuthActions";
 import { Input } from "@/components/ui/input"
 
 const ResetPassword = () => {

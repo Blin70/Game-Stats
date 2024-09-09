@@ -3,8 +3,8 @@ import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
-import { signOut } from "../auth/AuthActions";
-import { getCurrentUser } from "../auth/AuthActions";
+import { signOut } from "@/app/utils/auth/AuthActions";
+import { getCurrentUser } from "@/app/utils/auth/AuthActions";
 
 const ProfileMenuList = () => {
   const supabase = createClient();

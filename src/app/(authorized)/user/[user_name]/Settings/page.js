@@ -1,8 +1,8 @@
 import Image from "next/image";
 import defaultProfilePic from "/public/icons/default_profile_pic.png"
-import EditInfo from "@/app/_components/auth/EditInfo";
-import { getCurrentUser } from "@/app/_components/auth/AuthActions";
-import { ResetPasswordModal, DeleteAccountModal } from "@/app/_components/auth/EditInfo";
+import EditInfo from "@/app/utils/auth/EditInfo";
+import { getCurrentUser } from "@/app/utils/auth/AuthActions";
+import { ResetPasswordModal, DeleteAccountModal } from "@/app/utils/auth/EditInfo";
 
 const Settings = async () => {
     const user = await getCurrentUser()
