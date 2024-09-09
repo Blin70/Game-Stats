@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from "react";
-import AuthInput from "@/app/_components/auth/AuthInput";
 import { changePassword } from "@/app/_components/auth/AuthActions";
+import { Input } from "@/components/ui/input"
 
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState('');
@@ -23,10 +23,10 @@ const ResetPassword = () => {
     }
 
     return (
-        <div className="h-fit text-center w-fit p-5 mx-auto">
+        <div className="h-fit text-center w-fit p-5 mx-auto space-y-4">
                 <h1 className="text-4xl">What would you like your new password to be?</h1><br/><br/>
-                <AuthInput value={newPassword} onChange={handleNewPasswordChange} type='password' name='NewPassword' placeholder='Enter New Password' />
-                <AuthInput value={repeatPassword} onChange={handleRepeatPasswordChange} type='password' name='RepeatNewPassword' placeholder='Repeat Password' /><br/>
+                <Input value={newPassword} onChange={handleNewPasswordChange} type='password' name='NewPassword' placeholder='Enter New Password' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" required autoComplete='off' />
+                <Input value={repeatPassword} onChange={handleRepeatPasswordChange} type='password' name='RepeatNewPassword' placeholder='Repeat Password' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" required autoComplete='off' />
                 <button onClick={handleChangePassword} className="text-3xl rounded-3xl p-2 bg-green-700 hover:bg-green-800">Change Password</button>
         </div>
     );
