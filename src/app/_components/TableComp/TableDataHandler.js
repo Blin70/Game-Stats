@@ -1,4 +1,6 @@
 import { createClient } from "@/app/utils/supabase/client";
+import { TableRow, TableCell } from "@/components/ui/table";
+  
 
 const supabase = createClient();
 
@@ -20,13 +22,13 @@ const FetchTableData = async () => {
     .select('*');
     
     const renderedData = data.map((item) => (
-        <tr key={item.id} className="h-10 text-xl">
-            <td>{item.id}</td>
-            <td>{item.Username}</td>
-            <td>{item.Email}</td>
-            <td>{item.Phone}</td>
-            <td>{item.Joined}</td>
-        </tr>
+        <TableRow key={item.id} className="h-10 text-xl">
+            <TableCell>{item.id}</TableCell>
+            <TableCell>{item.Username}</TableCell>
+            <TableCell>{item.Email}</TableCell>
+            <TableCell>{item.Phone}</TableCell>
+            <TableCell>{item.Joined}</TableCell>
+        </TableRow>
     ));
 
     if(error){

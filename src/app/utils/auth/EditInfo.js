@@ -7,6 +7,8 @@ import { useState } from "react";
 import { createClient } from "@/app/utils/supabase/client";
 import { resetPassword } from "./AuthActions";
 import { deleteOwnAccount } from "./AuthActions";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 function EditInfo({ user, info }){
     const supabase = createClient();
@@ -88,7 +90,7 @@ function EditInfo({ user, info }){
                 : (
                     <div className="ml-10">
                         <br/>
-                        <input onChange={handleInfoChange} value={newInfo} name={info} className="w-52 h-9 bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none" autoComplete="off" />
+                        <Input onChange={handleInfoChange} value={newInfo} name={info} className="inline w-56 h-9 mb-5 text-2xl border-0 rounded focus-visible:ring-0" autoComplete="off" />
                         <FaRegCheckSquare onClick={handleInfoClick} className="text-green-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
                         <FiXSquare onClick={()=>{setNewInfoEdit(false);setNewInfo(dataToUpdate.getInfo())}} className="text-red-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
                     </div>
@@ -111,9 +113,8 @@ const ResetPasswordModal = (email) => {
         <>
             {
                 openModal 
-                ? (
-                    <>
-                        <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
+                && (
+                    <div onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
                             <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
                                 <h1 className="text-5xl">Reset Password</h1>
                                 <br/><br/><br/>
@@ -122,28 +123,24 @@ const ResetPasswordModal = (email) => {
                                         <>
                                             <h2 className="text-3xl">A password reset link has been sent to your email</h2>
                                             <br/><br/><br/>
-                                            <button onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-gray-600 hover:bg-gray-700">Alright</button>
+                                            <Button onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="py-6 px-8 rounded-3xl text-xl">Alright</Button>
                                         </>
                                       )
                                     : (
                                         <>
                                             <h2 className="text-3xl">Are you sure you want to reset your password?</h2>
                                             <br/><br/><br/><br/>
-                                            <button onClick={handleResetClick} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-green-800 hover:bg-green-900">Reset</button>
-                                            <button onClick={()=>setOpenModal(false)} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-gray-600 hover:bg-gray-700">Cancel</button>
+                                            <Button onClick={handleResetClick} className="py-6 px-8 rounded-3xl text-xl">Reset</Button>
+                                            <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800" >Cancel</Button>
                                         </>
                                       )
                                 }
                                 
                             </div>
                         </div>
-                        <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-1 block mx-auto">Reset Password</button>
-                    </>
-                )
-                : (
-                    <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-1 block mx-auto">Reset Password</button>
-                )
+                    )
             }
+            <Button onClick={()=>setOpenModal(true)} className="mt-10 p-6 rounded-xl mx-auto" >Reset Password</Button>
         </>
     );
 }
@@ -161,26 +158,21 @@ const DeleteAccountModal = (user) => {
         <>
             {
                 openModal 
-                ? (
-                    <>
-                        <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
-                            <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
-                                <h1 className="text-5xl">Delete Account</h1>
-                                <br/><br/><br/>
-                                <h2 className="text-3xl">Are you sure you want to delete your account?</h2>
-                                <h2 className="text-3xl">This action is irreversible</h2>
-                                            <br/><br/><br/><br/>
-                                            <button onClick={handleDeleteAccount} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-green-800 hover:bg-green-900">Delete</button>
-                                            <button onClick={()=>setOpenModal(false)} className="border-black border-2 rounded-3xl p-1 w-1/4 text-3xl bg-gray-600 hover:bg-gray-700">Cancel</button>
-                            </div>
+                && (
+                    <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
+                        <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
+                            <h1 className="text-5xl">Delete Account</h1>
+                            <br/><br/><br/>
+                            <h2 className="text-3xl">Are you sure you want to delete your account?</h2>
+                            <h2 className="text-3xl">This action is irreversible</h2>
+                            <br/><br/><br/><br/>
+                            <Button onClick={handleDeleteAccount} className="py-6 px-8 rounded-3xl text-xl">Delete</Button>
+                            <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800">Cancel</Button>
                         </div>
-                        <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-red-500 hover:bg-red-900 rounded-xl mt-5 p-1 block mx-auto">Delete account</button>
-                    </>
-                )
-                : (
-                    <button onClick={()=>setOpenModal(true)} className="w-1/2 h-16 text-4xl bg-red-500 hover:bg-red-900 rounded-xl mt-5 p-1 block mx-auto">Delete account</button>
+                    </div>
                 )
             }
+            <br/><Button onClick={()=>setOpenModal(true)} className="mt-5 p-6 rounded-xl mx-auto">Delete account</Button>
         </>
     );
 }

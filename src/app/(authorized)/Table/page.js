@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { FetchTableData } from "@/app/_components/TableComp/TableDataHandler";
-import ServerTable from '@/app/_components/TableComp/ServerTable';
+import { Table,TableBody, TableCaption, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import TableForm from '@/app/_components/TableComp/TableForm';
+  
 
 const ClientTable = () => {
     const [tableData, setTableData] = useState([]);
@@ -16,7 +18,25 @@ const ClientTable = () => {
         fetchData();
     }, []);
 
-    return <ServerTable tableData={tableData} setTableData={setTableData} />
+    return (<>
+            <TableForm setTableData={setTableData}/>
+                <Table className="w-fit h-fit mx-auto text-center">
+                    <TableCaption>List of users</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="w-1/12 text-center">Id</TableHead>
+                            <TableHead className="w-3/12 text-center">Username</TableHead>
+                            <TableHead className="w-3/12 text-center">Email</TableHead>
+                            <TableHead className="w-3/12 text-center">Phone</TableHead>
+                            <TableHead className="w-2/12 text-center">Joined</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {tableData}
+                    </TableBody>
+                </Table>
+    </>
+    )
 };
 
 export default ClientTable;
