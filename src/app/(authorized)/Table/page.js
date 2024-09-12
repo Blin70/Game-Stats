@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FetchTableData } from "@/app/_components/TableComp/TableDataHandler";
+import { FetchTableData } from "@/components/TableComp/TableDataHandler";
 import { Table,TableBody, TableCaption, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import TableForm from '@/app/_components/TableComp/TableForm';
+import TableForm from '@/components/TableComp/TableForm';
   
 
 const ClientTable = () => {

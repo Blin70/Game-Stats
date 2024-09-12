@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
-import { games } from '../_components/SidebarComp/GamesContainer';
+import { games } from '../../components/SidebarComp/GamesContainer';
 
 export async function checkUserAuthorization(request) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -32,6 +32,7 @@ export async function checkUserAuthorization(request) {
   const isUserPath = pathname.startsWith('/user/');
 
   if (
+    (pathname.startsWith('/table') && !user) ||
     isUserPath &&
     !pathname.startsWith("/user/signin") &&
     !pathname.startsWith("/user/signup") &&

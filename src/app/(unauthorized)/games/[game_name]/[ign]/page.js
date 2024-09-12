@@ -1,4 +1,4 @@
-import StatsInfo from "@/app/_components/StatsComp/StatsInfoComp";
+import StatsInfo from "@/components/StatsComp/StatsInfoComp";
 import { IoIosBody } from "react-icons/io";
 
 const UserGameStats = ({ params: { game_name, ign } }) => {
