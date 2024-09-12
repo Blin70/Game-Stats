@@ -1,8 +1,8 @@
 import Image from "next/image";
 import defaultProfilePic from "/public/icons/default_profile_pic.png"
-import { games } from "@/components/SidebarComp/GamesContainer";
+import { games } from "@/components/Sidebar/GamesContainer";
 import { getCurrentUser } from "@/app/utils/auth/AuthActions";
-import ClientImage from "@/components/StatsComp/ClientImage";
+import ClientImage from "@/components/Stats/ClientImage";
 
 const Profile = async () => {
 

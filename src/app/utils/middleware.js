@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
-import { games } from '../../components/SidebarComp/GamesContainer';
+import { games } from '../../components/Sidebar/GamesContainer';
 
 export async function checkUserAuthorization(request) {
   const SUPABASE_URL = process.env.SUPABASE_URL;

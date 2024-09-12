@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import ProfileMenu from "./ProfileMenu";
-import GamesContainer from "../SidebarComp/GamesContainer";
+import GamesContainer from "../Sidebar/GamesContainer";
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
 

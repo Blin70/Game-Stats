@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FetchTableData } from "@/components/TableComp/TableDataHandler";
+import { FetchTableData } from "@/components/Table/TableDataHandler";
 import { Table,TableBody, TableCaption, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import TableForm from '@/components/TableComp/TableForm';
+import TableForm from '@/components/Table/TableForm';
+import { ScrollArea } from "@/components/ui/scroll-area"
   
 
 const ClientTable = () => {
@@ -18,8 +19,10 @@ const ClientTable = () => {
         fetchData();
     }, []);
 
-    return (<>
+    return (
+        <>
             <TableForm setTableData={setTableData}/>
+            <ScrollArea className="h-[620px]">
                 <Table className="w-fit h-fit mx-auto text-center">
                     <TableCaption>List of users</TableCaption>
                     <TableHeader>
@@ -35,7 +38,8 @@ const ClientTable = () => {
                         {tableData}
                     </TableBody>
                 </Table>
-    </>
+            </ScrollArea>
+        </>
     )
 };
 

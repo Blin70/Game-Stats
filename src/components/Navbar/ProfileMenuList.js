@@ -5,6 +5,7 @@ import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
 import { signOut } from "@/app/utils/auth/AuthActions";
 import { getCurrentUser } from "@/app/utils/auth/AuthActions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const ProfileMenuList = () => {
   const supabase = createClient();
@@ -48,7 +49,7 @@ const ProfileMenuList = () => {
   return (
     <>
       {openList && (
-        <div className="relative top-24">
+        <div className="relative top-24 z-50">
           <div className="absolute right-12 w-0 h-0 text-3xl border-l-[25px] border-r-[25px] border-b-[25px] border-l-transparent border-r-transparent border-b-black"></div>
           <div className="absolute w-5/6 right-6 rounded-3xl h-fit mt-6 border-2 border-black">
             {renderedProfileMenuItems}
