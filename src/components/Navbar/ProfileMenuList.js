@@ -5,7 +5,6 @@ import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
 import { signOut } from "@/app/utils/auth/AuthActions";
 import { getCurrentUser } from "@/app/utils/auth/AuthActions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const ProfileMenuList = () => {
   const supabase = createClient();
