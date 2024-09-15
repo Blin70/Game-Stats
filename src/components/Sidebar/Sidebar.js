@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch"
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] h-screen px-3 py-1 overflow-hidden break-words rounded-md bg-gray-50">
+    <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] h-full px-3 py-1 overflow-hidden break-words rounded-md bg-gray-50">
       <div className="flex items-center w-full py-3">
         <Avatar className="inline-block size-16">
           <AvatarImage src={defaultProfilePic.src} />

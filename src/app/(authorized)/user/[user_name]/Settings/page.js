@@ -8,7 +8,7 @@ const Settings = async () => {
     const user = await getCurrentUser()
     
     return (
-        <div className="w-1/3 h-fit mx-auto text-center">
+        <div className="w-fit h-fit mx-auto text-center">
             <Image className="size-1/3 mx-auto cursor-pointer" alt="Default Profile Image" src={defaultProfilePic} />
             <EditInfo user={user} info='Name' />
             <EditInfo user={user} info='Email' />
