@@ -90,7 +90,7 @@ function EditInfo({ user, info }){
                 : (
                     <div className="ml-10">
                         <br/>
-                        <Input onChange={handleInfoChange} value={newInfo} name={info} className="inline w-56 h-9 mb-5 text-2xl border-0 rounded focus-visible:ring-0" autoComplete="off" />
+                        <Input onChange={handleInfoChange} value={newInfo} name={info} className="inline w-56 h-9 mb-5 text-2xl border-0 rounded focus-visible:ring-0 focus-visible:ring-offset-0" autoComplete="off" />
                         <FaRegCheckSquare onClick={handleInfoClick} className="text-green-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
                         <FiXSquare onClick={()=>{setNewInfoEdit(false);setNewInfo(dataToUpdate.getInfo())}} className="text-red-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
                     </div>
