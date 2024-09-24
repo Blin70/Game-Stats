@@ -1,15 +1,17 @@
 import Image from "next/image";
 import defaultProfilePic from "/public/icons/default_profile_pic.png"
-import { games } from "@/components/Sidebar/GamesContainer";
+import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page";
 import { getCurrentUser } from "@/app/utils/auth/AuthActions";
-import ClientImage from "@/components/Stats/ClientImage";
+import Link from "next/link";
 
 const Profile = async () => {
 
-    const renderedGames = games.map((game)=>{
+    const renderedGames = CurrentlySupportedGames.map((game)=>{
         return(
-            <div key={game.name} className="inline-block cursor-pointer">
-                <ClientImage game={game} />
+            <div key={game.name} className="inline-block cursor-pointer text-center">
+                <Link href={'/games/'+encodeURIComponent(game.name)}>
+                    <Image alt={game.name} src={game.icon} className="size-24" />
+                </Link>
                 <label>{game.name}</label>
             </div>
         ); 
@@ -17,7 +19,7 @@ const Profile = async () => {
     
 
     return (
-        <div className="w-1/3 h-fit mx-auto text-center ">
+        <div className="w-fit h-full mx-auto text-center">
             <h1 className="text-4xl mb-2">{(await getCurrentUser()).user_metadata.first_name}</h1>
             <Image className="size-1/3 mx-auto cursor-pointer" alt="Profile" src={defaultProfilePic} />
             <div className="w-full mt-14">
