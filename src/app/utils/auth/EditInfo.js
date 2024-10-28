@@ -1,106 +1,18 @@
 'use client';
 
-import { FaRegCheckSquare } from "react-icons/fa";
-import { FiXSquare } from "react-icons/fi";
-import { MdEdit } from "react-icons/md";
 import { useState } from "react";
 import { createClient } from "@/app/utils/supabase/client";
 import { resetPassword } from "./AuthActions";
 import { deleteOwnAccount } from "./AuthActions";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useUser } from "@/app/context/userContext";
+import { useRouter } from "next/navigation";
 
-function EditInfo({ user, info }){
-    const supabase = createClient();
-    const [newInfoEdit, setNewInfoEdit] = useState(false);
 
-    let initialInfo;
-    switch (info) {
-        case 'Name':
-            initialInfo = user.user_metadata.first_name;
-            break;
-        case 'Email':
-            initialInfo = user.email;
-            break;
-        case 'Phone':
-            initialInfo = user.user_metadata.phone ? user.user_metadata.phone : '';
-            break;
-        default:
-            initialInfo = '';
-    }
-    
-    const [newInfo, setNewInfo] = useState(initialInfo);
-
-    const dataToUpdate = ( () => {
-        switch (info){
-            case 'Name':
-                return {
-                    updateUser: { data: { first_name: newInfo } },
-                    getInfo: ()=> user.user_metadata.first_name,
-                    updateNewUser: () => user.user_metadata.first_name = newInfo,
-                    newInfoRequirements: newInfo.length >= 3
-                }
-            case 'Email':
-                return {
-                    updateUser: { email: newInfo },
-                    getInfo: ()=>user.email,
-                    updateNewUser: () => user.email = newInfo,
-                    newInfoRequirements: newInfo.includes('@')
-                }
-            case 'Phone':
-                return {
-                    updateUser: {data: { phone: newInfo }},
-                    getInfo: ()=>user.user_metadata.phone ? user.user_metadata.phone : '',
-                    updateNewUser: () => user.user_metadata.phone = newInfo,
-                    newInfoRequirements: newInfo.length >= 9 && /^\+?[1-9]\d{1,14}$/.test(newInfo)
-                }
-            default:
-                console.error('Invalid info type');
-                return null;
-        }
-    })();
-    
-      const handleInfoEdit = () => {
-          setNewInfoEdit(prev => !prev);
-      }
-      
-      const handleInfoChange = (event) => {
-          setNewInfo(event.target.value);
-      }
-
-      const handleInfoClick = async () => {
-          if(newInfo !== dataToUpdate.getInfo && dataToUpdate.newInfoRequirements){
-              const { error } = await supabase.auth.updateUser(dataToUpdate.updateUser)
-
-              if(error){
-                  console.error(error);
-                  return;
-                }
-
-                dataToUpdate.updateNewUser();
-                setNewInfo(newInfo);
-            }else{setNewInfo(dataToUpdate.getInfo())}
-            setNewInfoEdit(false)
-      } 
-
-    return (
-        <>
-            {!newInfoEdit 
-                ? <h2 className="text-3xl relative mt-5">{info}: {dataToUpdate.getInfo()} <MdEdit onClick={handleInfoEdit} className="text-4xl ml-4 -mt-3 inline-block cursor-pointer"/></h2>
-                : (
-                    <div className="ml-10">
-                        <br/>
-                        <Input onChange={handleInfoChange} value={newInfo} name={info} className="inline w-56 h-9 mb-5 text-2xl border-0 rounded focus-visible:ring-0 focus-visible:ring-offset-0" autoComplete="off" />
-                        <FaRegCheckSquare onClick={handleInfoClick} className="text-green-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
-                        <FiXSquare onClick={()=>{setNewInfoEdit(false);setNewInfo(dataToUpdate.getInfo())}} className="text-red-800 text-4xl ml-4 -mt-3 inline-block cursor-pointer" />
-                    </div>
-                )
-            }
-        </>
-    );
-}
-
-const ResetPasswordModal = (email) => {
+const ResetPasswordModal = () => {
     const [openModal, setOpenModal] = useState(false);
     const [openReqSent, setOpenReqSent] = useState(false);
 
@@ -115,43 +27,49 @@ const ResetPasswordModal = (email) => {
                 openModal 
                 && (
                     <div onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
-                            <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
-                                <h1 className="text-5xl">Reset Password</h1>
-                                <br/><br/><br/>
-                                {openReqSent
-                                    ? (
-                                        <>
-                                            <h2 className="text-3xl">A password reset link has been sent to your email</h2>
-                                            <br/><br/><br/>
-                                            <Button onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="py-6 px-8 rounded-3xl text-xl">Alright</Button>
-                                        </>
-                                      )
-                                    : (
-                                        <>
-                                            <h2 className="text-3xl">Are you sure you want to reset your password?</h2>
-                                            <br/><br/><br/><br/>
-                                            <Button onClick={handleResetClick} className="py-6 px-8 rounded-3xl text-xl">Reset</Button>
-                                            <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800" >Cancel</Button>
-                                        </>
-                                      )
-                                }
-                                
-                            </div>
+                            <Card onClick={(e)=>e.stopPropagation()} className="h-fit w-fit text-center rounded-3xl space-y-10 bg-[#474748] border-0">
+                                <CardHeader>
+                                    <CardTitle className="text-5xl font-medium">Reset Password</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-10">
+                                    {openReqSent
+                                        ? (
+                                                <h2 className="text-3xl">A password reset link has been sent to your email</h2>
+                                        )
+                                        : (
+                                                <h2 className="text-3xl">Are you sure you want to reset your password?</h2>
+                                        )
+                                    }
+                                </CardContent>
+                                <CardFooter className="justify-center space-x-2">
+                                    {openReqSent
+                                        ?(
+                                                <Button onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="py-6 px-8 rounded-3xl text-xl">Alright</Button>
+                                        )
+                                        :(
+                                            <>
+                                                <Button onClick={handleResetClick} className="py-6 px-8 rounded-3xl text-xl">Reset</Button>
+                                                <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800" >Cancel</Button>
+                                            </>
+                                        )
+                                    }
+                                </CardFooter>
+                            </Card>
                         </div>
                     )
             }
-            <Button onClick={()=>setOpenModal(true)} className="mt-10 p-6 rounded-xl mx-auto" >Reset Password</Button>
+            <Button onClick={()=>setOpenModal(true)} className="block mt-5 mx-auto">Change Password</Button>
         </>
     );
 }
 
-const DeleteAccountModal = (user) => {
+const DeleteAccountModal = () => {
+    const { user } = useUser();
     const [openModal, setOpenModal] = useState(false);
 
     const handleDeleteAccount = async () => {
-        await deleteOwnAccount(user)
+        await deleteOwnAccount(user.id)
         window.localStorage.clear();
-        alert('Your account has been deleted successfully')
     }
 
     return (
@@ -160,23 +78,155 @@ const DeleteAccountModal = (user) => {
                 openModal 
                 && (
                     <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
-                        <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-5 bg-[#474748] space-x-2">
-                            <h1 className="text-5xl">Delete Account</h1>
-                            <br/><br/><br/>
-                            <h2 className="text-3xl">Are you sure you want to delete your account?</h2>
-                            <h2 className="text-3xl">This action is irreversible</h2>
-                            <br/><br/><br/><br/>
-                            <Button onClick={handleDeleteAccount} className="py-6 px-8 rounded-3xl text-xl">Delete</Button>
-                            <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800">Cancel</Button>
+                            <Card onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl space-y-5 bg-[#474748] border-0 ">
+                                <CardHeader>
+                                    <CardTitle className="text-5xl font-medium">Delete Account</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-5">
+                                    <h2 className="text-3xl">Are you sure you want to delete your account?</h2>
+                                    <h2 className="text-3xl">This action is irreversible</h2>
+                                </CardContent>
+                                <CardFooter className="justify-center space-x-2">
+                                    <Button onClick={handleDeleteAccount} className="py-6 px-8 rounded-3xl text-xl">Delete</Button>
+                                    <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800">Cancel</Button>
+                                </CardFooter>
+                            </Card>
+                    </div>
+                )
+            }
+            <br/><Button onClick={()=>setOpenModal(true)} variant="destructive" className="p-5" >Delete Account</Button>
+
+        </>
+    );
+}
+
+const EditProfileModal = () => {
+    const router = useRouter();
+    const { user, fetchUserData } = useUser();
+    const supabase = createClient();
+    const [openModal, setOpenModal] = useState(false);
+    const [info, setInfo] = useState({
+        name: user?.user_metadata?.first_name,
+        email: user?.email,
+        phone: user?.phone || '',
+      });
+
+      const handleChange = (e) => {             //the user info in the modal that may have changed
+        const { name, value } = e.target;
+        setInfo(prevInfo => ({
+            ...prevInfo,                        // sets the new value of the inputs on the modal, has a base of the old values from context
+            [name]: value
+        }));
+      };
+
+    const handleAccChanges = async () => {
+        if(info.name != user.user_metadata.first_name || info.email != user.email){
+            if(info.name != user.user_metadata.first_name && info.email === user.email){
+                const { data, error } = await supabase.auth.updateUser({
+                    data: { first_name: info.name }
+                })
+
+                if(error) console.error("Error updating the name of the user: ", error);
+                if(data){
+                    fetchUserData();
+                    setOpenModal(false);
+                }
+            }
+            if(info.name === user.user_metadata.first_name && info.email != user.email){
+                const { data, error } = await supabase.auth.updateUser({
+                    email: info.email
+                })
+
+                if(error) console.error("Error updating the email of the user: ", error);
+                if(data){
+                    fetchUserData();
+                    setOpenModal(false);
+                    //ADD ALERT TO TELL THE USER TO CHECK HIS EMAIL FOR THE USER EMAIL CHANGE CONFIRMATION.
+                }
+            }
+        }
+    }
+
+    const handlePhoneChange = async () => {
+        if(info.phone != user.phone && info.phone != ''){     //add the (z) defination field.
+            const { data, error } = await supabase.auth.updateUser({
+                phone: info.phone
+            })
+
+            if(error) console.error("Error updating the phone number of the user: ", error);
+            if(data){
+                fetchUserData();
+                setOpenModal(false);
+            }
+        } 
+    }
+
+
+            // WHEN YOU IMPLEMENT DARK MODE, JUST ADD THE CLASSNAME "dark" TO 'Tabs' IF THE USER HAS DARKMODE TURNED ON.
+    return (
+        <>
+            {
+                openModal 
+                && (
+                    <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center backdrop-blur-sm">
+                        <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-0.5 pt-11">
+                            <Tabs defaultValue="account" className="w-[450px]">
+                                <TabsList className="grid w-full grid-cols-2 shadow-lg">
+                                    <TabsTrigger value="account">Account</TabsTrigger>
+                                    <TabsTrigger value="phone">Phone</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="account" className="focus-visible:ring-0 focus-visible:ring-offset-0" >
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle>Account</CardTitle>
+                                            <CardDescription>
+                                                Make changes to your account here. Click save when youre done.
+                                            </CardDescription>
+                                        </CardHeader>
+                                        <CardContent className="space-y-2">
+                                            <div className="space-y-1">
+                                                <label htmlFor="name">Name</label>
+                                                <Input onChange={handleChange} id="name" name="name" value={info.name} autoComplete="off"  />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label htmlFor="email">Email</label>
+                                                <Input onChange={handleChange} id="email" name="email" value={info.email} autoComplete="off"  />
+                                            </div>
+                                        </CardContent>
+                                        <CardFooter>
+                                            <Button onClick={handleAccChanges}>Save changes</Button>
+                                        </CardFooter>
+                                    </Card>
+                                </TabsContent>
+                                <TabsContent value="phone" className="focus-visible:ring-0 focus-visible:ring-offset-0" >
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle>Phone</CardTitle>
+                                            <CardDescription>
+                                                Change your phone number.
+                                            </CardDescription>
+                                        </CardHeader>
+                                        <CardContent className="space-y-2">
+                                            <div className="space-y-1">
+                                                <label htmlFor="phone">Phone</label>
+                                                <Input onChange={handleChange} id="phone" name="phone" type="text" value={info.phone} autoComplete="off" />
+                                            </div>
+                                        </CardContent>
+                                        <CardFooter>
+                                            <Button onClick={handlePhoneChange}>Save phone number</Button>
+                                        </CardFooter>
+                                    </Card>
+                                </TabsContent>
+                            </Tabs>
                         </div>
                     </div>
                 )
             }
-            <br/><Button onClick={()=>setOpenModal(true)} className="mt-5 p-6 rounded-xl mx-auto">Delete account</Button>
+            <Button onClick={()=>setOpenModal(true)} className="float-right mr-5">Edit Profile</Button>
         </>
     );
 }
 
 
-export default EditInfo;
+export default EditProfileModal;
 export { ResetPasswordModal, DeleteAccountModal };

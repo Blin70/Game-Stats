@@ -22,15 +22,15 @@ const CurrentlySupportedGames = [
   { name: "Splitgate", image: splitgateImage, icon:splitgateIcon },
 ]
 
-const SupportedGames = () => {
-
-    const Games = [
+const Games = [
         ...CurrentlySupportedGames,
         {name: "Valorant", image: valorantImage},
         {name: "GTA V", image: gtaImage},
         {name: "Assassins Creed 2", image: assassinscreedImage},
         {name: "EA FC 24", image: eafcImage}
-    ];
+];
+
+const SupportedGames = () => {
 
     const renderedGames = Games.map((i)=>{
         return(
@@ -65,4 +65,4 @@ const SupportedGames = () => {
 }
 
 export default SupportedGames;
-export { CurrentlySupportedGames };
+export { CurrentlySupportedGames, Games };

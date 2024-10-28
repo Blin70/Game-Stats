@@ -12,11 +12,11 @@ const iconMap = {
   "user": User
 };
 
-const CommandItems = ({ text, iconName , logout, ...others }) => {
+const CommandItems = ({ text, iconName, ...others }) => {
   const Icon = iconMap[iconName.toLowerCase()];
   
   return (
-    <CommandItem className="h-12 text-xl rounded-md cursor-pointer" {...others}>
+    <CommandItem className="h-12 text-xl rounded-md cursor-pointer" {...others} >
       <Icon className="size-8 mr-3" />
       {text}
     </CommandItem>

@@ -18,11 +18,14 @@ import Footer from "@/components/Footer/Footer";
 
 
 export default async function Home() {
-    const user = await getCurrentUser()
+  const user = await getCurrentUser();
+    
+  if(!user){
+    <h1>Loading....</h1>
+  }
 
     return (
       <>
-      
         <div className="w-full flex flex-col">
           <div className="relative h-[50vh] w-full flex-shrink-0 bg-gradient-to-r from-[#0a1020] via-[#150025]">
             <Image
@@ -44,14 +47,7 @@ export default async function Home() {
                 </Button>
               ) : (
                 <Button asChild className="h-14 w-28 text-xl rounded-2xl mt-5">
-                  <Link
-                    href={
-                      "/user/" +
-                      user.user_metadata.first_name +
-                      "/Profile"
-                    }>
-                    Profile
-                  </Link>
+                  <Link href="/user/Profile">Profile</Link>
                 </Button>
               )}
             </div>
@@ -104,7 +100,7 @@ export default async function Home() {
                     <Link
                       href={
                         user
-                          ? `/user/${user.user_metadata.first_name}/Profile`
+                          ? "/user/Profile"
                           : "/user/SignIn"
                       }>
                       View Leaderboards
@@ -127,7 +123,7 @@ export default async function Home() {
                   <Link
                     href={
                       user
-                        ? `/user/${user.user_metadata.first_name}/Profile`
+                        ? "/user/Profile"
                         : "/user/SignIn"
                     }>
                     View Progress

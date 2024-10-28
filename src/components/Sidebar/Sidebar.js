@@ -1,21 +1,24 @@
+'use client'
+
 import { Command, CommandGroup, CommandList } from "@/components/ui/command";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
-import { getCurrentUser, signOut } from "@/app/utils/auth/AuthActions";
+import { signOut } from "@/app/utils/auth/AuthActions";
 import Link from "next/link";
 import CommandItems from "./CommandItems";
 import ModeToggle from "./ModeToggle";
+import { useUser } from "@/app/context/userContext";
 
 
-const Sidebar = async () => {
-  const user = await getCurrentUser()
-
+const Sidebar = () => {
+  const { user } = useUser();
+  
   return (
     <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] max-h-screen px-3 py-1 overflow-hidden break-words rounded-md bg-gray-50">
       <div className="flex items-center w-full py-3">
         <Avatar className="inline-block size-16">
-          <Link href={`/user/${user.user_metadata.first_name}/Profile`}>
+          <Link href='/user/Profile'>
             <AvatarImage src={defaultProfilePic.src} />
             <AvatarFallback>s</AvatarFallback>
           </Link>
@@ -43,10 +46,12 @@ const Sidebar = async () => {
             <Link href='/Help'>
               <CommandItems text='Help' iconName="Info" />
             </Link>
-            <Link href={`/user/${user.user_metadata.first_name}/Settings`}>
+            <Link href='/user/Settings'>
               <CommandItems text='Settings' iconName="Settings" />
             </Link>
-            <CommandItems text='Log out' iconName="LogOut" />
+            <Link href='/' onClick={()=>signOut()}>
+              <CommandItems text='Log out' iconName="LogOut" />
+            </Link>
           </CommandGroup>
         </CommandList>
       </Command>

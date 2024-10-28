@@ -14,12 +14,12 @@ const Navbar = () => {
                     <div className="h-full w-full overflow-hidden">
                         <div className="h-full w-fit">
                             <Link href='/'>
-                                <Image alt="Logo" src={Logo} className="h-full w-fit" />
+                                <Image alt="Logo" src={Logo} className="h-full w-fit" priority />
                             </Link>
                         </div>
                     </div>
                 <div className="flex h-full w-full text-2xl space-x-20 items-center ">
-                    <Link href='#' className="">Top Games</Link>
+                    <Link href='/TopGames'>Top Games</Link>
                     <Link href='#'>Leaderboards</Link>
                 </div>
                 <div className="flex items-center w-full relative">

@@ -5,7 +5,7 @@ import { Linkedin, Instagram } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 
-const Footer =({ user }) => {
+const Footer = ({ user }) => {
 
     const CompanyItems = [
       {sendTo: "#", text: "About Us"},
@@ -24,7 +24,7 @@ const Footer =({ user }) => {
     const QuickLinks = [
       { sendTo: "#", text: "Leaderboards" },
       { sendTo: "/SupportedGames", text: "Supported Games" },
-      { sendTo: `/user/${user?.user_metadata.first_name}/Profile`, text: "Profile" }
+      { sendTo: "/user/Profile", text: "Profile" }
     ].map((i) => {
       return (
         <li key={i.text}>

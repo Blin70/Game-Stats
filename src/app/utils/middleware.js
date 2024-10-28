@@ -27,23 +27,18 @@ export async function checkUserAuthorization(request) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname.toLowerCase();
-  const userNameFromPath = pathname.split('/')[2];
 
   const isUserPath = pathname.startsWith('/user/');
-
+  
   if (
     (pathname.startsWith('/table') && !user) ||
     isUserPath &&
     !pathname.startsWith("/user/signin") &&
-    !pathname.startsWith("/user/signup") &&
-    (!user || user.user_metadata.first_name.toLowerCase() !== userNameFromPath)
+    !pathname.startsWith("/user/signup")
   ) {
     if(!user){
       return NextResponse.redirect(new URL("/user/SignIn", request.nextUrl));
-    }else{
-      return NextResponse.redirect(new URL("/unauthorized", request.nextUrl));
     }
-    
   }
 
   const gamesEncoded = CurrentlySupportedGames.map(game => encodeURIComponent(game.name.toLowerCase()));
