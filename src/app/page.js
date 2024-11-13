@@ -5,7 +5,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { MousePointerClick, Pencil, Check } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import { getCurrentUser } from "../utils/auth/AuthActions";
+import { getCurrentUser } from "../app/utils/auth/AuthActions";
 import apexImage from "/public/icons/apexImage.jpg";
 import csgoImage from "/public/icons/csgoImage.png";
 import division2Image from "/public/icons/division2Image.jpg";
@@ -15,17 +15,19 @@ import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
 import Footer from "@/components/Footer/Footer";
+import Navbar from "@/components/Navbar/Navbar";
 
 
 export default async function Home() {
-  const user = await getCurrentUser();
-    
+  let user = await getCurrentUser();
+
   if(!user){
-    <h1>Loading....</h1>
+    user = undefined
   }
 
     return (
       <>
+        <Navbar />
         <div className="w-full flex flex-col">
           <div className="relative h-[50vh] w-full flex-shrink-0 bg-gradient-to-r from-[#0a1020] via-[#150025]">
             <Image

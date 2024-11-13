@@ -1,50 +1,79 @@
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Games } from "@/app/(authorized)/SupportedGames/page";
 import { PandaScoreApi } from "@/app/utils/auth/AuthActions";
 import gtaImage from "/public/icons/gtaImage.jpg";
 import { RawgApi } from "@/app/utils/auth/AuthActions";
-import Image from "next/image";
 import TopGamesCarousel from "@/components/Carousel/TopGamesCarousel";
+import { cookies } from "next/headers";
+import valorantImage from '/public/icons/valorantImage.jpg';
+import starcraftBroodWarImage from '/public/icons/starcraftBroodWarImage.jpg';
+import starcraft2Image from '/public/icons/starcraft2Image.jpg';
+import rocketLeagueImage from '/public/icons/rocketLeagueImage.jpg';
+import r6SiegeImage from '/public/icons/r6SiegeImage.jpg';
+import pubgMobileImage from '/public/icons/pubgMobileImage.jpg';
+import overwatchImage from '/public/icons/overwatchImage.jpg';
+import leagueOfLegendsImage from '/public/icons/lolImage.jpg';
+import dota2Image from '/public/icons/dota2Image.jpg';
+import csgoImage from '/public/icons/csgoImage.png';
+import codMWImage from '/public/icons/codMWImage.jpg';
+import emblaCarouselReact from "embla-carousel-react";
+
 
 const TopGames = async () => {
-    const GameName = 'valorant';
-    const GameInfo = await RawgApi(GameName);
+    const cookieStore = cookies();
+    const indexCookie = cookieStore.get('selectedGame')?.value || '0';
 
+    let GameName = 'valorant';
     let TournamentGameName;
 
-    switch(GameName){
-        case 'counter-strike-global-offensive':
-            TournamentGameName = 'csgo';
-            break;
-        case 'rocket-league':
-            TournamentGameName = 'rl';
-            break;
-        case 'tom-clancys-rainbow-six-siege-2':
-            TournamentGameName = 'r6siege';
-            break;
-        case 'pubg-mobile':
-            TournamentGameName = 'pubg';
-            break;
-        case 'overwatch':
-            TournamentGameName = 'ow';
-            break;
-        case 'call-of-duty-modern-warfare':
-            TournamentGameName = 'codmw';
-            break;
-        case 'league-of-legends':
-            TournamentGameName = 'lol';
-            break;
-        case 'dota-2':
-            TournamentGameName = 'dota2';
-            break;
-        default:
-            TournamentGameName = GameName;
-    }
+   switch(indexCookie){
+    case '0':
+        GameName = 'valorant';
+        TournamentGameName = GameName;
+        break;
+    case '1':
+        GameName = 'starcraft-brood-war';
+        TournamentGameName = GameName;
+        break;
+    case '2':
+        GameName = 'starcraft-2';
+        TournamentGameName = GameName;
+        break;
+    case '3':
+        GameName = 'rocket-league'
+        TournamentGameName = 'rl';
+        break;
+    case '4':
+        GameName = 'tom-clancys-rainbow-six-siege-2'
+        TournamentGameName = 'r6siege';
+        break;
+    case '5':
+        GameName = 'pubg-mobile'
+        TournamentGameName = 'pubg';
+        break;
+    case '6':
+        GameName = 'overwatch'
+        TournamentGameName = 'ow';
+        break;
+    case '7':
+        GameName = 'league-of-legends'
+        TournamentGameName = 'lol';
+        break;
+    case '8':
+        GameName = 'dota-2'
+        TournamentGameName = 'dota2';
+        break;
+    case '9':
+        GameName = 'counter-strike-global-offensive'
+        TournamentGameName = 'csgo'
+        break;
+    case '10':
+        GameName = 'call-of-duty-modern-warfare'
+        TournamentGameName = 'codmw';
+        break;
+   }
 
-    const Tournaments = await PandaScoreApi(TournamentGameName, '6');
-
-    
+    const GameInfo = await RawgApi(GameName);
+    const Tournaments = await PandaScoreApi(TournamentGameName, 6);
 
     const renderedTournaments = Tournaments.map((tournament, index) => {
                 return(
@@ -102,13 +131,25 @@ const TopGames = async () => {
         );
     })
 
+    const TheGames = [
+      {name: "valorant", image: valorantImage},
+      {name: "starcraft-brood-war", image: starcraftBroodWarImage},
+      {name: "starcraft-2", image: starcraft2Image},
+      {name: "rocket-league", image: rocketLeagueImage},
+      {name: "tom-clancys-rainbow-six-siege-2", image: r6SiegeImage},
+      {name: "pubg-mobile", image: pubgMobileImage},
+      {name: "overwatch", image: overwatchImage},
+      {name: "league-of-legends", image: leagueOfLegendsImage},
+      {name: "dota-2", image: dota2Image},
+      {name: "counter-strike-global-offensive", image: csgoImage},
+      {name: "call-of-duty-modern-warfare", image: codMWImage},
+  ];
     
-
 
     return (
        <div className="container mx-auto px-36 py-4 space-y-8">
         <h1 className="text-center font-bold text-5xl">{GameInfo[0].Name}</h1>
-            <TopGamesCarousel gamename={GameName} />
+            <TopGamesCarousel TheGames={TheGames} />
             {renderedGameInfo}
        </div>
     )

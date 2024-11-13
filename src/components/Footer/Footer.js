@@ -59,8 +59,8 @@ const Footer = ({ user }) => {
               <ul className="text-gray-400 space-y-2">
                 {user === undefined 
                 ? <>
-                    <li><Link href='/user/SignIn'>Sign In</Link></li>
-                    <li><Link href='/user/SignUp'>Sign Up</Link></li>                
+                    <li><Link href='/user/SignIn' className="hover:text-white">Sign In</Link></li>
+                    <li><Link href='/user/SignUp' className="hover:text-white">Sign Up</Link></li>                
                 </>
                 :  QuickLinks
                 }
