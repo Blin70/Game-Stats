@@ -1,9 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PandaScoreApi } from "@/app/utils/auth/AuthActions";
-import gtaImage from "/public/icons/gtaImage.jpg";
-import { RawgApi } from "@/app/utils/auth/AuthActions";
-import TopGamesCarousel from "@/components/Carousel/TopGamesCarousel";
 import { cookies } from "next/headers";
+import { PandaScoreApi } from "@/app/utils/external-apis/externalApi";
+import { RawgApi } from "@/app/utils/external-apis/externalApi";
+import TopGamesCarousel from "@/components/Carousel/TopGamesCarousel";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import valorantImage from '/public/icons/valorantImage.jpg';
 import starcraftBroodWarImage from '/public/icons/starcraftBroodWarImage.jpg';
 import starcraft2Image from '/public/icons/starcraft2Image.jpg';
@@ -15,7 +14,6 @@ import leagueOfLegendsImage from '/public/icons/lolImage.jpg';
 import dota2Image from '/public/icons/dota2Image.jpg';
 import csgoImage from '/public/icons/csgoImage.png';
 import codMWImage from '/public/icons/codMWImage.jpg';
-import emblaCarouselReact from "embla-carousel-react";
 
 
 const TopGames = async () => {

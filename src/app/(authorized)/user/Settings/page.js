@@ -1,10 +1,10 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
+import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
+import { CurrentlySupportedGames } from "../../SupportedGames/page";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator"
-import { CurrentlySupportedGames } from "../../SupportedGames/page";
-import { DeleteAccountModal } from "@/app/utils/auth/EditInfo";
-import { ResetPasswordModal } from "@/app/utils/auth/EditInfo";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 
 const Settings = () => {

@@ -1,12 +1,12 @@
 'use client';
 
+import Link from "next/link";
 import Image from "next/image";
-import defaultProfilePic from "/public/icons/default_profile_pic.png"
+import { useUser } from "@/app/context/userContext";
+import EditProfileModal from "@/components/modals/EditInfo";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import EditProfileModal from "@/app/utils/auth/EditInfo";
-import { useUser } from "@/app/context/userContext";
-import Link from "next/link";
+import defaultProfilePic from "/public/icons/default_profile_pic.png"
 
 const Profile = () => {
   const { user } = useUser()

@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import { ThemeProvider } from "@/components/theme-provider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserProvider } from "../context/userContext";
 
@@ -24,23 +23,3 @@ export default function RootLayout({children}) {
         </div>
   );
 }
-
-//ose
-// return (
-//   <html lang="en">
-//     <body className={inter.className}>
-//     {/* <ThemeProvider attribute="class" defaultTheme="system"  > */}
-//       <div>
-//         <Navbar />
-//       </div>
-//       <div className="flex min-h-screen mt-2">
-//         <Sidebar />
-//         <main className="flex-1 container mx-auto p-8 bg-gray-50 rounded-md min-h-full h-fit">
-//             {children}
-//         </main>
-//       </div>
-//     {/* </ThemeProvider> */}
-//     </body>
-//   </html>
-// );
-

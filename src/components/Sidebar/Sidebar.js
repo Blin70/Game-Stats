@@ -1,15 +1,14 @@
 'use client'
 
+import Link from "next/link";
+import { useUser } from "@/app/context/userContext";
+import { signOut } from "@/app/utils/server-actions/AuthActions";
 import { Command, CommandGroup, CommandList } from "@/components/ui/command";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import defaultProfilePic from "/public/icons/default_profile_pic.png";
-import { signOut } from "@/app/utils/auth/AuthActions";
-import Link from "next/link";
 import CommandItems from "./CommandItems";
 import ModeToggle from "./ModeToggle";
-import { useUser } from "@/app/context/userContext";
-
+import defaultProfilePic from "/public/icons/default_profile_pic.png";
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -37,11 +36,15 @@ const Sidebar = () => {
             </Link>
             <CommandItems text='Notifications' iconName="Bell" />
           </CommandGroup>
-          <CommandGroup heading="Administation">
-            <Link href='/Table'>
-              <CommandItems text='User Management' iconName="User" />            
-            </Link>
-          </CommandGroup>
+          {user.role == 'service_role'
+            &&(
+              <CommandGroup heading="Administation">
+                <Link href='/admin'>
+                  <CommandItems text='User Management' iconName="User" />            
+                </Link>
+              </CommandGroup>
+            )
+          }
           <CommandGroup heading="Account">
             <Link href='/Help'>
               <CommandItems text='Help' iconName="Info" />

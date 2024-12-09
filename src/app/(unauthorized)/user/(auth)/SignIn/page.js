@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signInAction } from "@/app/utils/auth/AuthActions";
+import { signIn } from "@/app/utils/server-actions/AuthActions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -8,7 +8,7 @@ const SignIn = () => {
 
     return (
         <div className="absolute h-1/2 w-1/3 inset-0 m-auto">
-            <form action={signInAction} className="space-y-2">
+            <form action={signIn} className="space-y-2">
                 <h1 className="!m-6 text-center text-5xl">Sign In</h1>
                 <Input type='text' name='Email' placeholder='Email' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" required autoComplete='off' />
                 <Input type='password' name='Password' placeholder='Password' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" required autoComplete='off' />

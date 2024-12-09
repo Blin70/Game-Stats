@@ -1,11 +1,13 @@
+import Link from "next/link";
 import Image from "next/image";
-import herobg from "/public/icons/hero.jpg";
+import { getCurrentUser } from "./utils/server-actions/userActions";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { MousePointerClick, Pencil, Check } from 'lucide-react';
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
-import { getCurrentUser } from "../app/utils/auth/AuthActions";
+import { MousePointerClick, Pencil, Check } from 'lucide-react';
+import herobg from "/public/icons/hero.jpg";
 import apexImage from "/public/icons/apexImage.jpg";
 import csgoImage from "/public/icons/csgoImage.png";
 import division2Image from "/public/icons/division2Image.jpg";
@@ -14,8 +16,6 @@ import valorantImage from "/public/icons/valorantImage.jpg";
 import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
-import Footer from "@/components/Footer/Footer";
-import Navbar from "@/components/Navbar/Navbar";
 
 
 export default async function Home() {

@@ -1,107 +1,15 @@
 'use client';
 
 import { useState } from "react";
+import { useUser } from "@/app/context/userContext";
 import { createClient } from "@/app/utils/supabase/client";
-import { resetPassword } from "./AuthActions";
-import { deleteOwnAccount } from "./AuthActions";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUser } from "@/app/context/userContext";
-import { useRouter } from "next/navigation";
 
-
-const ResetPasswordModal = () => {
-    const [openModal, setOpenModal] = useState(false);
-    const [openReqSent, setOpenReqSent] = useState(false);
-
-    const handleResetClick = async () => {
-        setOpenReqSent(true);
-        resetPassword(`${window.location.protocol}//${window.location.host}`);
-    }
-
-    return (
-        <>
-            {
-                openModal 
-                && (
-                    <div onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
-                            <Card onClick={(e)=>e.stopPropagation()} className="h-fit w-fit text-center rounded-3xl space-y-10 bg-[#474748] border-0">
-                                <CardHeader>
-                                    <CardTitle className="text-5xl font-medium">Reset Password</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-10">
-                                    {openReqSent
-                                        ? (
-                                                <h2 className="text-3xl">A password reset link has been sent to your email</h2>
-                                        )
-                                        : (
-                                                <h2 className="text-3xl">Are you sure you want to reset your password?</h2>
-                                        )
-                                    }
-                                </CardContent>
-                                <CardFooter className="justify-center space-x-2">
-                                    {openReqSent
-                                        ?(
-                                                <Button onClick={()=>{setOpenModal(false);setOpenReqSent(false)}} className="py-6 px-8 rounded-3xl text-xl">Alright</Button>
-                                        )
-                                        :(
-                                            <>
-                                                <Button onClick={handleResetClick} className="py-6 px-8 rounded-3xl text-xl">Reset</Button>
-                                                <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800" >Cancel</Button>
-                                            </>
-                                        )
-                                    }
-                                </CardFooter>
-                            </Card>
-                        </div>
-                    )
-            }
-            <Button onClick={()=>setOpenModal(true)} className="block mt-5 mx-auto">Change Password</Button>
-        </>
-    );
-}
-
-const DeleteAccountModal = () => {
-    const { user } = useUser();
-    const [openModal, setOpenModal] = useState(false);
-
-    const handleDeleteAccount = async () => {
-        await deleteOwnAccount(user.id)
-        window.localStorage.clear();
-    }
-
-    return (
-        <>
-            {
-                openModal 
-                && (
-                    <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm">
-                            <Card onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl space-y-5 bg-[#474748] border-0 ">
-                                <CardHeader>
-                                    <CardTitle className="text-5xl font-medium">Delete Account</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-5">
-                                    <h2 className="text-3xl">Are you sure you want to delete your account?</h2>
-                                    <h2 className="text-3xl">This action is irreversible</h2>
-                                </CardContent>
-                                <CardFooter className="justify-center space-x-2">
-                                    <Button onClick={handleDeleteAccount} className="py-6 px-8 rounded-3xl text-xl">Delete</Button>
-                                    <Button onClick={()=>setOpenModal(false)} className="py-6 px-8 rounded-3xl text-xl bg-zinc-800">Cancel</Button>
-                                </CardFooter>
-                            </Card>
-                    </div>
-                )
-            }
-            <br/><Button onClick={()=>setOpenModal(true)} variant="destructive" className="p-5" >Delete Account</Button>
-
-        </>
-    );
-}
 
 const EditProfileModal = () => {
-    const router = useRouter();
     const { user, fetchUserData } = useUser();
     const supabase = createClient();
     const [openModal, setOpenModal] = useState(false);
@@ -121,7 +29,7 @@ const EditProfileModal = () => {
 
     const handleAccChanges = async () => {
         if(info.name != user.user_metadata.first_name || info.email != user.email){
-            if(info.name != user.user_metadata.first_name && info.email === user.email){
+            if(info.name != user.user_metadata.first_name && info.email === user.email){  //first_name has to be longer than 3 characters as defined in supabase
                 const { data, error } = await supabase.auth.updateUser({
                     data: { first_name: info.name }
                 })
@@ -165,8 +73,7 @@ const EditProfileModal = () => {
             // WHEN YOU IMPLEMENT DARK MODE, JUST ADD THE CLASSNAME "dark" TO 'Tabs' IF THE USER HAS DARKMODE TURNED ON.
     return (
         <>
-            {
-                openModal 
+            {openModal 
                 && (
                     <div onClick={()=>setOpenModal(false)} className="absolute inset-0 flex items-center justify-center backdrop-blur-sm">
                         <div onClick={(e)=>e.stopPropagation()} className="h-fit w-fit rounded-3xl p-0.5 pt-11">
@@ -227,6 +134,4 @@ const EditProfileModal = () => {
     );
 }
 
-
 export default EditProfileModal;
-export { ResetPasswordModal, DeleteAccountModal };

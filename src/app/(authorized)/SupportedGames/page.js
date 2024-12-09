@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import apexImage from "/public/icons/apexImage.jpg";
 import apexIcon from "/public/icons/apexIcon.png";
 import csgoImage from "/public/icons/csgoImage.png";
@@ -12,8 +14,6 @@ import valorantImage from "/public/icons/valorantImage.jpg";
 import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 
 const CurrentlySupportedGames = [
   { name: "Apex Legends", image: apexImage, icon: apexIcon },
