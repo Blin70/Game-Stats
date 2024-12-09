@@ -28,7 +28,7 @@ const TopGamesCarousel = ({ TheGames }) => {
               document.cookie = "selectedGame=; Max-Age=-99999999; path=/";
             }
         };
-    }, [api, pathname]);
+    }, [api, pathname, router]);
     
     const renderedCarouselItems = TheGames.map((game, index) => {
         return( 
