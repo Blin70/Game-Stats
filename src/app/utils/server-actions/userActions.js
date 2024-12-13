@@ -2,9 +2,9 @@
 
 import { createClient } from "../supabase/server";
 
-const supabase = createClient();
 
 export async function getCurrentUser() {
+  const supabase = createClient();
 
   const {data, error} = await supabase.auth.getUser();
 
@@ -17,6 +17,7 @@ export async function getCurrentUser() {
 }
 
 export async function getRole() {
+  const supabase = createClient();
 
   const {data, error} = await supabase.from('profiles').select('role');
 

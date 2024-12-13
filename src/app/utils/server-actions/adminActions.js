@@ -3,9 +3,9 @@
 import { createAdmin } from "@/app/utils/supabase/admin";
 import { revalidatePath } from "next/cache";
 
-const supabaseAdmin = createAdmin();
 
 export async function AdminCreateUser(formData){
+  const supabaseAdmin = createAdmin();
   
   const inputValues = {
     email: formData.get('Email'),
@@ -34,6 +34,8 @@ export async function AdminCreateUser(formData){
 }
 
 export async function AdminDeleteUser(user){
+    const supabaseAdmin = createAdmin();
+
     const { data, error } = await supabaseAdmin.auth.admin.deleteUser(user.id)
       
     if (error) console.error('Error while deleting user', error);
@@ -41,6 +43,8 @@ export async function AdminDeleteUser(user){
 }
 
 export async function AdminBanUser(user, input) {
+    const supabaseAdmin = createAdmin();
+
     const { data, error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
         { ban_duration:  (input === 'none' ? input : input.trim() + 'h' )}
       )
@@ -49,6 +53,8 @@ export async function AdminBanUser(user, input) {
 }
 
 export async function AdminUpdateEmail(user, input) {
+  const supabaseAdmin = createAdmin();
+
   const { data, error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
     { email: input }
   )
@@ -57,6 +63,8 @@ export async function AdminUpdateEmail(user, input) {
 }
 
 export async function AdminUpdateName(user, input) {
+  const supabaseAdmin = createAdmin();
+
   const { data, error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
     { user_metadata: { first_name: input } }
   )  
@@ -65,6 +73,8 @@ export async function AdminUpdateName(user, input) {
 }
 
 export async function AdminUpdatePhone(user, input) {
+  const supabaseAdmin = createAdmin();
+
   const { data, error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
     { phone: input }
   )
@@ -73,6 +83,8 @@ export async function AdminUpdatePhone(user, input) {
 }
 
 export async function AdminUpdatePassword(user, input) {
+  const supabaseAdmin = createAdmin();
+
   const { data, error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
     { password: input }
   )
@@ -81,6 +93,8 @@ export async function AdminUpdatePassword(user, input) {
 }
 
 export async function AdminUpdateRole(user, input) {
+  const supabaseAdmin = createAdmin();
+
   const { data, error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
     { role: input }
   )
@@ -89,6 +103,8 @@ export async function AdminUpdateRole(user, input) {
 }
 
 export async function ConfirmEmailorPhone(user, type) {
+  const supabaseAdmin = createAdmin();
+
   const updateFields = {
     ...(type === 'email' && { email_confirm: true }),
     ...(type === 'phone' && { phone_confirm: true })
@@ -100,6 +116,8 @@ export async function ConfirmEmailorPhone(user, type) {
 }
 
 export async function UnconfirmEmailorPhone(user, type) {
+  const supabaseAdmin = createAdmin();
+
   const { data, error } = await supabaseAdmin.rpc('unconfirm_user_email_or_phone', {
     user_id: user.id,
     confirmation_type: type 
