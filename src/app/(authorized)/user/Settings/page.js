@@ -23,7 +23,7 @@ const Settings = () => {
           <h1 className="text-2xl font-semibold">Privacy Settings</h1>
           <div className="p-6 ml-2 bg-gray-100 rounded-lg">
             <span className="text-lg font-medium">Make Profile Public</span>
-            <Input type='checkbox' className="size-8 float-right text-gray-300 accent-zinc-900"/>
+            <Input type='checkbox' name="PublicProfile_checkbox" id="PublicProfile_checkbox" className="size-8 float-right text-gray-300 accent-zinc-900"/>
           </div>
         </section>
 
@@ -31,7 +31,7 @@ const Settings = () => {
           <h1 className="text-2xl font-semibold">Notification Settings</h1>
           <div className="p-6 ml-2 bg-gray-100 rounded-lg">
             <span className="text-lg font-medium">Email Notifications</span>
-            <Input type='checkbox' className="size-8 float-right accent-zinc-900"/>
+            <Input type='checkbox' name="EmailNotif_checkbox" id="EmailNotif_checkbox" className="size-8 float-right accent-zinc-900"/>
           </div>
         </section>
 
@@ -47,7 +47,7 @@ const Settings = () => {
                   {renderedGameOptions}
                 </SelectContent>
               </Select>
-              <Input placeholder="Enter your game username" className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0" />
+              <Input placeholder="Enter your game username" name="LinkAccount" id="LinkAccount" className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0" />
               <Button>Link Account</Button>
             </div>
             <p className="text-sm text-gray-500 mt-4 w-fit mx-auto">You can link your account to avoid searching for your stats each time.</p>
@@ -58,7 +58,7 @@ const Settings = () => {
           <h1 className="text-2xl font-semibold">Security Settings</h1>
           <div className="p-6 ml-2 bg-gray-100 rounded-lg">
             <span className="text-lg font-medium">Enable Two-Factor Authentication</span>
-            <Input type='checkbox' className="size-8 float-right accent-zinc-900"/>
+            <Input type='checkbox' name="TWOFA_checkbox" id="TWOFA_checkbox" className="size-8 float-right accent-zinc-900"/>
             <ResetPasswordModal />
           </div>
         </section>

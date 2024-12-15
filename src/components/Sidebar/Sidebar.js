@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import CommandItems from "./CommandItems";
 import ModeToggle from "./ModeToggle";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
+import { ChartNoAxesCombined, Bell, Info, Settings, LogOut, User} from 'lucide-react';
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -23,8 +24,8 @@ const Sidebar = () => {
           </Link>
         </Avatar>
         <div className="inline-block ml-2">
-          <label className="block text-2xl">{user.user_metadata.first_name}</label>
-          <label className="block text-sm">{user.email}</label>
+          <span className="block text-2xl">{user.user_metadata.first_name}</span>
+          <span className="block text-sm">{user.email}</span>
         </div>
       </div>
       <Separator />
@@ -32,29 +33,27 @@ const Sidebar = () => {
         <CommandList className="min-h-full">
           <CommandGroup heading="Suggestions">
             <Link href='/SupportedGames'>
-              <CommandItems text='Game Stats' iconName="ChartNoAxesCombined" />
+              <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="size-8 mr-3" />} />
             </Link>
-            <CommandItems text='Notifications' iconName="Bell" />
+            <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
           </CommandGroup>
           {user.role == 'service_role'
             &&(
               <CommandGroup heading="Administation">
                 <Link href='/admin'>
-                  <CommandItems text='User Management' iconName="User" />            
+                  <CommandItems text='User Management' icon={<User className="size-8 mr-3" />} />            
                 </Link>
               </CommandGroup>
             )
           }
           <CommandGroup heading="Account">
             <Link href='/Help'>
-              <CommandItems text='Help' iconName="Info" />
+              <CommandItems text='Help' icon={<Info className="size-8 mr-3" />} />
             </Link>
             <Link href='/user/Settings'>
-              <CommandItems text='Settings' iconName="Settings" />
+              <CommandItems text='Settings' icon={<Settings className="size-8 mr-3" />} />
             </Link>
-            <Link href='/' onClick={()=>signOut()}>
-              <CommandItems text='Log out' iconName="LogOut" />
-            </Link>
+            <CommandItems onSelect={signOut} text='Log out' icon={<LogOut className="size-8 mr-3" />} />
           </CommandGroup>
         </CommandList>
       </Command>

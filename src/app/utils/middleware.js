@@ -31,7 +31,7 @@ export async function checkUserAuthorization(request) {
   const isUserPath = pathname.startsWith('/user/');
   
   if (
-    (pathname.startsWith('/table') && !user) ||
+    (pathname.startsWith('/admin') && !user) ||
     isUserPath &&
     !pathname.startsWith("/user/signin") &&
     !pathname.startsWith("/user/signup")
