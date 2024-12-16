@@ -11,9 +11,9 @@ const Footer = ({ user }) => {
       {sendTo: "#", text: "About Us"},
       {sendTo: "#", text: "Careers"},
       {sendTo: !user ? "/user/SignIn" : "/Help", text: !user ? undefined : "Help"}
-    ].map((i) => {
+    ].map((i, index) => {
       return (
-        <li key={i.text}>
+        <li key={index}>
           <Link href={i.sendTo} className="hover:text-white">
             {i.text}
           </Link>
@@ -25,9 +25,9 @@ const Footer = ({ user }) => {
       { sendTo: "#", text: "Leaderboards" },
       { sendTo: "/SupportedGames", text: "Supported Games" },
       { sendTo: "/user/Profile", text: "Profile" }
-    ].map((i) => {
+    ].map((i, index) => {
       return (
-        <li key={i.text}>
+        <li key={index}>
           <Link href={i.sendTo} className="hover:text-white">
             {i.text}
           </Link>
