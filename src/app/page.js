@@ -19,11 +19,7 @@ import eafcImage from "/public/icons/eafcImage.jpg";
 
 
 export default async function Home() {
-  let user = await getCurrentUser();
-
-  if(!user){
-    user = undefined
-  }
+  const user = await getCurrentUser();
 
     return (
       <>
@@ -43,7 +39,7 @@ export default async function Home() {
               <h2 className="text-3xl text-white font-bold mt-2">
                 All your game stats in one place
               </h2>
-              {user === undefined ? (
+              {!user ? (
                 <Button asChild className="h-14 w-28 text-xl rounded-2xl mt-5">
                   <Link href="/user/SignIn">Log In</Link>
                 </Button>

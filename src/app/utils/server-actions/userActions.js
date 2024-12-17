@@ -3,17 +3,14 @@
 import { createClient } from "../supabase/server";
 
 
-export async function getCurrentUser() {
+export async function getCurrentUser() {  //using getSession returns a warning on the terminal console although getSession should be used here
   const supabase = createClient();
 
-  const {data, error} = await supabase.auth.getUser();
+  const user = (await supabase.auth.getSession()).data.session?.user;
 
-  if (error) {
-    console.error("Error while getting User", error);
-    return null;
-  }
+  if (!user) return null;
 
-  return data.user;
+  return user;
 }
 
 export async function getRole() {

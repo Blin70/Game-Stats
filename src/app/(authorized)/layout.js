@@ -1,5 +1,4 @@
 import { Inter } from "next/font/google";
-import "../globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";

@@ -31,7 +31,9 @@ export async function checkUserAuthorization(request) {
   const isUserPath = pathname.startsWith('/user/');
   
   if (
-    (pathname.startsWith('/admin') && !user) ||
+    pathname.startsWith('/admin') ||
+    pathname.startsWith('/help') ||
+    pathname.startsWith('/supportedgames') ||
     isUserPath &&
     !pathname.startsWith("/user/signin") &&
     !pathname.startsWith("/user/signup")

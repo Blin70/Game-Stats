@@ -57,7 +57,7 @@ const Footer = ({ user }) => {
             <div>
               <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
               <ul className="text-gray-400 space-y-2">
-                {user === undefined 
+                {!user
                 ? <>
                     <li><Link href='/user/SignIn' className="hover:text-white">Sign In</Link></li>
                     <li><Link href='/user/SignUp' className="hover:text-white">Sign Up</Link></li>                
