@@ -12,13 +12,13 @@ const Profile = () => {
   const { user } = useUser()
 
   const renderedInfo = [
-    { label:'Name', info: user.user_metadata.first_name },
-    { label:'Email', info: user.email },
-    { label:'Phone', info: user.phone || 'No number added' }
-  ].map((i) => {
+    { text:'Name', info: user.user_metadata.first_name },
+    { text:'Email', info: user.email },
+    { text:'Phone', info: user.phone || 'No number added' }
+  ].map((i, index) => {
       return (
-        <div key={i.label}>
-          <label className="text-lg text-gray-500">{i.label}</label>
+        <div key={index}>
+          <span className="text-lg text-gray-500">{i.text}</span>
           <h1 className="text-xl ml-1 font-bold">{i.info}</h1>
         </div>
       );
