@@ -16,12 +16,12 @@ export async function getCurrentUser() {  //using getSession returns a warning o
 export async function getRole() {
   const supabase = createClient();
 
-  const {data, error} = await supabase.from('profiles').select('role');
+  const { data: { user: { role } }, error } = await supabase.auth.getUser();
 
   if (error) {
-    console.error("Error getting user role from supabase", error);
+    console.error("Error getting user role", error);
     return null;
   }
 
-  return data[0].role;
+  return role;
 }

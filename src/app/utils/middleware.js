@@ -27,20 +27,18 @@ export async function checkUserAuthorization(request) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname.toLowerCase();
-
-  const isUserPath = pathname.startsWith('/user/');
   
-  if (
+  if(!user && (
     pathname.startsWith('/admin') ||
     pathname.startsWith('/help') ||
     pathname.startsWith('/supportedgames') ||
-    isUserPath &&
-    !pathname.startsWith("/user/signin") &&
-    !pathname.startsWith("/user/signup")
-  ) {
-    if(!user){
+    (
+      pathname.startsWith('/user') &&
+      !pathname.startsWith('/user/signin') &&
+      !pathname.startsWith('/user/signup') 
+    )
+  )){
       return NextResponse.redirect(new URL("/user/SignIn", request.nextUrl));
-    }
   }
 
   const gamesEncoded = CurrentlySupportedGames.map(game => encodeURIComponent(game.name.toLowerCase()));
