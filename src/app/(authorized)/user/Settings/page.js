@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 
-const Settings = () => {
+const Settings = async () => {
 
-  const renderedGameOptions = CurrentlySupportedGames.map((game) => {
+  const renderedGameOptions = (await CurrentlySupportedGames()).map((game) => {
     return(
       <SelectItem key={game.name} value={game.name}>{game.name}</SelectItem>
     );

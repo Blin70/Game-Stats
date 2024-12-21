@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { FaSkullCrossbones, FaHandsHelping , FaTrophy, FaBalanceScale, FaCrosshairs, FaMedal, FaEquals, FaUserAlt } from "react-icons/fa";
 import { GiLaurelsTrophy } from "react-icons/gi";
+import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page";
+import { redirect } from "next/navigation";
 
-const UserGameStats = ({ params: { game_name, ign } }) => {
+const UserGameStats = async ({ params: { game_name, ign } }) => {
+  const isSupported = (await CurrentlySupportedGames()).some((game) => game.name.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
+
+  if(!isSupported) redirect('/unauthorized');
 
   const StatsFromDB = [
     { stat: "Kills", value: 1250, icon: <FaCrosshairs /> },
