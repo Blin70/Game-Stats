@@ -2,41 +2,42 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import apexImage from "/public/icons/apexImage.jpg";
-import apexIcon from "/public/icons/apexIcon.png";
-import csgoImage from "/public/icons/csgoImage.png";
-import csgoIcon from "/public/icons/csgoIcon.png";
-import division2Image from "/public/icons/division2Image.jpg";
-import division2Icon from "/public/icons/division2Icon.png";
-import splitgateImage from "/public/icons/splitgateImage.jpg";
-import splitgateIcon from "/public/icons/splitgateIcon.png";
 import valorantImage from "/public/icons/valorantImage.jpg";
 import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
+import { createClient } from "@/app/utils/supabase/server";
 
-const CurrentlySupportedGames = [
-  { name: "Apex Legends", image: apexImage, icon: apexIcon },
-  { name: "CSGO 2", image: csgoImage, icon: csgoIcon },
-  { name: "The Division 2", image: division2Image, icon: division2Icon },
-  { name: "Splitgate", image: splitgateImage, icon:splitgateIcon },
-]
 
-const Games = [
-        ...CurrentlySupportedGames,
-        {name: "Valorant", image: valorantImage},
-        {name: "GTA V", image: gtaImage},
-        {name: "Assassins Creed 2", image: assassinscreedImage},
-        {name: "EA FC 24", image: eafcImage}
-];
+const CurrentlySupportedGames = async () => {
+  const supabase = createClient();
 
-const SupportedGames = () => {
+  const { data, error } = await supabase.from('games').select('*');
 
-    const renderedGames = Games.map((i)=>{
+  if(error){
+    console.error("Error while getting games from supabase", error);
+    return [];
+  }
+
+  return data;
+}
+
+const SupportedGames = async () => {
+
+  const Games = [
+    ...(await CurrentlySupportedGames()),
+    {name: "Valorant", image_url: valorantImage},
+    {name: "GTA V", image_url: gtaImage},
+    {name: "Assassins Creed 2", image_url: assassinscreedImage},
+    {name: "EA FC 24", image_url: eafcImage}
+  ];
+
+  console.log("games: ",Games)
+    const renderedGames = Games.map((i, index)=>{
         return(
-            <Card key={i.name} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">
+            <Card key={index} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">
                 <CardHeader className="p-0">
-                    <Image src={i.image} alt="Apex Legends" className="w-full h-40 object-cover" />
+                    <Image src={i.image_url} width={i.image_url.width || 500} height={i.image_url.height || 375} alt={i.name} className="w-full h-40 object-cover" />  {/*Adjust the 'size' when making the website responsive*/}
                 </CardHeader>
                 <CardContent className="p-4">
                     <CardTitle className="text-xl font-bold">{i.name}</CardTitle>
@@ -65,4 +66,4 @@ const SupportedGames = () => {
 }
 
 export default SupportedGames;
-export { CurrentlySupportedGames, Games };
+export { CurrentlySupportedGames };

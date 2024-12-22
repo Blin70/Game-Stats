@@ -15,7 +15,7 @@ const SignUp = () => {
                 <Button type="submit" variant="secondary" className="block h-12 w-1/2 rounded-2xl mx-auto !mt-6 text-2xl bg-[#777777] hover:bg-[#a0a0a0]">Sign Up</Button>
             </form>
             <div className="text-lg mx-auto h-fit w-fit block mt-2 space-x-2">
-                <label>Already have an account?</label>
+                <span>Already have an account?</span>
                 <Link href='/user/SignIn'>SignIn</Link>
             </div>
         </div>

@@ -5,11 +5,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { LinkAccount } from "@/app/utils/server-actions/linkingActions";
 
 
-const Settings = () => {
+const Settings = async () => {
 
-  const renderedGameOptions = CurrentlySupportedGames.map((game) => {
+  const renderedGameOptions = (await CurrentlySupportedGames()).map((game) => {
     return(
       <SelectItem key={game.name} value={game.name}>{game.name}</SelectItem>
     );
@@ -38,8 +39,8 @@ const Settings = () => {
         <section className="space-y-5">
           <h1 className="text-2xl font-semibold">Linked Accounts</h1>
           <div className="text-2xl font-semibold bg-gray-100 rounded-lg p-6">
-            <div className="grid grid-cols-[20%,40%,15%] gap-5">
-              <Select>
+            <form action={LinkAccount} className="grid grid-cols-[20%,40%,15%] gap-5">
+              <Select name="SelectedGame">
                 <SelectTrigger>
                   <SelectValue placeholder="Select Game"/>
                 </SelectTrigger>
@@ -47,9 +48,9 @@ const Settings = () => {
                   {renderedGameOptions}
                 </SelectContent>
               </Select>
-              <Input placeholder="Enter your game username" name="LinkAccount" id="LinkAccount" className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0" />
-              <Button>Link Account</Button>
-            </div>
+              <Input placeholder="Enter your game username" name="username" id="username" autoComplete='off' className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0" />
+              <Button type="submit">Link Account</Button>
+            </form>
             <p className="text-sm text-gray-500 mt-4 w-fit mx-auto">You can link your account to avoid searching for your stats each time.</p>
           </div>
         </section>

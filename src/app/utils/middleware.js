@@ -1,6 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
-import { CurrentlySupportedGames } from '../(authorized)/SupportedGames/page';
 
 export async function checkUserAuthorization(request) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -32,6 +31,7 @@ export async function checkUserAuthorization(request) {
     pathname.startsWith('/admin') ||
     pathname.startsWith('/help') ||
     pathname.startsWith('/supportedgames') ||
+    pathname.startsWith('/games') ||
     (
       pathname.startsWith('/user') &&
       !pathname.startsWith('/user/signin') &&
@@ -39,16 +39,6 @@ export async function checkUserAuthorization(request) {
     )
   )){
       return NextResponse.redirect(new URL("/user/SignIn", request.nextUrl));
-  }
-
-  const gamesEncoded = CurrentlySupportedGames.map(game => encodeURIComponent(game.name.toLowerCase()));
-
-  if (pathname.startsWith('/games')) {
-    const gameNameInUrl = pathname.split('/games/')[1]?.split('/')[0];
-    
-    if (!gamesEncoded.includes(gameNameInUrl)) {
-        return NextResponse.redirect(new URL('/unauthorized', request.nextUrl));
-    }
   }
 
   return NextResponse.next();
