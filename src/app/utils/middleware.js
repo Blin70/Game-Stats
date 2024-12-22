@@ -31,6 +31,7 @@ export async function checkUserAuthorization(request) {
     pathname.startsWith('/admin') ||
     pathname.startsWith('/help') ||
     pathname.startsWith('/supportedgames') ||
+    pathname.startsWith('/games') ||
     (
       pathname.startsWith('/user') &&
       !pathname.startsWith('/user/signin') &&

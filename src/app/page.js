@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getCurrentUser } from "./utils/server-actions/userActions";
+import { getUserFromSession } from "./utils/server-actions/userActions";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,7 +19,7 @@ import eafcImage from "/public/icons/eafcImage.jpg";
 
 
 export default async function Home() {
-  const user = await getCurrentUser();
+  const user = await getUserFromSession();
 
     return (
       <>
@@ -75,7 +75,7 @@ export default async function Home() {
                     <Link
                       href={
                         user
-                          ? `/SupportedGames`
+                          ? "/SupportedGames"
                           : "/user/SignIn"
                       }>
                       Lookup Stats
@@ -121,7 +121,7 @@ export default async function Home() {
                   <Link
                     href={
                       user
-                        ? "/user/Profile"
+                        ? "/SupportedGames"
                         : "/user/SignIn"
                     }>
                     View Progress
