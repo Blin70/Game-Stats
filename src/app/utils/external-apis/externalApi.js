@@ -1,5 +1,62 @@
 "use server";
 
+export async function TRNProfile(game, platform, userIdentifier) {
+  const access_key = process.env.TRN_API_KEY;
+
+  const options = {
+    method: 'GET',
+    next: { tags: ['PlayerData'] },
+    headers: {
+      "TRN-Api-Key": access_key,
+      "Accept": "application/json",
+      "Accept-Encoding": "gzip"
+    }
+  }
+
+  let returnThis = {};
+
+  await fetch(`https://public-api.tracker.gg/v2/${game}/standard/profile/${platform}/${userIdentifier}`, options)
+    .then(res => res.json())
+    .then(res => {
+      const { 
+        data: { 
+          userInfo: { pageviews }, 
+          platformInfo: { platformSlug, platformUserHandle, avatarUrl },
+          segments
+        } 
+      } = res;
+      
+      const stats = segments[0]?.stats || 'Unavailable';
+
+      returnThis = {
+        pageviews,
+        platformSlug,
+        platformUserHandle,
+        avatarUrl,
+        level : stats?.level?.displayValue || 'Unavailable',
+        kills : stats?.kills?.displayValue || 'Unavailable',
+        killsPerMatch : stats?.killsPerMatch?.displayValue || 'Unavailable',
+        damage : stats?.damage?.displayValue || 'Unavailable',
+        headshots : stats?.headshots?.displayValue || 'Unavailable',
+        matchesPlayed : stats?.matchesPlayed?.displayValue || 'Unavailable',
+        revives : stats?.revives?.displayValue || 'Unavailable',
+        currentRank : stats?.rankScore?.metadata?.rankName || 'Unavailable',
+        currentRankIcon : stats?.rankScore?.metadata?.iconUrl || 'Unavailable',
+        PeakRank : stats?.lifetimePeakRankScore?.metadata?.rankName || 'Unavailable',
+        PeakRankIcon : stats?.lifetimePeakRankScore?.metadata?.iconUrl || 'Unavailable',
+        PeakRankPlacement : stats?.lifetimePeakRankScore?.rank || 'Unavailable',
+        PeakRankScore : stats?.lifetimePeakRankScore?.displayValue || 'Unavailable',
+      }
+
+    })
+  .catch(err => {
+    console.error(err);
+    return err;
+  });
+
+  return returnThis;
+}
+
 export async function PandaScoreApi(game, size) {
     const access_key = process.env.PANDASCORE_API_ACCESS_KEY;
   
