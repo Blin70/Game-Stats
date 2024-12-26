@@ -26,26 +26,26 @@ export async function TRNProfile(game, platform, userIdentifier) {
         } 
       } = res;
       
-      const stats = segments[0]?.stats || 'Unavailable';
+      const stats = segments[0]?.stats;
 
       returnThis = {
         pageviews,
         platformSlug,
         platformUserHandle,
         avatarUrl,
-        level : stats?.level?.displayValue || 'Unavailable',
-        kills : stats?.kills?.displayValue || 'Unavailable',
-        killsPerMatch : stats?.killsPerMatch?.displayValue || 'Unavailable',
-        damage : stats?.damage?.displayValue || 'Unavailable',
-        headshots : stats?.headshots?.displayValue || 'Unavailable',
-        matchesPlayed : stats?.matchesPlayed?.displayValue || 'Unavailable',
-        revives : stats?.revives?.displayValue || 'Unavailable',
-        currentRank : stats?.rankScore?.metadata?.rankName || 'Unavailable',
-        currentRankIcon : stats?.rankScore?.metadata?.iconUrl || 'Unavailable',
-        PeakRank : stats?.lifetimePeakRankScore?.metadata?.rankName || 'Unavailable',
-        PeakRankIcon : stats?.lifetimePeakRankScore?.metadata?.iconUrl || 'Unavailable',
-        PeakRankPlacement : stats?.lifetimePeakRankScore?.rank || 'Unavailable',
-        PeakRankScore : stats?.lifetimePeakRankScore?.displayValue || 'Unavailable',
+        level : stats?.level?.displayValue,
+        kills : stats?.kills?.displayValue,
+        killsPerMatch : stats?.killsPerMatch?.displayValue,
+        damage : stats?.damage?.displayValue,
+        headshots : stats?.headshots?.displayValue,
+        matchesPlayed : stats?.matchesPlayed?.displayValue,
+        revives : stats?.revives?.displayValue,
+        currentRank : stats?.rankScore?.metadata?.rankName,
+        currentRankIcon : stats?.rankScore?.metadata?.iconUrl,
+        PeakRank : stats?.lifetimePeakRankScore?.metadata?.rankName,
+        PeakRankIcon : stats?.lifetimePeakRankScore?.metadata?.iconUrl,
+        PeakRankPlacement : stats?.lifetimePeakRankScore?.rank,
+        PeakRankScore : stats?.lifetimePeakRankScore?.displayValue,
       }
 
     })

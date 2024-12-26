@@ -1,74 +1,57 @@
 import { Button } from "@/components/ui/button"
-import { FaSkullCrossbones, FaHandsHelping , FaTrophy, FaBalanceScale, FaCrosshairs, FaMedal, FaEquals, FaUserAlt } from "react-icons/fa";
-import { GiLaurelsTrophy } from "react-icons/gi";
 import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page";
 import { redirect } from "next/navigation";
+import { TRNProfile } from "@/app/utils/external-apis/externalApi";
+import { revalidateTag } from "next/cache";
+import { createClient } from "@/app/utils/supabase/server";
+import Image from "next/image";
+import { SiOrigin, SiSteam, SiPlaystation } from "react-icons/si";
+import { FaXbox } from "react-icons/fa";
+import { BsEyeFill } from "react-icons/bs";
 
 const UserGameStats = async ({ params: { game_name, ign } }) => {
   const isSupported = (await CurrentlySupportedGames()).some((game) => game.name.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
 
   if(!isSupported) redirect('/unauthorized');
 
-  const StatsFromDB = [
-    { stat: "Kills", value: 1250, icon: <FaCrosshairs /> },
-    { stat: "Deaths", value: 762, icon: <FaSkullCrossbones /> },
-    { stat: "Assists", value: 506, icon: <FaHandsHelping /> },
-    { stat: "Level", value: 102, icon: <GiLaurelsTrophy  /> },
-    { stat: "K/D", value: 1.5, icon: <FaBalanceScale /> },
-    { stat: "Win %", value: "60%" , icon: <FaMedal /> },
-    { stat: "Wins", value: 506, icon: <FaTrophy /> },
-    { stat: "Draws", value: 50, icon: <FaEquals /> },
-    { stat: "Losses", value: 305, icon: <FaUserAlt /> },
-    { stat: 'Headshot %', value: '30%'},
-    { stat: 'Bodyshot %', value: '50%'},
-    { stat: 'Legshot %', value: '20%'}
-  ];
-  
-  const StatsFromDBrendered = StatsFromDB.slice(0,9).map((i) => {
-    return(
-        <div key={i.stat} className="p-6 rounded-lg shadow-lg flex flex-col items-center w-full bg-white hover:shadow-xl transition-shadow duration-300" >
-          <div className="text-4xl mb-2">
-            {i.icon}
-          </div>
-          <h1 className="text-4xl font-semibold text-gray-800">{i.value}</h1>
-          <h1 className="text-lg text-gray-600">{i.stat}</h1>
-        </div>
-    );
-  })
+  const supabase = createClient();
 
-  const ShotStatsFromDbrendered = StatsFromDB.slice(9, 12).map((i) => {
-    return (
-      <div key={i.stat} className="flex flex-col items-center">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-3xl font-bold text-gray-800">{i.value}</span>
-          </div>
-        </div>
-        <h3 className="mt-4 text-lg text-gray-600">{i.stat}</h3>
-      </div>
-    );
-  });
-  
+  const PlayerData = await TRNProfile('apex', 'origin', ign);
 
     return (
-        <>
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-4xl font-bold">{decodeURIComponent(game_name)}</h1>
-              <h2 className="text-lg italic text-gray-600">{decodeURIComponent(ign)}</h2>
-            </div>
-            <Button>Refresh Stats</Button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {StatsFromDBrendered}
-          </div>
+        <div>
+          <Image alt={`${decodeURIComponent(game_name)} Image`} width={1472} height={900} src={(await supabase.from("games").select("background_img").eq("name", decodeURIComponent(game_name)).single()).data.background_img} className="rounded-md object-center w-full h-[40vh]"/>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {ShotStatsFromDbrendered}
+          <div className="flex relative max-w-7xl mx-auto -mt-14 -mb-10 text-white">
+            <div className="mr-6 flex flex-shrink-0 relative size-24">
+              <Image alt="User Avatar" width={100} height={100} src={PlayerData.avatarUrl} className="h-full w-full absolute left-0 top-0 rounded-full object-cover z-10 border-4 border-solid border-white"/>
+            </div>
+            <div className="flex flex-col justify-start gap-1">
+              <div className="flex items-center -mt-3">
+                <span className="flex items-center gap-2 text-sm"><BsEyeFill /> {PlayerData.pageviews} views</span>
+              </div>
+              <div className="flex gap-3">
+                <div className="flex flex-col gap-2 items-start rounded-full p-2 bg-black/15 w-9">
+                  { PlayerData.platformSlug === 'origin' && <SiOrigin className="size-5" /> }
+                  { PlayerData.platformSlug === 'steam' && <SiSteam className="size-5" /> }
+                  { PlayerData.platformSlug === 'psn' && <SiPlaystation className="size-5" /> }
+                  { PlayerData.platformSlug === 'xbl' && <FaXbox className="size-5" /> }
+                </div>
+                <span className="text-3xl">{PlayerData.platformUserHandle}</span>
+              </div>
+            </div>
           </div>
-        </>
-    );
+
+          <div className="bg-[#1e1e1e] grid grid-cols-[15%,85%] p-5 text-2xl text-white relative gap-6 rounded-md">
+            <div></div>
+            <ul className="flex gap-6 text-white/80">
+              <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Overview</li>
+              <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Legends</li>
+              <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Matches</li>
+            </ul>
+          </div>
+        </div>
+    )
 }
 
 export default UserGameStats;

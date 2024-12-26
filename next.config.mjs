@@ -7,6 +7,12 @@ const nextConfig = {
           hostname: 'jgimhxrvxhmownpbwmod.supabase.co',
           pathname: '/storage/v1/object/public/**',
         },
+        {
+          protocol: 'https',
+          hostname: 'secure.download.dm.origin.com',
+          port: '',
+          pathname: '/production/avatar/prod/userAvatar/**',
+        },
       ],
     },
   };
