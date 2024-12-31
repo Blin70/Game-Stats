@@ -32,7 +32,6 @@ const SupportedGames = async () => {
     {name: "EA FC 24", image_url: eafcImage}
   ];
 
-  console.log("games: ",Games)
     const renderedGames = Games.map((i, index)=>{
         return(
             <Card key={index} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">

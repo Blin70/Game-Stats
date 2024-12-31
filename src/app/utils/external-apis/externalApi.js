@@ -16,7 +16,12 @@ export async function TRNProfile(game, platform, userIdentifier) {
   let returnThis = {};
 
   await fetch(`https://public-api.tracker.gg/v2/${game}/standard/profile/${platform}/${userIdentifier}`, options)
-    .then(res => res.json())
+    .then(async res => {
+      if(!res.ok){
+        throw new Error(JSON.stringify(await res.json()));
+      }
+      return res.json();
+    })
     .then(res => {
       const { 
         data: { 
@@ -50,8 +55,7 @@ export async function TRNProfile(game, platform, userIdentifier) {
 
     })
   .catch(err => {
-    console.error(err);
-    return err;
+    console.error(JSON.parse(err.message).errors.map(error => error.message).join('\n'))
   });
 
   return returnThis;

@@ -50,6 +50,32 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
               <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Matches</li>
             </ul>
           </div>
+
+          <div className="w-fit text-white mt-4 rounded-2xl bg-[#1e1e1e] tracking-wider">
+            <h1 className="text-center pt-4 text-3xl font-semibold">Peak Rating</h1>
+
+            <div className="p-4 flex items-center space-x-4">
+              <Image alt="Peak Rank Icon" width={70} height={70} src={PlayerData.PeakRankIcon} className="object-cover" />
+
+              <div>
+                <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
+                <h2 className="text-3xl font-semibold">{PlayerData.PeakRank}</h2>
+                <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+              </div>
+            </div>
+
+            <div className="bg-[#343a40] rounded-2xl p-4">
+              <h3 className="text-lg font-medium mb-3">Current Rating</h3>
+              <div className="flex items-center space-x-4">
+                <Image alt="Current Rank Icon" width={70} height={70} src={PlayerData.currentRankIcon} className="object-cover" />
+                <div>
+                  <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
+                  <h2 className="text-3xl font-semibold">{PlayerData.currentRank}</h2>
+                  <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     )
 }
