@@ -34,6 +34,7 @@ export async function TRNProfile(game, platform, userIdentifier) {
       const stats = segments[0]?.stats;
 
       returnThis = {
+        stats,
         pageviews,
         platformSlug,
         platformUserHandle,

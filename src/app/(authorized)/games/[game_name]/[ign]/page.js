@@ -8,6 +8,8 @@ import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
+import { Sparkles, Circle } from 'lucide-react';
+import { Progress } from "@/components/ui/progress"
 
 const UserGameStats = async ({ params: { game_name, ign } }) => {
   const isSupported = (await CurrentlySupportedGames()).some((game) => game.name.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
@@ -18,8 +20,49 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
 
   const PlayerData = await TRNProfile('apex', 'origin', ign);
 
+
+  const rankKeys = ['lifetimePeakRankScore', 'peakRankScore', 'rankScore'];
+  const coreStatsKeys = ['level', 'kills', 'damage', 'wins'];
+
+  PlayerData.stats = Object.fromEntries(
+    Object.entries(PlayerData.stats).filter(([key]) => key !== 'arenaRankScore')   //remove the arenaRankScore property
+  );
+
+  const rankStats = Object.entries(PlayerData.stats).filter(([key]) => rankKeys.includes(key));
+  const coreStats = Object.entries(PlayerData.stats).filter(([key]) => coreStatsKeys.includes(key));
+  const otherStats = Object.entries(PlayerData.stats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
+  
+
+  const renderedCoreStats = coreStats.map(([key, value]) => (
+    <div key={key} className="bg-[#868e96] rounded-2xl flex flex-col justify-center items-center p-2 w-full max-w-72">
+      <h3 className="text-xl font-medium -ml-14">{value.displayName}</h3>
+      <h2 className="text-3xl font-bold">{value.displayValue}</h2>
+      <div className="flex text-[#ffd43b] text-xs items-center">
+        {value.rank && <span>#{value.rank}</span>}
+        {(value.rank && value.percentile) && <Circle className="size-1.5 fill-[#ffd43b] mx-1" />}
+        {value.percentile && <span>Top {Number.isInteger(value.percentile) ? (100 - value.percentile) : (parseFloat(100 - value.percentile).toFixed(1))}%</span>}
+      </div>
+    </div>
+  ));
+
+  const renderedOtherStats = otherStats.map(([key, value]) => (
+    <div key={key} className="flex items-center w-full max-w-xs -space-x-8" >
+      {value.percentile && <Progress value={value.percentile} className="[&>*]:bg-[#B7B7B7] bg-black h-2 w-20 -rotate-90 flex-none"/>}
+
+      <div className="flex flex-col justify-center items-center w-full">
+        <h3 className="text-xl font-medium truncate">{value.displayName}</h3>
+        <h2 className="text-3xl font-bold">{value.displayValue}</h2>
+        <div className="flex items-center text-xs text-[#ffd43b] space-x-1.5">
+          {value.rank && <span>#{value.rank}</span>}
+          {(value.rank && value.percentile) && <Circle className="size-1.5 fill-[#ffd43b]" />}
+          {value.percentile && <span>Top {Number.isInteger(value.percentile) ? (100 - value.percentile) : parseFloat(100 - value.percentile).toFixed(1)}%</span>}
+        </div>
+      </div>
+    </div>
+  ))
+
     return (
-        <div>
+        <>
           <Image alt={`${decodeURIComponent(game_name)} Image`} width={1472} height={900} src={(await supabase.from("games").select("background_img").eq("name", decodeURIComponent(game_name)).single()).data.background_img} className="rounded-md object-center w-full h-[40vh]"/>
           
           <div className="flex relative max-w-7xl mx-auto -mt-14 -mb-10 text-white">
@@ -51,32 +94,59 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
             </ul>
           </div>
 
-          <div className="w-fit text-white mt-4 rounded-2xl bg-[#1e1e1e] tracking-wider">
-            <h1 className="text-center pt-4 text-3xl font-semibold">Peak Rating</h1>
+          <div className="grid grid-cols-[25%,75%] mt-6 text-white/90">
+            <div>
+              <div className="w-fit rounded-2xl bg-[#1e1e1e] inline-block">
+                <h1 className="text-center pt-4 text-3xl font-semibold font-serif">Peak Rating</h1>
 
-            <div className="p-4 flex items-center space-x-4">
-              <Image alt="Peak Rank Icon" width={70} height={70} src={PlayerData.PeakRankIcon} className="object-cover" />
+                <div className="p-4 flex items-center space-x-4">
+                  <Image alt="Peak Rank Icon" width={70} height={70} src={PlayerData.PeakRankIcon} className="object-cover" />
 
-              <div>
-                <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
-                <h2 className="text-3xl font-semibold">{PlayerData.PeakRank}</h2>
-                <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+                  <div>
+                    <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
+                    <h2 className="text-3xl font-semibold font-serif">{PlayerData.PeakRank}</h2>
+                    <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+                  </div>
+                </div>
+
+                <div className="bg-[#343a40] rounded-2xl p-5">
+                  <h3 className="text-lg  mb-3 font-serif">Current Rating</h3>
+                  <div className="flex items-center space-x-4">
+                    <Image alt="Current Rank Icon" width={70} height={70} src={PlayerData.currentRankIcon} className="object-cover" />
+                    <div>
+                      <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
+                      <h2 className="text-3xl font-semibold font-serif">{PlayerData.currentRank}</h2>
+                      <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="bg-[#343a40] rounded-2xl p-4">
-              <h3 className="text-lg font-medium mb-3">Current Rating</h3>
-              <div className="flex items-center space-x-4">
-                <Image alt="Current Rank Icon" width={70} height={70} src={PlayerData.currentRankIcon} className="object-cover" />
-                <div>
-                  <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
-                  <h2 className="text-3xl font-semibold">{PlayerData.currentRank}</h2>
-                  <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+            <div>
+              <div className="flex flex-col rounded-2xl bg-[#1e1e1e]">
+                <div className="w-full flex items-center p-3 ml-3 gap-2">
+                  <Sparkles className="size-9" />
+                  <h1 className="text-3xl font-serif font-semibold tracking-wide">Lifetime Overview</h1>
+                </div>
+                <div className="w-full px-3 py-5 space-x-2 bg-[#343a40] items-center flex">
+                  <Image alt="Current Rank Icon" src={PlayerData.currentRankIcon} width={100} height={100} className="object-cover inline-block" />
+                  <div className="inline-block">
+                    <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
+                    <h2 className="text-4xl font-semibold font-serif">{PlayerData.currentRank}</h2>
+                    <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
+                  </div>
+                </div>
+                <div className="flex justify-center px-4 gap-10 -mt-5 text-black">
+                  {renderedCoreStats}
+                </div>
+                <div className="grid grid-cols-5 gap-7 w-full mt-2 p-2 gap-y-10">
+                  {renderedOtherStats}
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
     )
 }
 
