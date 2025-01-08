@@ -27,13 +27,17 @@ export async function TRNProfile(game, platform, userIdentifier) {
         data: { 
           userInfo: { pageviews }, 
           platformInfo: { platformSlug, platformUserHandle, avatarUrl },
+          metadata,
           segments
         } 
       } = res;
       
       const stats = segments[0]?.stats;
+      const steamUsername = metadata?.steamInfo?.displayName;
 
       returnThis = {
+        segments,
+        steamUsername,
         stats,
         pageviews,
         platformSlug,
