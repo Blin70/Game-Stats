@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
 import { revalidateTag } from "next/cache";
 import Image from "next/image";
-import { SiOrigin, SiSteam, SiPlaystation } from "react-icons/si";
+import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
 import RenderedLegends from "@/components/GameStats/RenderedLegends";
@@ -12,6 +12,7 @@ import SteamAliasSection from "@/components/GameStats/SteamAliasSection";
 import GameBackgroundImage from "@/components/GameStats/GameBackgroundImage";
 import RankSection from "@/components/GameStats/RankSection";
 import LifetimeOverviewSection from "@/components/GameStats/LifetimeOverviewSection";
+import StatTabs from "@/components/GameStats/StatTabs";
 
 
 const UserGameStats = async ({ params: { game_name, ign } }) => {
@@ -50,34 +51,20 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
                   { PlayerData.platformSlug === 'steam' && <SiSteam className="size-5" /> }
                   { PlayerData.platformSlug === 'psn' && <SiPlaystation className="size-5" /> }
                   { PlayerData.platformSlug === 'xbl' && <FaXbox className="size-5" /> }
+                  { PlayerData.platformSlug === 'ubi' && <SiUbisoft className="size-5" />}
                 </div>
                 <span className="text-3xl">{PlayerData.platformUserHandle}</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-[#1e1e1e] grid grid-cols-[15%,85%] p-5 text-2xl text-white relative gap-6 rounded-md">
-            <div></div>
-            <ul className="flex gap-6 text-white/80">
-              <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Overview</li>
-              <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Legends</li>
-              <li className="h-fit cursor-pointer hover:-mt-0.5 hover:text-white/100">Matches</li>
-            </ul>
-          </div>
-
-          <div className="grid grid-cols-[25%,75%] space-x-4 mt-6 text-white/90">
-            <div>
-              <RankSection Ranks={rankStats} />
-              {PlayerData.steamUsername && <SteamAliasSection steamUsername={PlayerData.steamUsername} /> }
-            </div>
-
-            <div>
-              <LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />
-              <div>
-                <RenderedLegends legendsArray={PlayerData.segments.slice(1)} />
-              </div>
-            </div>
-          </div>
+          <StatTabs 
+            RankSection={<RankSection Ranks={rankStats} />} 
+            SteamAliasSection={PlayerData.steamUsername && <SteamAliasSection steamUsername={PlayerData.steamUsername} />}
+            LifetimeOverviewSection={<LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />} 
+            RenderedLegends={<RenderedLegends legendsArray={PlayerData.segments.slice(1)} />} 
+            RenderedSomeLegends={<RenderedLegends legendsArray={PlayerData.segments.slice(1,4)} />}
+          />
         </>
     )
 }
