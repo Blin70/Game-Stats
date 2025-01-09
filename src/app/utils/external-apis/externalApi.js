@@ -43,19 +43,6 @@ export async function TRNProfile(game, platform, userIdentifier) {
         platformSlug,
         platformUserHandle,
         avatarUrl,
-        level : stats?.level?.displayValue,
-        kills : stats?.kills?.displayValue,
-        killsPerMatch : stats?.killsPerMatch?.displayValue,
-        damage : stats?.damage?.displayValue,
-        headshots : stats?.headshots?.displayValue,
-        matchesPlayed : stats?.matchesPlayed?.displayValue,
-        revives : stats?.revives?.displayValue,
-        currentRank : stats?.rankScore?.metadata?.rankName,
-        currentRankIcon : stats?.rankScore?.metadata?.iconUrl,
-        PeakRank : stats?.lifetimePeakRankScore?.metadata?.rankName,
-        PeakRankIcon : stats?.lifetimePeakRankScore?.metadata?.iconUrl,
-        PeakRankPlacement : stats?.lifetimePeakRankScore?.rank,
-        PeakRankScore : stats?.lifetimePeakRankScore?.displayValue,
       }
 
     })

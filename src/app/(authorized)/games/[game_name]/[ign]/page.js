@@ -3,13 +3,15 @@ import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page"
 import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
 import { revalidateTag } from "next/cache";
-import { createClient } from "@/app/utils/supabase/server";
 import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
-import { Sparkles, Circle } from 'lucide-react';
-import { Progress } from "@/components/ui/progress";
+import RenderedLegends from "@/components/GameStats/RenderedLegends";
+import SteamAliasSection from "@/components/GameStats/SteamAliasSection";
+import GameBackgroundImage from "@/components/GameStats/GameBackgroundImage";
+import RankSection from "@/components/GameStats/RankSection";
+import LifetimeOverviewSection from "@/components/GameStats/LifetimeOverviewSection";
 
 
 const UserGameStats = async ({ params: { game_name, ign } }) => {
@@ -17,65 +19,8 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
 
   if(!isSupported) redirect('/unauthorized');
 
-  const supabase = createClient();
-
   const PlayerData = await TRNProfile('apex', 'origin', ign);
-
-
-  const Legends = PlayerData.segments.slice(1).map((legend) => {
-
-    const LegendCoreStatsKeys = ['kills', 'damage', 'wins'];
-
-    const LegendCoreStats = Object.entries(legend.stats).filter(([key]) => LegendCoreStatsKeys.includes(key));
-    const LegendOtherStats = Object.entries(legend.stats).filter(([key]) => !LegendCoreStatsKeys.includes(key));
-
-    const renderedLegendCoreStats = LegendCoreStats.map(([key, value]) => (
-      <div key={key} className="bg-[#292929] rounded-2xl flex flex-col justify-center items-center p-2 w-full max-w-72">
-        <h3 className="text-xl font-medium -ml-14">{value.displayName}</h3>
-        <h2 className="text-3xl font-bold">{value.displayValue}</h2>
-        <div className="flex text-[#ffd43b] text-xs items-center">
-          {value.rank && <span>#{value.rank}</span>}
-          {(value.rank && value.percentile) && <Circle className="size-1.5 fill-[#ffd43b] mx-1" />}
-          {value.percentile && <span>Top {Number.isInteger(value.percentile) ? (100 - value.percentile) : (parseFloat(100 - value.percentile).toFixed(1))}%</span>}
-        </div>
-      </div>
-    ))
-
-    const renderedLegendOtherStats = LegendOtherStats.map(([key, value]) => (
-      <div key={key} className="flex items-center w-full max-w-xs -space-x-8" >
-        {value.percentile && <Progress value={value.percentile} className="[&>*]:bg-[#B7B7B7] bg-black h-2 w-20 -rotate-90 flex-none"/>}
-
-        <div className="flex flex-col justify-center items-center w-full">
-          <h3 className="text-xl font-medium truncate">{value.displayName}</h3>
-          <h2 className="text-3xl font-bold">{value.displayValue}</h2>
-          <div className="flex items-center text-xs text-[#ffd43b] space-x-1.5">
-            {value.rank && <span>#{value.rank}</span>}
-            {(value.rank && value.percentile) && <Circle className="size-1.5 fill-[#ffd43b]" />}
-            {value.percentile && <span>Top {Number.isInteger(value.percentile) ? (100 - value.percentile) : parseFloat(100 - value.percentile).toFixed(1)}%</span>}
-          </div>
-        </div>
-      </div>
-    ))
-
-    if(Object.keys(legend.stats).length === 0 )return;
-
-    return(
-      <div key={legend?.attributes?.id} className="rounded-2xl bg-[#1e1e1e] mt-5">
-        <div className="flex items-center bg-[#343a40] rounded-t-2xl">
-          <Image src={legend?.metadata?.portraitImageUrl} alt="Legend Icon" width={80} height={80} style={{ backgroundColor: legend?.metadata?.legendColor }} className="object-cover rounded-tl-2xl" />
-          <h2 className="text-3xl font-medium p-3">{legend?.metadata?.name}</h2>
-        </div>
-        <div className="p-5">
-          <div className="flex justify-center gap-10">
-            {renderedLegendCoreStats}
-          </div>
-          <div className="grid grid-cols-4 gap-7 w-full mt-7 gap-y-10">
-            {renderedLegendOtherStats}
-          </div>
-        </div>
-      </div>
-    )
-  });
+  
 
   const rankKeys = ['lifetimePeakRankScore', 'peakRankScore', 'rankScore'];
   const coreStatsKeys = ['level', 'kills', 'damage', 'wins'];
@@ -84,43 +29,13 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
     Object.entries(PlayerData.stats).filter(([key]) => key !== 'arenaRankScore')   //removes the arenaRankScore property
   );
 
-  const rankStats = Object.entries(PlayerData.stats).filter(([key]) => rankKeys.includes(key));
+  const rankStats = Object.fromEntries(Object.entries(PlayerData.stats).filter(([key]) => rankKeys.includes(key)));
   const coreStats = Object.entries(PlayerData.stats).filter(([key]) => coreStatsKeys.includes(key));
   const otherStats = Object.entries(PlayerData.stats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
-  
-
-  const renderedCoreStats = coreStats.map(([key, value]) => (
-    <div key={key} className="bg-[#868e96] rounded-2xl flex flex-col justify-center items-center p-2 w-full max-w-72">
-      <h3 className="text-xl font-medium -ml-14">{value.displayName}</h3>
-      <h2 className="text-3xl font-bold">{value.displayValue}</h2>
-      <div className="flex text-[#ffd43b] text-xs items-center">
-        {value.rank && <span>#{value.rank}</span>}
-        {(value.rank && value.percentile) && <Circle className="size-1.5 fill-[#ffd43b] mx-1" />}
-        {value.percentile && <span>Top {Number.isInteger(value.percentile) ? (100 - value.percentile) : (parseFloat(100 - value.percentile).toFixed(1))}%</span>}
-      </div>
-    </div>
-  ));
-
-  const renderedOtherStats = otherStats.map(([key, value]) => (
-    <div key={key} className="flex items-center w-full max-w-xs -space-x-8" >
-      {value.percentile && <Progress value={value.percentile} className="[&>*]:bg-[#B7B7B7] bg-black h-2 w-20 -rotate-90 flex-none"/>}
-
-      <div className="flex flex-col justify-center items-center w-full">
-        <h3 className="text-xl font-medium truncate">{value.displayName}</h3>
-        <h2 className="text-3xl font-bold">{value.displayValue}</h2>
-        <div className="flex items-center text-xs text-[#ffd43b] space-x-1.5">
-          {value.rank && <span>#{value.rank}</span>}
-          {(value.rank && value.percentile) && <Circle className="size-1.5 fill-[#ffd43b]" />}
-          {value.percentile && <span>Top {Number.isInteger(value.percentile) ? (100 - value.percentile) : parseFloat(100 - value.percentile).toFixed(1)}%</span>}
-        </div>
-      </div>
-    </div>
-  ))
 
     return (
-        <div>
-          <Image alt={`${decodeURIComponent(game_name)} Image`} width={1472} height={900} src={(await supabase.from("games").select("background_img").eq("name", decodeURIComponent(game_name)).single()).data.background_img} className="rounded-md object-center w-full h-[40vh]"/>
-          
+        <>
+          <GameBackgroundImage game_name={decodeURIComponent(game_name)} />
           <div className="flex relative max-w-7xl mx-auto -mt-14 -mb-10 text-white">
             <div className="mr-6 flex flex-shrink-0 relative size-24">
               <Image alt="User Avatar" width={100} height={100} src={PlayerData.avatarUrl} className="h-full w-full absolute left-0 top-0 rounded-full object-cover z-10 border-4 border-solid border-white"/>
@@ -152,71 +67,18 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
 
           <div className="grid grid-cols-[25%,75%] space-x-4 mt-6 text-white/90">
             <div>
-              <div className="w-full rounded-2xl bg-[#1e1e1e] inline-block">
-                <h1 className="text-center pt-4 text-3xl font-semibold font-serif">Peak Rating</h1>
-
-                <div className="p-4 flex items-center space-x-4">
-                  <Image alt="Peak Rank Icon" width={70} height={70} src={PlayerData.PeakRankIcon} className="object-cover" />
-
-                  <div>
-                    <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
-                    <h2 className="text-3xl font-semibold font-serif">{PlayerData.PeakRank}</h2>
-                    <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
-                  </div>
-                </div>
-
-                <div className="bg-[#343a40] rounded-2xl p-5">
-                  <h3 className="text-lg  mb-3 font-serif">Current Rating</h3>
-                  <div className="flex items-center space-x-4">
-                    <Image alt="Current Rank Icon" width={70} height={70} src={PlayerData.currentRankIcon} className="object-cover" />
-                    <div>
-                      <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
-                      <h2 className="text-3xl font-semibold font-serif">{PlayerData.currentRank}</h2>
-                      <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {PlayerData.steamUsername && (
-                <div className="mt-5 rounded-2xl bg-[#1e1e1e] flex flex-col border border-[#292929]">
-                  <div className="flex py-5 px-6">
-                    <h2 className="text-2xl font-medium">Steam Alias</h2>
-                  </div>
-                  <div className="flex space-x-3 py-5 px-6 border-t border-t-[#292929]">
-                    <SiSteam className="size-7" /> <span className="text-xl font-bold">{PlayerData.steamUsername}</span>
-                  </div>
-                </div>
-              )}
+              <RankSection Ranks={rankStats} />
+              {PlayerData.steamUsername && <SteamAliasSection steamUsername={PlayerData.steamUsername} /> }
             </div>
 
             <div>
-              <div className="flex flex-col w-full rounded-2xl pb-3 bg-[#1e1e1e]">
-                <div className="w-full flex items-center p-3 ml-3 gap-2">
-                  <Sparkles className="size-9" />
-                  <h1 className="text-3xl font-serif font-semibold tracking-wide">Lifetime Overview</h1>
-                </div>
-                <div className="w-full px-3 py-5 space-x-2 bg-[#343a40] items-center flex">
-                  <Image alt="Current Rank Icon" src={PlayerData.currentRankIcon} width={100} height={100} className="object-cover inline-block" />
-                  <div className="inline-block">
-                    <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{PlayerData.PeakRankScore} RP</span>
-                    <h2 className="text-4xl font-semibold font-serif">{PlayerData.currentRank}</h2>
-                    <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{PlayerData.PeakRankPlacement}</span>
-                  </div>
-                </div>
-                <div className="flex justify-center px-4 gap-10 -mt-5 text-black">
-                  {renderedCoreStats}
-                </div>
-                <div className="grid grid-cols-5 gap-7 w-full mt-2 p-2 gap-y-10">
-                  {renderedOtherStats}
-                </div>
-              </div>
+              <LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />
               <div>
-                {Legends}
+                <RenderedLegends legendsArray={PlayerData.segments.slice(1)} />
               </div>
             </div>
           </div>
-        </div>
+        </>
     )
 }
 
