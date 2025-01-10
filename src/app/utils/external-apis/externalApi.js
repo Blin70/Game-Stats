@@ -48,6 +48,12 @@ export async function TRNProfile(game, platform, userIdentifier) {
     })
   .catch(err => {
     console.error(JSON.parse(err.message).errors.map(error => error.message).join('\n'))
+    returnThis = {
+      err: {
+        code: JSON.parse(err.message).errors.map((error) => error.code).join("\n"),
+        message : JSON.parse(err.message).errors.map(error => error.message).join('\n')
+      },
+    };
   });
 
   return returnThis;

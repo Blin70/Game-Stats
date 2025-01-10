@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { createClient } from "@/app/utils/supabase/server";
 
-const GameBackgroundImage = async ({game_name}) => {
+const GameBackgroundImage = async ({ game_name }) => {
   const supabase = createClient();
 
   const bgImage = (
     await supabase
       .from("games")
       .select("background_img")
-      .eq("name", game_name)
+      .eq("alias", game_name)
       .single()
   ).data.background_img;
 

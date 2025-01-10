@@ -8,19 +8,15 @@ import { createClient } from "@/app/utils/supabase/server";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {
-    const isSupported = (await CurrentlySupportedGames()).some((game) => game.name.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
+    const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
     
     if(!isSupported) redirect('/unauthorized');
 
     const supabase = createClient();
 
-    const platforms = (
-        await supabase
-        .from("games")
-        .select("platform")
-        .eq("name", decodeURIComponent(game_name))
-        .single()
-    ).data.platform;
+    const { data: GameData, error } = await supabase.from('games').select('name, platforms').eq('alias', game_name).single()
+
+    if(error) console.error("Error while getting data for the game from supabase", error);
 
     const possiblePlatforms = {
         "ubi":{
@@ -45,7 +41,7 @@ const UsernameEntry = async ({ params: { game_name } }) => {
         }
     }
 
-    const renderedPlatforms = platforms.map((platform, index) => (
+    const renderedPlatforms = GameData.platforms.map((platform, index) => (
         <SelectItem key={index} value={platform} className="font-semibold">
             {possiblePlatforms[platform].icon} {possiblePlatforms[platform].name} 
         </SelectItem>
@@ -56,12 +52,14 @@ const UsernameEntry = async ({ params: { game_name } }) => {
         "use server";
 
         const Username = formData.get('Username');
-        redirect(`/games/${game_name}/${encodeURIComponent(Username)}`)
+        const Platform = formData.get('SelectedPlatform');
+
+        redirect(`/games/${game_name}/${Platform}/${encodeURIComponent(Username)}`)
     }
 
     return (
         <form action={submitUsername} className="h-fit w-fit mx-auto p-4 text-center mt-40 space-y-4">
-            <h1 className="text-5xl">{decodeURIComponent(game_name)} Stats</h1>
+            <h1 className="text-5xl">{GameData.name} Stats</h1>
             <div className="flex space-x-5 items-center">
                 <Select name="SelectedPlatform">
                     <SelectTrigger className="w-fit space-x-1">

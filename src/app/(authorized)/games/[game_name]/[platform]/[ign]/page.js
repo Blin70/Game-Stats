@@ -13,14 +13,24 @@ import GameBackgroundImage from "@/components/GameStats/GameBackgroundImage";
 import RankSection from "@/components/GameStats/RankSection";
 import LifetimeOverviewSection from "@/components/GameStats/LifetimeOverviewSection";
 import StatTabs from "@/components/GameStats/StatTabs";
+import IgnNotFound from "@/components/GameStats/IgnNotFound";
 
 
-const UserGameStats = async ({ params: { game_name, ign } }) => {
-  const isSupported = (await CurrentlySupportedGames()).some((game) => game.name.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
-
+const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
+  const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase());
   if(!isSupported) redirect('/unauthorized');
 
-  const PlayerData = await TRNProfile('apex', 'origin', ign);
+  const SupportedPlatforms = ['steam', 'xbl', 'psn', 'origin', 'ubi'];    
+  if(!SupportedPlatforms.includes(platform)) redirect('/unauthorized');
+
+  const PlayerData = await TRNProfile(game_name, platform, ign);
+
+  if(Object.keys(PlayerData) == "err" && PlayerData?.err?.code === 'CollectorResultStatus::NotFound') {
+
+    return(
+      <IgnNotFound errorMessage={PlayerData?.err?.message} />
+    );
+  }
   
 
   const rankKeys = ['lifetimePeakRankScore', 'peakRankScore', 'rankScore'];
@@ -36,7 +46,7 @@ const UserGameStats = async ({ params: { game_name, ign } }) => {
 
     return (
         <>
-          <GameBackgroundImage game_name={decodeURIComponent(game_name)} />
+          <GameBackgroundImage game_name={game_name} />
           <div className="flex relative max-w-7xl mx-auto -mt-14 -mb-10 text-white">
             <div className="mr-6 flex flex-shrink-0 relative size-24">
               <Image alt="User Avatar" width={100} height={100} src={PlayerData.avatarUrl} className="h-full w-full absolute left-0 top-0 rounded-full object-cover z-10 border-4 border-solid border-white"/>

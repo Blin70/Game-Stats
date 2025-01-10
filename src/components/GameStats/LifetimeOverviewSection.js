@@ -13,9 +13,9 @@ const LifetimeOverviewSection = ({ CurrentRank, coreStats, otherStats }) => {
             <div className="w-full px-3 py-5 space-x-2 bg-[#343a40] items-center flex">
                 <Image alt="Current Rank Icon" src={CurrentRank.metadata.iconUrl} width={100} height={100} className="object-cover inline-block" />
                 <div className="inline-block">
-                    <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{CurrentRank.displayValue} RP</span>
-                    <h2 className="text-4xl font-semibold font-serif">{CurrentRank.metadata.rankName}</h2>
-                    <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{CurrentRank.rank}</span>
+                    <span className="text-xs text-[#ffd43b] text-right block tracking-normal">{CurrentRank?.displayValue || '?'} RP</span>
+                    <h2 className="text-4xl font-semibold font-serif">{CurrentRank?.metadata?.rankName}</h2>
+                    <span className="text-xs text-[#ffd43b] text-left block tracking-normal">#{CurrentRank?.rank || '?'}</span>
                 </div>
             </div>
             <div className="flex justify-center px-4 gap-10 -mt-5">
