@@ -14,6 +14,7 @@ import RankSection from "@/components/GameStats/RankSection";
 import LifetimeOverviewSection from "@/components/GameStats/LifetimeOverviewSection";
 import StatTabs from "@/components/GameStats/StatTabs";
 import IgnNotFound from "@/components/GameStats/IgnNotFound";
+import ApexLegendsTabs from "@/components/GameStats/ApexLegendsTabs";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
@@ -35,14 +36,40 @@ const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
 
   const rankKeys = ['lifetimePeakRankScore', 'peakRankScore', 'rankScore'];
   const coreStatsKeys = ['level', 'kills', 'damage', 'wins'];
+  
+  let AllTimeStats = PlayerData?.categorizedStats?.overview[0]?.stats;
 
-  PlayerData.stats = Object.fromEntries(
-    Object.entries(PlayerData.stats).filter(([key]) => key !== 'arenaRankScore')   //removes the arenaRankScore property
+  AllTimeStats = Object.fromEntries(
+    Object.entries(AllTimeStats).filter(([key]) => key !== 'arenaRankScore')
   );
 
-  const rankStats = Object.fromEntries(Object.entries(PlayerData.stats).filter(([key]) => rankKeys.includes(key)));
-  const coreStats = Object.entries(PlayerData.stats).filter(([key]) => coreStatsKeys.includes(key));
-  const otherStats = Object.entries(PlayerData.stats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
+  const rankStats = Object.fromEntries(Object.entries(AllTimeStats).filter(([key]) => rankKeys.includes(key)));
+  const coreStats = Object.entries(AllTimeStats).filter(([key]) => coreStatsKeys.includes(key));
+  const otherStats = Object.entries(AllTimeStats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
+
+  const GameComponent = (
+    game_name === 'apex' ? (
+      <ApexLegendsTabs 
+        RankSection={<RankSection Ranks={rankStats} />} 
+        SteamAliasSection={PlayerData.steamUsername && <SteamAliasSection steamUsername={PlayerData.steamUsername} />}
+        LifetimeOverviewSection={<LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />} 
+        RenderedLegends={PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend} /> : null}
+        RenderedSomeLegends={PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend.slice(0,4)} /> : null} 
+      />
+    ) : game_name === 'division-2' ? (
+      <div>
+        <h1 className="text-black">Division 2</h1>
+      </div>
+    ) : game_name === 'csgo' ? (
+      <div>
+        <h1 className="text-black">CSGO</h1>
+      </div>
+    ) : game_name === 'splitgate' ? (
+      <div>
+        <h1 className="text-black">Splitgate</h1>
+      </div>
+    ) : null
+  )
 
     return (
         <>
@@ -69,11 +96,8 @@ const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
           </div>
 
           <StatTabs 
-            RankSection={<RankSection Ranks={rankStats} />} 
-            SteamAliasSection={PlayerData.steamUsername && <SteamAliasSection steamUsername={PlayerData.steamUsername} />}
-            LifetimeOverviewSection={<LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />} 
-            RenderedLegends={<RenderedLegends legendsArray={PlayerData.segments.slice(1)} />} 
-            RenderedSomeLegends={<RenderedLegends legendsArray={PlayerData.segments.slice(1,4)} />}
+            CategorizedStats={PlayerData.categorizedStats}
+            GameComponent={GameComponent}
           />
         </>
     )

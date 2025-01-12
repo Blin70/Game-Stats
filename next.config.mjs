@@ -25,6 +25,18 @@ const nextConfig = {
           port: '',
           pathname: '/cdn/**',
         },
+        {
+          protocol: 'https',
+          hostname: 'ubisoft-avatars.akamaized.net',
+          port: '',
+          pathname: '/**',
+        },
+        {
+          protocol: 'https',
+          hostname: 'avatars.steamstatic.com',
+          port: '',
+          pathname: '/**',
+        },
       ],
     },
   };

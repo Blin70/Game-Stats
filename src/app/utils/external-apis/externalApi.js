@@ -28,17 +28,24 @@ export async function TRNProfile(game, platform, userIdentifier) {
           userInfo: { pageviews }, 
           platformInfo: { platformSlug, platformUserHandle, avatarUrl },
           metadata,
-          segments
         } 
       } = res;
+
+      let categorizedStats = {};
+
+      res.data.segments.map((segment) => {
+        if(!Object.keys(categorizedStats).includes(segment.type)){
+          categorizedStats[segment.type] = [segment]
+        }else{
+          categorizedStats[segment.type].push(segment)
+        }
+      })
       
-      const stats = segments[0]?.stats;
       const steamUsername = metadata?.steamInfo?.displayName;
 
       returnThis = {
-        segments,
+        categorizedStats,
         steamUsername,
-        stats,
         pageviews,
         platformSlug,
         platformUserHandle,
