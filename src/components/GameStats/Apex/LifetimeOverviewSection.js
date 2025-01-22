@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Sparkles } from 'lucide-react';
-import { renderedCoreStats, renderedOtherStats } from "./RenderStats";
+import { renderedCoreStats, renderedOtherStats } from "../RenderStats";
 
 const LifetimeOverviewSection = ({ CurrentRank, coreStats, otherStats }) => {
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { renderedCoreStats, renderedOtherStats } from "./RenderStats";
+import { renderedCoreStats, renderedOtherStats } from "../RenderStats";
 
 const Legend = ({ legend }) => {
 

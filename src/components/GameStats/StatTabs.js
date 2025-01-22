@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react";
-import ApexLegendsTabs from "./ApexLegendsTabs";
+import ApexLegendsTabs from "./Apex/ApexLegendsTabs";
+import Division2Tabs from "./Division-2/Division2Tabs";
 
 
 const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
@@ -20,7 +21,7 @@ const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
 
         {gameName === "apex" && <ApexLegendsTabs activeTab={activeTab} RankSection={GameProps?.RankSection} SteamAliasSection={GameProps?.SteamAliasSection} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} RenderedSomeLegends={GameProps?.RenderedSomeLegends} RenderedLegends={GameProps?.RenderedLegends} />}
         {gameName === "csgo" && <h1>Section in developement</h1>}
-        {gameName === "division-2" && <h1>Section in developement</h1>}
+        {gameName === "division-2" && <Division2Tabs CategorizedStats={CategorizedStats} Awards={GameProps?.Awards} /> }
         {gameName === "splitgate" && <h1>Section in developement</h1>}
       </>
     );

@@ -7,13 +7,10 @@ import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
-import RenderedLegends from "@/components/GameStats/RenderedLegends";
-import SteamAliasSection from "@/components/GameStats/SteamAliasSection";
 import GameBackgroundImage from "@/components/GameStats/GameBackgroundImage";
-import RankSection from "@/components/GameStats/RankSection";
-import LifetimeOverviewSection from "@/components/GameStats/LifetimeOverviewSection";
 import StatTabs from "@/components/GameStats/StatTabs";
 import IgnNotFound from "@/components/GameStats/IgnNotFound";
+import getGameProps from "@/lib/getGameProps";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
@@ -31,28 +28,7 @@ const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
       <IgnNotFound errorMessage={PlayerData?.err?.message} />
     );
   }
-  
 
-  const rankKeys = ['lifetimePeakRankScore', 'peakRankScore', 'rankScore'];
-  const coreStatsKeys = ['level', 'kills', 'damage', 'wins'];
-  
-  let AllTimeStats = PlayerData?.categorizedStats?.overview[0]?.stats;
-
-  AllTimeStats = Object.fromEntries(
-    Object.entries(AllTimeStats).filter(([key]) => key !== 'arenaRankScore')
-  );
-
-  const rankStats = Object.fromEntries(Object.entries(AllTimeStats).filter(([key]) => rankKeys.includes(key)));
-  const coreStats = Object.entries(AllTimeStats).filter(([key]) => coreStatsKeys.includes(key));
-  const otherStats = Object.entries(AllTimeStats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
-
-  const GameProps = game_name === 'apex' ? {
-    RankSection: <RankSection Ranks={rankStats} />,
-    SteamAliasSection: PlayerData.steamUsername ? <SteamAliasSection steamUsername={PlayerData.steamUsername} /> : null,
-    LifetimeOverviewSection: <LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />,
-    RenderedLegends: PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend} /> : null,
-    RenderedSomeLegends: PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend.slice(0, 4)} /> : null,
-  } : null;
 
   return (
     <>
@@ -82,7 +58,7 @@ const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
 
       <StatTabs 
         CategorizedStats={PlayerData.categorizedStats}
-        GameProps={GameProps}
+        GameProps={getGameProps(game_name, PlayerData)}
         gameName={game_name}
       />
     </>
