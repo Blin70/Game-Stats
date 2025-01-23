@@ -21,7 +21,7 @@ const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
 
         {gameName === "apex" && <ApexLegendsTabs activeTab={activeTab} RankSection={GameProps?.RankSection} SteamAliasSection={GameProps?.SteamAliasSection} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} RenderedSomeLegends={GameProps?.RenderedSomeLegends} RenderedLegends={GameProps?.RenderedLegends} />}
         {gameName === "csgo" && <h1>Section in developement</h1>}
-        {gameName === "division-2" && <Division2Tabs CategorizedStats={CategorizedStats} Awards={GameProps?.Awards} /> }
+        {gameName === "division-2" && <Division2Tabs Awards={GameProps?.Awards} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} DarkZoneSection={GameProps?.DarkZoneSection} PvESection={GameProps?.PvESection} PlayDetailsSection={GameProps?.PlayDetailsSection} /> }
         {gameName === "splitgate" && <h1>Section in developement</h1>}
       </>
     );

@@ -1,8 +1,12 @@
 import RankSection from "@/components/GameStats/Apex/RankSection";
 import SteamAliasSection from "@/components/GameStats/Apex/SteamAliasSection";
-import LifetimeOverviewSection from "@/components/GameStats/Apex/LifetimeOverviewSection";
+import LifetimeOverviewSectionApex from "@/components/GameStats/Apex/LifetimeOverviewSection";
 import RenderedLegends from "@/components/GameStats/Apex/RenderedLegends";
 import Awards from "@/components/GameStats/Division-2/Awards";
+import LifetimeOverviewSectionDivision2 from "@/components/GameStats/Division-2/LifetimeOverviewSection";
+import OtherSections from "@/components/GameStats/Division-2/OtherSections";
+import { Radiation } from 'lucide-react';
+import PlayDetailsSection from "@/components/GameStats/Division-2/PlayDetailsSection";
 
 
 export default function getGameProps(gameName, PlayerData){
@@ -26,7 +30,7 @@ export default function getGameProps(gameName, PlayerData){
             return {
                 RankSection: <RankSection Ranks={rankStats} />,
                 SteamAliasSection: PlayerData.steamUsername ? <SteamAliasSection steamUsername={PlayerData.steamUsername} /> : null,
-                LifetimeOverviewSection: <LifetimeOverviewSection CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />,
+                LifetimeOverviewSection: <LifetimeOverviewSectionApex CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />,
                 RenderedLegends: PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend} /> : null,
                 RenderedSomeLegends: PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend.slice(0, 4)} /> : null,
             };
@@ -42,8 +46,9 @@ export default function getGameProps(gameName, PlayerData){
                     GroupedCategories[i[1].category][i[0]] = i[1];
                 }
             });
-            
 
+           const generalKeys = ['killsPvP', 'killsNpc', 'killsSkill', 'headshots', 'itemsLooted', 'eCreditBalance'];
+           const generalStats = Object.entries(GroupedCategories?.general).filter(([key]) => generalKeys.includes(key));
 
            return {
                 Awards: <Awards stats={{
@@ -54,8 +59,12 @@ export default function getGameProps(gameName, PlayerData){
                     killsSpecializationSurvivalist: GroupedCategories?.general?.killsSpecializationSurvivalist,
                     killsSpecializationSharpshooter: GroupedCategories?.general?.killsSpecializationSharpshooter,
                     latestConflictRank: GroupedCategories?.conflictPvp?.latestConflictRank
-                }} />
-           };
+                }} />,
+                LifetimeOverviewSection: <LifetimeOverviewSectionDivision2 stats={generalStats} playtime={GroupedCategories?.general?.timePlayed} />,
+                DarkZoneSection: <OtherSections stats={Object.entries(GroupedCategories?.darkZone)} Title='Dark Zone' Icon={<Radiation className="size-9" />} />,
+                PvESection: <OtherSections stats={Object.entries(GroupedCategories?.pve)} Title='PvE' />,
+                PlayDetailsSection: <PlayDetailsSection stats={Object.entries(GroupedCategories?.kills)} />
+            };
         }
 
         default:

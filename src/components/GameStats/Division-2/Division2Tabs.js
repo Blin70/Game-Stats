@@ -1,4 +1,4 @@
-const Division2Tabs = ({ CategorizedStats, Awards }) => {
+const Division2Tabs = ({ Awards, LifetimeOverviewSection, DarkZoneSection, PvESection, PlayDetailsSection }) => {
     
 
     return(
@@ -6,6 +6,12 @@ const Division2Tabs = ({ CategorizedStats, Awards }) => {
             <aside>
                 {Awards}
             </aside>
+            <main className="space-y-5">
+                {LifetimeOverviewSection}
+                {DarkZoneSection}
+                {PvESection}
+                {PlayDetailsSection}
+            </main>
         </div>
     );
 
