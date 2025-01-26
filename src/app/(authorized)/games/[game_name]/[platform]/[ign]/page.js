@@ -14,7 +14,7 @@ import getGameProps from "@/lib/getGameProps";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
-  const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase());
+  const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
   if(!isSupported) redirect('/unauthorized');
 
   const SupportedPlatforms = ['steam', 'xbl', 'psn', 'origin', 'ubi'];    

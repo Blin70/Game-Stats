@@ -8,7 +8,7 @@ import { createClient } from "@/app/utils/supabase/server";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {
-    const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === decodeURIComponent(game_name).toLowerCase());
+    const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
     
     if(!isSupported) redirect('/unauthorized');
 
