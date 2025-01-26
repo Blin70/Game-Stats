@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ApexLegendsTabs from "./Apex/ApexLegendsTabs";
 import Division2Tabs from "./Division-2/Division2Tabs";
+import SplitgateTabs from "./Splitgate/SplitgateTabs";
 
 
 const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
@@ -22,7 +23,7 @@ const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
         {gameName === "apex" && <ApexLegendsTabs activeTab={activeTab} RankSection={GameProps?.RankSection} SteamAliasSection={GameProps?.SteamAliasSection} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} RenderedSomeLegends={GameProps?.RenderedSomeLegends} RenderedLegends={GameProps?.RenderedLegends} />}
         {gameName === "csgo" && <h1>Section in developement</h1>}
         {gameName === "division-2" && <Division2Tabs Awards={GameProps?.Awards} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} DarkZoneSection={GameProps?.DarkZoneSection} PvESection={GameProps?.PvESection} PlayDetailsSection={GameProps?.PlayDetailsSection} /> }
-        {gameName === "splitgate" && <h1>Section in developement</h1>}
+        {gameName === "splitgate" && <SplitgateTabs activeTab={activeTab} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} OverviewPlaylists={GameProps?.OverviewPlaylists} Playlists={GameProps?.Playlists} Weapons={GameProps?.Weapons} />}
       </>
     );
 }

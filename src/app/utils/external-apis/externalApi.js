@@ -66,6 +66,49 @@ export async function TRNProfile(game, platform, userIdentifier) {
   return returnThis;
 }
 
+export async function GameSegments(game, platform, userIdentifier, segment, queue, season) {
+  const access_key = process.env.TRN_API_KEY;
+
+  const options = {
+    method: 'GET',
+    next: { tags: ['GameSegments'] },
+    headers: {
+      "TRN-Api-Key": access_key,
+      "Accept": "application/json",
+      "Accept-Encoding": "gzip"
+    }
+  }
+
+  let returnThis = {};
+
+  const optionalParams = new URLSearchParams()
+  if (queue) params.append('queue', queue);
+  if (season) params.append('season', season);
+
+  await fetch(`https://public-api.tracker.gg/v2/${game}/standard/profile/${platform}/${userIdentifier}/segments/${segment}?${optionalParams.toString()}`, options)
+  .then(async res => {
+    if(!res.ok){
+      throw new Error(JSON.stringify(await res.json()));
+    }
+    return res.json();
+  })
+  .then(res => {
+    returnThis = {res}
+  })
+  .catch(err => {
+    console.error(JSON.parse(err.message).errors.map(error => error.message).join('\n'))
+    returnThis = {
+      err: {
+        code: JSON.parse(err.message).errors.map((error) => error.code).join("\n"),
+        message : JSON.parse(err.message).errors.map(error => error.message).join('\n')
+      },
+    };
+  });
+    
+  return returnThis;
+
+}
+
 export async function PandaScoreApi(game, size) {
     const access_key = process.env.PANDASCORE_API_ACCESS_KEY;
   

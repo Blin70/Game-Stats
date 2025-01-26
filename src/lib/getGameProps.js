@@ -7,9 +7,12 @@ import LifetimeOverviewSectionDivision2 from "@/components/GameStats/Division-2/
 import OtherSections from "@/components/GameStats/Division-2/OtherSections";
 import { Radiation } from 'lucide-react';
 import PlayDetailsSection from "@/components/GameStats/Division-2/PlayDetailsSection";
+import LifetimeOverviewSectionSplitgate from "@/components/GameStats/Splitgate/LifetimeOverviewSection";
+import Playlists from "@/components/GameStats/Splitgate/Playlists";
+import Weapons from "@/components/GameStats/Splitgate/Weapons";
 
 
-export default function getGameProps(gameName, PlayerData){
+export default function getGameProps(gameName, PlayerData, platform, ign){
     if(!PlayerData) return null;
 
     switch(gameName){
@@ -65,6 +68,32 @@ export default function getGameProps(gameName, PlayerData){
                 PvESection: <OtherSections stats={Object.entries(GroupedCategories?.pve)} Title='PvE' />,
                 PlayDetailsSection: <PlayDetailsSection stats={Object.entries(GroupedCategories?.kills)} />
             };
+        }
+
+        case 'splitgate': {
+            const GroupedCategories = {};
+
+            Object.entries(PlayerData?.categorizedStats?.overview[0]?.stats).forEach((i) => {
+                if (!GroupedCategories[i[1].category]) {
+                    GroupedCategories[i[1].category] = { [i[0]]: i[1] };
+                } else {
+                    GroupedCategories[i[1].category][i[0]] = i[1];
+                }
+            });
+
+            const overviewStatsKeys = ['kills', 'assists', 'deaths', 'damageDealt', 'kd', 'headshotAccuracy'];
+
+            const overviewStats = {
+                ...GroupedCategories.game,
+                ...Object.fromEntries(Object.entries(GroupedCategories.combat).filter(([key]) => overviewStatsKeys.includes(key)))
+            }
+
+            return{
+                LifetimeOverviewSection: <LifetimeOverviewSectionSplitgate stats={Object.entries(overviewStats)} playtime={GroupedCategories?.game?.timePlayed} />,
+                OverviewPlaylists: <Playlists playlists={PlayerData?.categorizedStats?.playlist?.slice(0,12)} length={6} />,
+                Playlists: <Playlists playlists={PlayerData?.categorizedStats?.playlist} />,
+                Weapons: <Weapons game={gameName} platform={platform} ign={ign} />
+            }
         }
 
         default:

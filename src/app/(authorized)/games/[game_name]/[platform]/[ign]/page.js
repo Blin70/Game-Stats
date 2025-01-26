@@ -58,7 +58,7 @@ const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
 
       <StatTabs 
         CategorizedStats={PlayerData.categorizedStats}
-        GameProps={getGameProps(game_name, PlayerData)}
+        GameProps={getGameProps(game_name, PlayerData, platform, ign)}
         gameName={game_name}
       />
     </>
