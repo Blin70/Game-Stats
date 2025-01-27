@@ -69,7 +69,7 @@ const UsernameEntry = async ({ params: { game_name } }) => {
                         {renderedPlatforms}
                     </SelectContent>
                 </Select>
-                <Input type="text" name="Username" placeholder="Enter Username" className="w-fit h-fit mx-auto rounded-2xl text-3xl p-3" autoComplete="off"  />
+                <Input type="text" name="Username" placeholder="Enter Player Id" className="w-fit h-fit mx-auto rounded-2xl text-3xl p-3" autoComplete="off"  />
             </div>
         </form>
     );
