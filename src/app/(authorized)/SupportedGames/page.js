@@ -35,7 +35,6 @@ const SupportedGames = async () => {
   ];
 
   const supportedGamesNames = supportedGames.map(game => game.name)
-  console.log(supportedGamesNames)
 
     const renderedGames = Games.map((i, index)=>{
         return(
@@ -49,8 +48,8 @@ const SupportedGames = async () => {
                     <Button asChild className="mt-4 text-white px-4 py-2 rounded-lg">
                       <Link href={`/games/${i.alias}`}>View Stats</Link>
                     </Button>
-                    <label className="flex items-center float-right gap-1 mt-6">
-                      <Circle className={`size-2.5 ${supportedGamesNames.includes(i.name) ? 'text-green-500 fill-green-500' : 'text-red-500 fill-red-500'}`}/> 
+                    <label className="flex items-center float-right gap-1 mt-6 font-medium leading-loose tracking-tight">
+                      <Circle className={`size-2.5 ${supportedGamesNames.includes(i.name) ? 'text-green-600 fill-green-600' : 'text-red-600 fill-red-600'}`}/> 
                       {supportedGamesNames.includes(i.name) ? 'Supported' : 'Not Supported'}
                     </label>
                 </CardContent>
