@@ -2,16 +2,20 @@
 
 import { useUser } from "@/app/context/userContext";
 import { Button } from "@/components/ui/button";
-import { deleteOwnAccount } from "@/app/utils/server-actions/AuthActions";
+import { deleteOwnAccount, signOut } from "@/app/utils/server-actions/AuthActions";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose, DialogDescription } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 
 const DeleteAccountModal = () => {
     const { user: { id } } = useUser();
 
     const handleDeleteAccount = async () => {
-        await deleteOwnAccount(id)
+        const res = await deleteOwnAccount(id);
+        await signOut();
         window.localStorage.clear();
+        
+        toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
 
     return(

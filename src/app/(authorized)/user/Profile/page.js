@@ -5,8 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { createClient } from "@/app/utils/supabase/server";
-import { UnlinkAccount } from "@/app/utils/server-actions/linkingActions";
 import { getCurrentUser } from "@/app/utils/server-actions/userActions";
+import UnlinkAccountForm from "@/components/UnlinkAccountForm";
 
 const Profile = async () => {
   const supabase = createClient();
@@ -38,10 +38,7 @@ const Profile = async () => {
       
       <div className="h-full flex flex-col justify-between">
         <p className="text-sm text-gray-500">Linked on: {i.linked_at.slice(0,10)}</p>
-        <form action={UnlinkAccount} className="flex flex-col">
-          <input type="hidden" name="linkedAccountId" value={i.id} />
-          <Button type="submit" variant="outline" className="w-fit h-8 ml-auto">Unlink</Button>
-        </form>
+        <UnlinkAccountForm AccountId={i.id} />
       </div>
     </div>
   ));

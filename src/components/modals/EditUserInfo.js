@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserRoundPen } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 
 const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName, AdminUpdatePhone, AdminUpdatePassword, AdminUpdateRole, ConfirmEmailorPhone, UnconfirmEmailorPhone }) => {
@@ -30,60 +31,71 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
         }));
     }
 
-    const handleUpdateUserDetails = () => {
+    const handleUpdateUserDetails = async () => {
         let shouldRevalidate = false;
 
         if(userData.email != user.email){
-            AdminUpdateEmail(user, userData.email)
+            const res = await AdminUpdateEmail(user, userData.email);
+            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
         if(userData.name != user.name){
-            if(userData.name.length<3){         //the name Has to be longer than 3 (As defined in supabase)
+            if(userData.name.length < 3){
                 setUserData(prevInfo => ({
                     ...prevInfo,
                     name: user.name
                 }));
+                toast.error('The users name has to be longer than 3 characters')
                 return;
             };      
 
-            AdminUpdateName(user, userData.name)
+            const res = await AdminUpdateName(user, userData.name);
+            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
         if(userData.phone != user.phone){
-            AdminUpdatePhone(user, userData.phone)
+            const res = await AdminUpdatePhone(user, userData.phone);
+            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
         if(user.email_confirmed != userData.emailConfirmed){
             if(user.email_confirmed === false && userData.emailConfirmed === true){
-                ConfirmEmailorPhone(user, 'email')
+                const res = await ConfirmEmailorPhone(user, 'email');
+                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }else{
-                UnconfirmEmailorPhone(user, 'email')
+                const res = await UnconfirmEmailorPhone(user, 'email');
+                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }
             shouldRevalidate = true;
         }
 
         if(user.phone_confirmed != userData.phoneConfirmed){
             if(user.phone_confirmed === false && userData.phoneConfirmed === true){
-                ConfirmEmailorPhone(user, 'phone')
-
+                const res = await ConfirmEmailorPhone(user, 'phone');
+                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }else{
-                UnconfirmEmailorPhone(user, 'phone')
+                const res = await UnconfirmEmailorPhone(user, 'phone');
+                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }
             shouldRevalidate = true;
         }
 
-        if(shouldRevalidate) revalidatePage()
+        if(shouldRevalidate){
+            toast.success('User updated successfully')
+            revalidatePage()
+        }
     }
 
 
-    const handleSaveSensitiveData = () => {
+    const handleSaveSensitiveData = async () => {
         let shouldRevalidate = false;
 
         if(userData.password != ''){
-            AdminUpdatePassword(user, userData.password)
+            const res = await AdminUpdatePassword(user, userData.password);
+            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             setUserData(prevInfo => ({
                 ...prevInfo,
                 password: ''
@@ -92,12 +104,42 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
         }
         
         if(user.role != userData.role){
-            AdminUpdateRole(user, userData.role)
+            const res = await AdminUpdateRole(user, userData.role);
+            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
-        if(shouldRevalidate) revalidatePage()
+        if(shouldRevalidate){
+            toast.success('User updated successfully');
+            revalidatePage()
+        } 
     }
+
+    const UserFields = [
+        { name: 'email', checkbox: true },
+        { name: 'name', checkbox: false },
+        { name: 'phone', checkbox: true },
+    ]
+
+    const SensitiveFields = [
+        { name: 'password', checkbox: false },
+        { name: 'role', checkbox: false },
+    ]
+
+    const renderedFields = (fields) => fields.map((field, index) => (
+        <div key={index} className="my-2">
+            <label htmlFor={field.name} className="capitalize">{field.name}</label>
+            <div className={`grid grid-cols-${fields === SensitiveFields ? '[60%,40%]' : '[65%,35%]'} ${field.checkbox && 'gap-10'}`}>
+                <Input onChange={handleChange} value={userData[field.name]} id={field.name} name={field.name} {...field.name === 'password' && { placeholder:"[Encrypted]" }} autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
+                {field.checkbox && (
+                    <div className="flex gap-2 items-center">
+                        <Input onChange={handleChange} checked={userData[field.name + 'Confirmed']} type="checkbox" id={field.name + 'Confirmed'} name={field.name + 'Confirmed'} autoComplete="off" className="size-6 accent-black focus-visible:ring-0 focus-visible:ring-offset-0" />
+                        <span className="text-xs text-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0">Confirm {field.name}</span>
+                    </div>
+                )}
+            </div>
+        </div>
+    ))
 
     return(
         <Dialog>
@@ -106,7 +148,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                     <UserRoundPen/> Edit User
                 </DropdownMenuItem>
             </DialogTrigger>
-            <DialogContent aria-describedby={undefined} className="bg-transparent [&>button]:hidden border-0 shadow-none ">
+            <DialogContent aria-describedby={undefined} className="bg-transparent [&>button]:hidden border-0 shadow-none">
                 <DialogTitle className="hidden">Update User</DialogTitle>
                 <Tabs defaultValue="user">
                     <TabsList className="w-full grid grid-cols-2 shadow-lg">
@@ -120,32 +162,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                                 <CardDescription>Make changes to the users account</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="my-2">
-                                    <label htmlFor="email">Email</label>
-                                    <div className="grid grid-cols-[65%,35%] gap-10">
-                                        <Input onChange={handleChange} value={userData.email} id="email" name="email" autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                        <div className="flex gap-2 items-center">
-                                            <Input onChange={handleChange} checked={userData.emailConfirmed} type="checkbox" id="emailConfirmed" name="emailConfirmed" autoComplete="off" className="size-6 accent-black focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                            <span className="text-xs text-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0">Confirm email</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="my-2">
-                                    <label htmlFor="name">Name</label>
-                                    <div className="grid grid-cols-[65%,35%]">
-                                        <Input onChange={handleChange} value={userData.name} id="name" name="name" autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                    </div>
-                                </div>
-                                <div className="my-2">
-                                    <label htmlFor="phone">Phone</label>
-                                    <div className="grid grid-cols-[65%,35%] gap-10">
-                                        <Input onChange={handleChange} value={userData.phone} id="phone" name="phone" autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                        <div className="flex gap-2 items-center">
-                                            <Input onChange={handleChange} checked={userData.phoneConfirmed} type="checkbox" id="phoneConfirmed" name="phoneConfirmed" autoComplete="off" className="size-6 accent-black focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                            <span className="text-xs text-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0">Confirm phone</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                {renderedFields(UserFields)}
                             </CardContent>
                             <CardFooter>
                                 <DialogClose asChild>
@@ -161,18 +178,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                                 <CardDescription>Make changes to the users account</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="my-2">
-                                    <label htmlFor="password">Password</label>
-                                    <div className="grid grid-cols-[60%,40%]">
-                                        <Input onChange={handleChange} value={userData.password} id="password" name="password" placeholder="[Encrypted]" autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                    </div>
-                                </div>
-                                <div className="my-2">
-                                    <label htmlFor="role">Role</label>
-                                    <div className="grid grid-cols-[60%,40%]">
-                                        <Input onChange={handleChange} value={userData.role} id="role" name="role" autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
-                                    </div>
-                                </div>
+                                {renderedFields(SensitiveFields)}
                             </CardContent>
                             <CardFooter>
                                 <DialogClose asChild>

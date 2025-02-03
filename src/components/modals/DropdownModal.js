@@ -4,21 +4,24 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const DropdownModal = ({ children, triggerIcon, triggerText, triggerStyle, title, action, actionText, actionType, buttonVariant, user }) => {
 
-    const handleActionClick = () => {
+    const handleActionClick = async () => {
         switch(actionType){
             case 'ban':
                 const inputValue = document.getElementById('ban-duration')?.value;
                 if(!inputValue.trim() || /[a-zA-Z]/.test(inputValue) && inputValue != 'none'){      //Doenst include whitespaces, letters, and it isnt 'none'
-                    console.log("Invalid Input. Enter a valid ban duration or 'none' to remove the ban") //should be a toaster
+                    toast.error("Invalid Input. Enter a valid ban duration or 'none' to remove the ban")
                     return;
                 }
-                action(user, inputValue);
+                const banRes = await action(user, inputValue);
+                toast[Object.keys(banRes)[0]]?.(Object.values(banRes)[0]);
                 break;
             case 'delete':
-                action(user);
+                const DeleteRes = await action(user);
+                toast[Object.keys(DeleteRes)[0]]?.(Object.values(DeleteRes)[0]);
                 break;
         }
     }

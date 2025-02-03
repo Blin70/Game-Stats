@@ -48,14 +48,15 @@ export async function signIn(formData) {
 export async function signOut() {
   const supabase = createClient();
 
-  const { error} = await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut();
 
   if (error) {
-    console.log(error);
+    console.error('[signOut] Supabase error while signing out', error);
+    return { error: "Couldn't log out" };
   }
 
   revalidatePath("/");
-  return redirect("/");
+  redirect("/");
 }
 
 export async function resetPassword(baseUrl, email) {
@@ -68,17 +69,24 @@ export async function resetPassword(baseUrl, email) {
   );
 
   if (error) {
-    console.error("Something went wrong with sending you the password reset link ", error); //popup error
-    return null;
+    console.error("[resetPassword] Supabase error while sending password reset link", error);
+    return { error: 'Something went wrong with sending you the password reset link' };
   }
+
+  return { success: 'A password reset link has been sent to your email' };
 }
 
-export async function deleteOwnAccount(userId) {
+export async function deleteOwnAccount(userId) { //have to clear localstorage? and signOut from client comp
   const supabase = createClient();
-  const {error} = await supabase.rpc("delete_own_account", {user_id: userId});
-  //have to clear localstorage from client comp
-  if (error) console.error(error);
-  await signOut();
+
+  const { error } = await supabase.rpc("delete_own_account", {user_id: userId});
+  
+  if(error){
+    console.error('[deleteOwnAccount] Supabase error: ', error)
+    return { error: 'Error while deleting account'}
+  }
+
+  return { success: 'Account deleted successfully'};
 }
 
 export async function changePassword(newPassword) {
