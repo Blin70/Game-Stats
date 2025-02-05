@@ -154,7 +154,7 @@ export async function ConfirmEmailorPhone(user, type) {
 export async function UnconfirmEmailorPhone(user, type) {
   const supabaseAdmin = createAdmin();
 
-  const { data, error } = await supabaseAdmin.rpc('unconfirm_user_email_or_phone', {
+  const { error } = await supabaseAdmin.rpc('unconfirm_user_email_or_phone', {
     user_id: user.id,
     confirmation_type: type 
   })

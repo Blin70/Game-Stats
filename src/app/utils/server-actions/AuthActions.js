@@ -5,44 +5,52 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/server";
 
 
-export async function signUp(formData) {
+export async function signUp(values) {
   const supabase = createClient();
 
   const data = {
-    email: formData.get("Email"),
-    password: formData.get("Password"),
+    email: values.email,
+    password: values.password,
     options: {
       data: {
-        first_name: formData.get("Name"),
+        first_name: values.name,
       },
     },
   };
 
-  const {error} = await supabase.auth.signUp(data);
+  const { error } = await supabase.auth.signUp(data);
 
-  if (error) console.error(error);
+  if(error){
+    if(error.code === 'user_already_exists') return { error: 'This user already exists' }
+
+    console.error('[signUp] Supabase error while signing up', error);
+    return { error: "Something went wrong. Please try again"}
+  }
 
   revalidatePath("/");
-  return redirect("/");
+  return redirect("/user/Profile");
 }
 
-export async function signIn(formData) {
+export async function signIn(values) {
   const supabase = createClient();
 
   const data = {
-    email: formData.get("Email"),
-    password: formData.get("Password"),
+    email: values.email,
+    password: values.password,
   };
 
-  const {error} = await supabase.auth.signInWithPassword(data);
+  const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    console.error("Error while Logging in", error);
-    return;
+  if(error) {
+    if(error.code === 'invalid_credentials') return { error: 'Invalid login credentials' }
+    if(error.code === 'user_banned') return { error: 'This user is banned' }
+    if(error.code === 'email_not_confirmed') return { error: 'Email not confirmed' }
+
+    console.error("[signIn] Supabase error while logging in", error);
+    return { error: 'Something went wrong' };
   }
 
   redirect("/user/Profile");
-  //MAYBE PLACE THE AUTH PAGES IN ANOTHER FOLDER OUTSIDE OF THE GROUP FOLDERS??
 }
 
 export async function signOut() {
@@ -52,7 +60,7 @@ export async function signOut() {
 
   if (error) {
     console.error('[signOut] Supabase error while signing out', error);
-    return { error: "Couldn't log out" };
+    return { error: "Couldn't log out. Please try again" };
   }
 
   revalidatePath("/");

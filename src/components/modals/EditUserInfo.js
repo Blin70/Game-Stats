@@ -36,7 +36,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
 
         if(userData.email != user.email){
             const res = await AdminUpdateEmail(user, userData.email);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+            if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
@@ -51,23 +51,23 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
             };      
 
             const res = await AdminUpdateName(user, userData.name);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+            if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
         if(userData.phone != user.phone){
             const res = await AdminUpdatePhone(user, userData.phone);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+            if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
         if(user.email_confirmed != userData.emailConfirmed){
             if(user.email_confirmed === false && userData.emailConfirmed === true){
                 const res = await ConfirmEmailorPhone(user, 'email');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+                if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }else{
                 const res = await UnconfirmEmailorPhone(user, 'email');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+                if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }
             shouldRevalidate = true;
         }
@@ -75,10 +75,10 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
         if(user.phone_confirmed != userData.phoneConfirmed){
             if(user.phone_confirmed === false && userData.phoneConfirmed === true){
                 const res = await ConfirmEmailorPhone(user, 'phone');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+                if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }else{
                 const res = await UnconfirmEmailorPhone(user, 'phone');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+                if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }
             shouldRevalidate = true;
         }
@@ -95,7 +95,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
 
         if(userData.password != ''){
             const res = await AdminUpdatePassword(user, userData.password);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+            if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             setUserData(prevInfo => ({
                 ...prevInfo,
                 password: ''
@@ -105,7 +105,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
         
         if(user.role != userData.role){
             const res = await AdminUpdateRole(user, userData.role);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+            if(res) toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             shouldRevalidate = true;
         }
 
