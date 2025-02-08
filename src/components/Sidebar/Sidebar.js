@@ -47,7 +47,9 @@ const Sidebar = () => {
             <Link href='/SupportedGames'>
               <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="size-8 mr-3" />} />
             </Link>
-            <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
+            <Link href='/Notifications'>
+              <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
+            </Link>
           </CommandGroup>
           {user.role == 'service_role'
             &&(
