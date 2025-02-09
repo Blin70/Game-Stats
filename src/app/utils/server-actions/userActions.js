@@ -37,3 +37,33 @@ export async function getRole() {
 
   return role;
 }
+
+export async function sendNotification(user_id, type, title, message) {
+  const supabase = createClient();
+
+  const { error } = await supabase.from('notifications').insert([
+    { 
+      user_id,
+      type,
+      title,
+      message
+    }
+  ]);
+
+  if(error) console.error('[sendNotification] Supabase error while sending notification', error);
+}
+
+export async function getNotifications() {
+  const supabase = createClient();
+
+  const { id } = await getCurrentUser();
+  
+  const { data, error } = await supabase.from('notifications').select('*').eq('user_id', id);
+    
+  if(error){
+    console.error('[getNotifications] Supabase error while getting notifications for user', error);
+    return [];
+  }
+
+  return data;
+}

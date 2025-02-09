@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/server";
+import { sendNotification } from "./userActions";
 
 
 export async function signUp(values) {
@@ -18,7 +19,7 @@ export async function signUp(values) {
     },
   };
 
-  const { error } = await supabase.auth.signUp(data);
+  const { data: UserData, error } = await supabase.auth.signUp(data);
 
   if(error){
     if(error.code === 'user_already_exists') return { error: 'This user already exists' }
@@ -26,6 +27,8 @@ export async function signUp(values) {
     console.error('[signUp] Supabase error while signing up', error);
     return { error: "Something went wrong. Please try again"}
   }
+
+  sendNotification(UserData?.user?.id, "New User", "Welcome to Game Stats!", "Track your game stats, compare leaderboards, and improve your skills. Start by searching for your in-game name!");
 
   revalidatePath("/");
   return redirect("/user/Profile");
