@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
+
 export async function TRNProfile(game, platform, userIdentifier) {
   const access_key = process.env.TRN_API_KEY;
 
@@ -64,6 +66,10 @@ export async function TRNProfile(game, platform, userIdentifier) {
   });
 
   return returnThis;
+}
+
+export async function refreshPlayerData() {
+  revalidateTag("PlayerData");
 }
 
 export async function GameSegments(game, platform, userIdentifier, segment, queue, season) {
