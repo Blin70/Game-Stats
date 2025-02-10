@@ -7,6 +7,7 @@ import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
 import { createClient } from "@/app/utils/supabase/server";
+import { Circle } from "lucide-react";
 
 
 const CurrentlySupportedGames = async () => {
@@ -23,16 +24,18 @@ const CurrentlySupportedGames = async () => {
 }
 
 const SupportedGames = async () => {
+  const supportedGames = await CurrentlySupportedGames();
 
   const Games = [
-    ...(await CurrentlySupportedGames()),
+    ...(supportedGames),
     {name: "Valorant", image_url: valorantImage},
     {name: "GTA V", image_url: gtaImage},
     {name: "Assassins Creed 2", image_url: assassinscreedImage},
     {name: "EA FC 24", image_url: eafcImage}
   ];
 
-  console.log("games: ",Games)
+  const supportedGamesNames = supportedGames.map(game => game.name)
+
     const renderedGames = Games.map((i, index)=>{
         return(
             <Card key={index} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">
@@ -43,8 +46,12 @@ const SupportedGames = async () => {
                     <CardTitle className="text-xl font-bold">{i.name}</CardTitle>
                     <p className="mt-2 text-gray-600">Track your stats for this game.</p>
                     <Button asChild className="mt-4 text-white px-4 py-2 rounded-lg">
-                      <Link href={`/games/${i.name}`}>View Stats</Link>
+                      <Link href={`/games/${i.alias}`}>View Stats</Link>
                     </Button>
+                    <label className="flex items-center float-right gap-1 mt-6 font-medium leading-loose tracking-tight">
+                      <Circle className={`size-2.5 ${supportedGamesNames.includes(i.name) ? 'text-green-600 fill-green-600' : 'text-red-600 fill-red-600'}`}/> 
+                      {supportedGamesNames.includes(i.name) ? 'Supported' : 'Not Supported'}
+                    </label>
                 </CardContent>
             </Card>
         );

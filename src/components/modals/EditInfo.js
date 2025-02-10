@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/userContext";
 import { createClient } from "@/app/utils/supabase/client";
 import { Button } from "@/components/ui/button"
@@ -10,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 
 const EditProfileModal = () => {
+    const router = useRouter();
     const { user, fetchUserData } = useUser();
     const supabase = createClient();
     const [openModal, setOpenModal] = useState(false);
@@ -38,6 +40,7 @@ const EditProfileModal = () => {
                 if(data){
                     fetchUserData();
                     setOpenModal(false);
+                    router.refresh()
                 }
             }
             if(info.name === user.user_metadata.first_name && info.email != user.email){
@@ -49,6 +52,7 @@ const EditProfileModal = () => {
                 if(data){
                     fetchUserData();
                     setOpenModal(false);
+                    router.refresh()
                     //ADD ALERT TO TELL THE USER TO CHECK HIS EMAIL FOR THE USER EMAIL CHANGE CONFIRMATION.
                 }
             }
@@ -65,6 +69,7 @@ const EditProfileModal = () => {
             if(data){
                 fetchUserData();
                 setOpenModal(false);
+                router.refresh()
             }
         } 
     }

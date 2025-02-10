@@ -58,20 +58,17 @@ export async function signOut() {
   return redirect("/");
 }
 
-export async function resetPassword(baseUrl) {
+export async function resetPassword(baseUrl, email) {
   const supabase = createClient();
 
-  const {error} = await supabase.auth.resetPasswordForEmail(
-    (
-      await getCurrentUser()
-    ).email,
+  const { error } = await supabase.auth.resetPasswordForEmail(email,
     {
       redirectTo: `${baseUrl}/user/ResetPassword`,
     }
   );
 
   if (error) {
-    console.error("Something went wrong with sending you the password reset link ", error);
+    console.error("Something went wrong with sending you the password reset link ", error); //popup error
     return null;
   }
 }
