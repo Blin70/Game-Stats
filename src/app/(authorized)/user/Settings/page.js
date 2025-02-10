@@ -3,7 +3,7 @@ import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
 import { CurrentlySupportedGames } from "../../SupportedGames/page";
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
-import LinkAccount from "@/components/LinkAccount";
+import LinkAccount from "@/components/AccountLinking/LinkAccount";
 
 
 const Settings = async () => {

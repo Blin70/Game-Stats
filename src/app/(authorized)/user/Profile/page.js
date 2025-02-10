@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { createClient } from "@/app/utils/supabase/server";
 import { getCurrentUser } from "@/app/utils/server-actions/userActions";
-import UnlinkAccountForm from "@/components/UnlinkAccountForm";
+import UnlinkAccountForm from "@/components/AccountLinking/UnlinkAccountForm";
 
 const Profile = async () => {
   const supabase = createClient();

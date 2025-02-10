@@ -1,6 +1,6 @@
 import { getNotifications } from "@/app/utils/server-actions/userActions";
-import { Button } from "@/components/ui/button";
-import { X, Clock3 } from 'lucide-react';
+import { Clock3 } from 'lucide-react';
+import DiscardNotificationBtn from "@/components/DiscardNotificationBtn";
 
 const Notifications = async () => {
     const notifications = await getNotifications();
@@ -8,9 +8,7 @@ const Notifications = async () => {
     const renderedNotifications = notifications?.map((notification, index) => (
         <div key={index} className="grid grid-cols-[auto,1fr,auto] bg-gray-100 max-w-3xl w-full shadow-md rounded-lg p-6 gap-4">
             <div>
-                <Button size="icon" variant="outline" className="size-6">
-                    <X className="size-4" />
-                </Button>
+                <DiscardNotificationBtn NotificationId={notification.id} />
             </div>
 
             <div className="flex flex-col">
