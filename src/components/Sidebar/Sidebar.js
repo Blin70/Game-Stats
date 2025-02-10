@@ -10,9 +10,21 @@ import CommandItems from "./CommandItems";
 import ModeToggle from "./ModeToggle";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { ChartNoAxesCombined, Bell, Info, Settings, LogOut, User} from 'lucide-react';
+import { toast } from "sonner";
 
 const Sidebar = () => {
   const { user } = useUser();
+
+  const handleSignOut = async () => {
+    const res = await signOut();
+
+    if(res?.error){
+      toast.error(res.error)
+      return;
+    }
+
+    toast.success('Successfully signed out')
+  };
   
   return (
     <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] max-h-screen px-3 py-1 overflow-hidden break-words rounded-md bg-gray-50">
@@ -35,7 +47,9 @@ const Sidebar = () => {
             <Link href='/SupportedGames'>
               <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="size-8 mr-3" />} />
             </Link>
-            <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
+            <Link href='/Notifications'>
+              <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
+            </Link>
           </CommandGroup>
           {user.role == 'service_role'
             &&(
@@ -53,7 +67,7 @@ const Sidebar = () => {
             <Link href='/user/Settings'>
               <CommandItems text='Settings' icon={<Settings className="size-8 mr-3" />} />
             </Link>
-            <CommandItems onSelect={signOut} text='Log out' icon={<LogOut className="size-8 mr-3" />} />
+            <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="size-8 mr-3" />} />
           </CommandGroup>
         </CommandList>
       </Command>

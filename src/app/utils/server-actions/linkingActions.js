@@ -3,45 +3,47 @@
 import { createClient } from "../supabase/server";
 import { getCurrentUser } from "./userActions";
 import { revalidatePath } from "next/cache";
+import { sendNotification } from "./userActions";
 
 export async function LinkAccount(formData) {
-    const supabase = createClient();
+  const supabase = createClient();
 
-    const { id } = await getCurrentUser();
+  const { id } = await getCurrentUser();
 
-    const game = formData.get('SelectedGame');
-    const ign = formData.get('username');
+  const game = formData.get('SelectedGame');
+  const ign = formData.get('username');
 
-    if(!game || !ign){
-        console.error('Missing fields', { game, ign }); 
-        return;
-    }
+  if(!game || !ign) return { error: 'Missing fields'};
 
-    const { error } = await supabase.from('linkedAccounts').insert(
-      { user_id: id, game_name: game, in_game_username: ign }
-    )
+  const { error } = await supabase.from('linkedAccounts').insert(
+    { user_id: id, game_name: game, in_game_username: ign }
+  )
 
-    if(error){
-      console.error('Error while linking account', error);
-      return;
-    }
+  if(error){
+    if(error.code === '23505') return { warning: 'This account is already linked' };
 
-    revalidatePath('/user/Profile');
-    //Call a toaster
+    console.error('[LinkAccount] Supabase error: ', error);
+    return { error: 'Error while linking account'};
+  }
+
+  sendNotification(id, 'Account Connection', 'Account linked!', `Your ${game} (@${ign}) account has been successfully linked to your profile.`);
+
+  revalidatePath('/user/Profile');
+  return { success: 'Account linked successfully'}
 }
 
 export async function UnlinkAccount(formData) {
-    const supabase = createClient();
+  const supabase = createClient();
 
-    const linkedAccountId = formData.get('linkedAccountId');
+  const linkedAccountId = formData.get('linkedAccountId');
 
-    const { error } = await supabase.from('linkedAccounts').delete().eq('id', linkedAccountId);
+  const { error } = await supabase.from('linkedAccounts').delete().eq('id', linkedAccountId);
 
-    if(error){
-        console.error("Error while unlinking account", error);
-        return;
-    }
+  if(error){
+    console.error("Error while unlinking account", error);
+    return { error: 'Error while unlinking account' };
+  }
 
-    revalidatePath('/user/Profile');
-    //Call a toaster
+  revalidatePath('/user/Profile');
+  return { success: 'Account unlinked'};
 }

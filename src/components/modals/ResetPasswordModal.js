@@ -4,12 +4,16 @@ import { useUser } from "@/app/context/userContext";
 import { Button } from "@/components/ui/button";
 import { resetPassword } from "@/app/utils/server-actions/AuthActions";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose, DialogDescription } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 
-const ResetPasswordModal = () => {  //ADD POPUP THAT SAYS "YOUR PASSWORD RESET LINK HAS BEEN SENT TO YOUR EMAIL"
-    const { user: { email } } = useUser();
+const ResetPasswordModal = () => {
+    const { user: { email, id } } = useUser();
 
-    const handleResetClick = async () => resetPassword(`${window.location.protocol}//${window.location.host}`, email);
+    const handleResetClick = async () => {
+        const res = await resetPassword(`${window.location.protocol}//${window.location.host}`, email, id);
+        toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+    }
 
     return(
         <Dialog>
