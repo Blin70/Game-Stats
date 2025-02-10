@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { sendNotification } from "@/app/utils/server-actions/userActions";
 
 
 const EditProfileModal = () => {
@@ -66,10 +67,11 @@ const EditProfileModal = () => {
 
                 router.refresh()
                 emailChanged = true;
+                sendNotification(user.id, 'System', 'Email Update Initiated', `We've registered your request to update your email address from ${user.email} to ${info.email}. A reset link has been sent to ${info.email} for you to finalize the change. If you did not initiate this request, we recommend that you change your password immediately.`);
             }
             fetchUserData();
             setIsOpen(false);
-            toast.success(emailChanged ? 'Account updated successfully please check your email to confirm email change' : 'Account updated successfully');
+            toast.success(emailChanged ? 'Account updated successfully. Please check your email to confirm email change' : 'Account updated successfully');
         }
     }
 

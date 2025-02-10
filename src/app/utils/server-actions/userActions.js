@@ -58,7 +58,7 @@ export async function getNotifications() {
 
   const { id } = await getCurrentUser();
   
-  const { data, error } = await supabase.from('notifications').select('*').eq('user_id', id);
+  const { data, error } = await supabase.from('notifications').select('*').eq('user_id', id).order('date', { ascending: false });
     
   if(error){
     console.error('[getNotifications] Supabase error while getting notifications for user', error);

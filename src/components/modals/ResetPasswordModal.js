@@ -8,10 +8,10 @@ import { toast } from "sonner";
 
 
 const ResetPasswordModal = () => {
-    const { user: { email } } = useUser();
+    const { user: { email, id } } = useUser();
 
     const handleResetClick = async () => {
-        const res = await resetPassword(`${window.location.protocol}//${window.location.host}`, email);
+        const res = await resetPassword(`${window.location.protocol}//${window.location.host}`, email, id);
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
 

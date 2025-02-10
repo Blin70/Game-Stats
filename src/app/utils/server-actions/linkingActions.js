@@ -3,6 +3,7 @@
 import { createClient } from "../supabase/server";
 import { getCurrentUser } from "./userActions";
 import { revalidatePath } from "next/cache";
+import { sendNotification } from "./userActions";
 
 export async function LinkAccount(formData) {
   const supabase = createClient();
@@ -24,6 +25,8 @@ export async function LinkAccount(formData) {
     console.error('[LinkAccount] Supabase error: ', error);
     return { error: 'Error while linking account'};
   }
+
+  sendNotification(id, 'Account Connection', 'Account linked!', `Your ${game} (@${ign}) account has been successfully linked to your profile.`);
 
   revalidatePath('/user/Profile');
   return { success: 'Account linked successfully'}

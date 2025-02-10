@@ -70,7 +70,7 @@ export async function signOut() {
   redirect("/");
 }
 
-export async function resetPassword(baseUrl, email) {
+export async function resetPassword(baseUrl, email, userId) {
   const supabase = createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email,
@@ -83,6 +83,8 @@ export async function resetPassword(baseUrl, email) {
     console.error("[resetPassword] Supabase error while sending password reset link", error);
     return { error: 'Something went wrong with sending you the password reset link' };
   }
+
+  sendNotification(userId, 'System', 'Password Change Initiated', "A request to reset your password was made. A reset link has been sent to your email. If you didn't request this, we recommend resetting your password and securing your account.")
 
   return { success: 'A password reset link has been sent to your email' };
 }
@@ -103,16 +105,16 @@ export async function deleteOwnAccount(userId) { //have to clear localstorage? a
 export async function changePassword(newPassword) {
   const supabase = createClient();
 
-  const {data, error} = await supabase.auth.updateUser({
+  const { data, error } = await supabase.auth.updateUser({
     password: newPassword,
   });
 
   if (error) {
-    console.error("Please try again", error);
+    console.error("[changePassword] Supabase error while changing the users password", error);
+    return { error: 'Error while changing password. Please try again' };
   }
 
-  if (data) {
-    console.log("Password changed successfully");
-    redirect("/");
-  }
+  sendNotification(data.user.id, 'System', 'Password changed', "Your password was successfully changed. If you did not make this change, reset your password immediately and check your account for any unusual activity.")
+  
+  redirect("/")
 }
