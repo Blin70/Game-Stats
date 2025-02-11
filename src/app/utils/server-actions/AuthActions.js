@@ -70,7 +70,7 @@ export async function signOut() {
   redirect("/");
 }
 
-export async function resetPassword(baseUrl, email, userId) {
+export async function sendPasswordResetEmail(baseUrl, email, userId) {
   const supabase = createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email,
