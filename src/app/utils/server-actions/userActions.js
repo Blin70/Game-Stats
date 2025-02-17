@@ -7,7 +7,7 @@ export async function getUserFromSession() {//using getSession returns a warning
   const supabase = createClient();
 
   const { data, error } = await supabase.auth.getSession();
-  if(error) console.error('Error while getting user from session', error);
+  if(error) console.error('[getUserFromSession] Supabase error while getting user from session', error);
 
   return data.session?.user || null;
 }
@@ -18,7 +18,7 @@ export async function getCurrentUser() {
   const { data: { user }, error } = await supabase.auth.getUser();
 
   if(error){
-    console.error('Error while getting current user', error);
+    console.error('[getCurrentUser] Supabase error while getting current user', error);
     return null;
   }
   if (!user) return null;
@@ -32,7 +32,7 @@ export async function getRole() {
   const { data: { user: { role } }, error } = await supabase.auth.getUser();
 
   if (error) {
-    console.error("Error getting user role", error);
+    console.error("[getRole] Supabase error while getting user role", error);
     return null;
   }
 

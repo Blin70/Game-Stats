@@ -80,6 +80,8 @@ export async function sendPasswordResetEmail(baseUrl, email, userId) {
   );
 
   if (error) {
+    if(error.code === 'over_email_send_rate_limit') return { error: 'Please wait a bit before sending a new password reset email.' }
+
     console.error("[resetPassword] Supabase error while sending password reset link", error);
     return { error: 'Something went wrong with sending you the password reset link' };
   }

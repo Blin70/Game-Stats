@@ -10,6 +10,9 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useUser } from "@/app/context/userContext";
+import { createClient } from "@/app/utils/supabase/client";
 
 const formSchema = z.object({
     NewPassword: z.string().nonempty({
@@ -26,9 +29,12 @@ const formSchema = z.object({
 });
 
 const ResetPassword = () => {
+    const [isVerified, setIsVerified] = useState(false);
     const searchParams = useSearchParams();
+    const token_hash = searchParams.get('token_hash') || null;
+    const type = searchParams.get('type') || null;
     const router = useRouter();
-    const code = searchParams.get('code')
+    const { setUser } = useUser();
     
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -38,14 +44,48 @@ const ResetPassword = () => {
         }
     })
 
-    if(!code){
-        return router.back();
-    }
+    useEffect(() => {
+        if(token_hash && type){
+            const verifyResetOTP = async () => {        
+                const supabase = createClient(); // cant put these in server actions bcz session context is only available in the browser.
+                
+                const { data: OTPData, error: OTPError } = await supabase.auth.verifyOtp({ type, token_hash });
+                
+                if(OTPError){
+                    if(OTPError.code === 'otp_expired'){
+                        toast.error('Invalid or expired reset link.')
+                        return router.push('/');
+                    }
+                
+                    console.error('[ResetPassword] Supabase error while verifying hash code', OTPError)
+                    toast.error('Unexpected error. Please try again')
+                    return router.push('/');
+                }
+
+                
+                const { error: SessionError } = await supabase.auth.setSession(OTPData.session);
+                
+                if(SessionError){
+                    console.error('[ResetPassword] Supabase error while setting session', SessionError);
+                    toast.error('Unexpected error. Please try again');
+                    return router.push('/');
+                }
+                
+                setUser(OTPData.user)
+                setIsVerified(true)
+            }
+
+            verifyResetOTP();
+        } else return router.push('/');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token_hash, type, router])
 
     const onSubmit = async (values) => {
         const res = await changePassword(values.NewPassword) || { success: 'Password changed successfully' };
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
+
+    if (!isVerified) return <p className="text-center text-xl">Verifying...</p>
 
     return(
         <Form {...form}>
