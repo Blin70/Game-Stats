@@ -36,8 +36,8 @@ const Sidebar = () => {
           </Link>
         </Avatar>
         <div className="inline-block ml-2">
-          <span className="block text-2xl">{user.user_metadata.first_name}</span>
-          <span className="block text-sm">{user.email}</span>
+          <span className="block text-2xl">{user?.user_metadata?.first_name}</span>
+          <span className="block text-sm">{user?.email}</span>
         </div>
       </div>
       <Separator />
@@ -51,7 +51,7 @@ const Sidebar = () => {
               <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
             </Link>
           </CommandGroup>
-          {user.role == 'service_role'
+          {user?.role == 'service_role'
             &&(
               <CommandGroup heading="Administation">
                 <Link href='/admin'>

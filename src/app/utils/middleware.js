@@ -35,7 +35,8 @@ export async function checkUserAuthorization(request) {
     (
       pathname.startsWith('/user') &&
       !pathname.startsWith('/user/signin') &&
-      !pathname.startsWith('/user/signup') 
+      !pathname.startsWith('/user/signup') &&
+      !pathname.startsWith('/user/resetpassword')
     )
   )){
       return NextResponse.redirect(new URL("/user/SignIn", request.nextUrl));

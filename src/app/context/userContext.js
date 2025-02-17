@@ -12,7 +12,12 @@ export const UserProvider = ({ children }) => {
 
   const fetchUserData = async () => {
     const { data: { user }, error } = await supabase.auth.getUser();
-    if (error) console.error('Error while getting user from supabase', error);
+    if (error){
+      if (!(error?.name === 'AuthSessionMissingError' && process.env.NODE_ENV !== 'development')) console.error('[UserContext] Supabase error while getting user from Supabase', error);
+      setUser(null)
+      setLoading(false)
+      return;
+    }
     setUser(user);
     setLoading(false);
   };

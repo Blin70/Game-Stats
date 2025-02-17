@@ -2,7 +2,7 @@
 
 import { useUser } from "@/app/context/userContext";
 import { Button } from "@/components/ui/button";
-import { resetPassword } from "@/app/utils/server-actions/AuthActions";
+import { sendPasswordResetEmail } from "@/app/utils/server-actions/AuthActions";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
@@ -11,7 +11,7 @@ const ResetPasswordModal = () => {
     const { user: { email, id } } = useUser();
 
     const handleResetClick = async () => {
-        const res = await resetPassword(`${window.location.protocol}//${window.location.host}`, email, id);
+        const res = await sendPasswordResetEmail(`${window.location.protocol}//${window.location.host}`, email, id);
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
 
@@ -31,7 +31,9 @@ const ResetPasswordModal = () => {
                     <DialogClose asChild>
                         <Button variant="secondary">Cancel</Button>
                     </DialogClose>
-                    <Button onClick={handleResetClick}>Reset</Button>
+                    <DialogClose asChild>
+                        <Button onClick={handleResetClick}>Reset</Button>
+                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -70,7 +70,7 @@ export async function signOut() {
   redirect("/");
 }
 
-export async function resetPassword(baseUrl, email, userId) {
+export async function sendPasswordResetEmail(baseUrl, email, userId) {
   const supabase = createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email,
@@ -80,6 +80,8 @@ export async function resetPassword(baseUrl, email, userId) {
   );
 
   if (error) {
+    if(error.code === 'over_email_send_rate_limit') return { error: 'Please wait a bit before sending a new password reset email.' }
+
     console.error("[resetPassword] Supabase error while sending password reset link", error);
     return { error: 'Something went wrong with sending you the password reset link' };
   }
