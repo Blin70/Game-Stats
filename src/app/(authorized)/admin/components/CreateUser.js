@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserPlus } from 'lucide-react';
-import CreateUserForm from "../CreateUserForm";
+import CreateUserForm from "./CreateUserForm";
 
 
 const CreateUser = () => {

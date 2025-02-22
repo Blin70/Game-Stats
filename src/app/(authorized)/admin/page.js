@@ -1,8 +1,8 @@
 import { Table,TableBody, TableCaption, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
-import CreateUser from "@/components/Table/CreateUser";
+import CreateUser from "./components/CreateUser";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { getRole } from "@/app/utils/server-actions/userActions";
-import EditUserButton from "@/components/Table/EditUserButton";
+import EditUserButton from "./components/EditUserButton";
 import { createClient } from "@/app/utils/supabase/server";
 import { redirect } from "next/navigation";
 

@@ -1,11 +1,11 @@
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { CircleX, Pencil, Ban, Trash, TriangleAlert } from 'lucide-react';
-import DropdownModal from "../modals/DropdownModal";
+import DropdownModal from "./DropdownModal";
 import { DialogDescription } from "@/components/ui/dialog";
-import { Separator } from "../ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import EditUserInfo from "../modals/EditUserInfo";
+import EditUserInfo from "./EditUserInfo";
 import { AdminDeleteUser, AdminBanUser, AdminUpdateEmail, AdminUpdateName, AdminUpdatePhone, AdminUpdatePassword, AdminUpdateRole, ConfirmEmailorPhone, UnconfirmEmailorPhone } from "@/app/utils/server-actions/adminActions";
 import { revalidatePath } from "next/cache";
 

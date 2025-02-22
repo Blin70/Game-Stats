@@ -1,12 +1,12 @@
 'use client'
 
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel as CnCarousel, CarouselContent as CnCarouselContent, CarouselItem as CnCarouselItem}  from "@/components/ui/carousel";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
-const TopGamesCarousel = ({ TheGames }) => {
+const Carousel = ({ TheGames }) => {
     const router = useRouter();
     const pathname = usePathname();
     const [api, setApi] = useState();
@@ -32,20 +32,20 @@ const TopGamesCarousel = ({ TheGames }) => {
     
     const renderedCarouselItems = TheGames.map((game, index) => {
         return( 
-            <CarouselItem key={index} className="pt-1">
+            <CnCarouselItem key={index} className="pt-1">
                 <Image alt="gameimage" src={game.image} className="w-full h-[400px] object-fill rounded-lg shadow-md" />
-            </CarouselItem>
+            </CnCarouselItem>
         );
     })
 
 
     return(
-        <Carousel setApi={setApi}>
-            <CarouselContent>
+        <CnCarousel setApi={setApi}>
+            <CnCarouselContent>
                 {renderedCarouselItems}
-            </CarouselContent>
-        </Carousel>
+            </CnCarouselContent>
+        </CnCarousel>
     );
 }
 
-export default TopGamesCarousel;
+export default Carousel;

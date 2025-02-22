@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import EditProfileModal from "@/components/modals/EditInfo";
+import EditProfileModal from "./components/EditProfileModal";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { createClient } from "@/app/utils/supabase/server";
 import { getCurrentUser } from "@/app/utils/server-actions/userActions";
-import UnlinkAccountForm from "@/components/AccountLinking/UnlinkAccountForm";
+import UnlinkAccountForm from "./components/UnlinkAccountForm";
 
 const Profile = async () => {
   const supabase = createClient();
