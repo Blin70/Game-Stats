@@ -84,3 +84,16 @@ export async function discardNotification(NotificationId) {
     { success: 'Notification discarded successfully' }
   );
 }
+
+export async function getCurrentlySupportedGames(){
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from('games').select('*');
+
+  if(error){
+    console.error("[getCurrentlySupportedGames] Supabase error while getting games from supabase", error);
+    return [];
+  }
+
+  return data;
+}

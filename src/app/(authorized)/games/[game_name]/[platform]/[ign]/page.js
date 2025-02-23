@@ -1,5 +1,5 @@
 import RefreshStatsBtn from "./components/RefreshStatsBtn";
-import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
 import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import getGameProps from "./lib/getGameProps";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
-  const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
+  const isSupported = (await getCurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
   if(!isSupported) redirect('/unauthorized');
 
   const SupportedPlatforms = ['steam', 'xbl', 'psn', 'origin', 'ubi'];    
