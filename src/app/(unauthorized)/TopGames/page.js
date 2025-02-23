@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { PandaScoreApi } from "@/app/utils/external-apis/externalApi";
 import { RawgApi } from "@/app/utils/external-apis/externalApi";
-import TopGamesCarousel from "@/components/Carousel/TopGamesCarousel";
+import Carousel from "./components/Carousel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import valorantImage from '/public/icons/valorantImage.jpg';
 import starcraftBroodWarImage from '/public/icons/starcraftBroodWarImage.jpg';
@@ -147,7 +147,7 @@ const TopGames = async () => {
     return (
        <div className="container mx-auto px-36 py-4 space-y-8">
         <h1 className="text-center font-bold text-5xl">{GameInfo[0].Name}</h1>
-            <TopGamesCarousel TheGames={TheGames} />
+            <Carousel TheGames={TheGames} />
             {renderedGameInfo}
        </div>
     )

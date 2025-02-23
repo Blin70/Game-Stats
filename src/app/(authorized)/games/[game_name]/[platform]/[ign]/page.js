@@ -1,19 +1,19 @@
-import RefreshStatsBtn from "@/components/GameStats/RefreshStatsBtn";
-import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page";
+import RefreshStatsBtn from "./components/RefreshStatsBtn";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
 import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
 import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
-import GameBackgroundImage from "@/components/GameStats/GameBackgroundImage";
-import StatTabs from "@/components/GameStats/StatTabs";
-import IgnNotFound from "@/components/GameStats/IgnNotFound";
-import getGameProps from "@/lib/getGameProps";
+import GameBackgroundImage from "./components/GameBackgroundImage";
+import StatTabs from "./components/StatTabs";
+import IgnNotFound from "./components/IgnNotFound";
+import getGameProps from "./lib/getGameProps";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
-  const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
+  const isSupported = (await getCurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
   if(!isSupported) redirect('/unauthorized');
 
   const SupportedPlatforms = ['steam', 'xbl', 'psn', 'origin', 'ubi'];    

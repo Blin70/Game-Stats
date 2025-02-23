@@ -1,15 +1,15 @@
-import RankSection from "@/components/GameStats/Apex/RankSection";
-import SteamAliasSection from "@/components/GameStats/Apex/SteamAliasSection";
-import LifetimeOverviewSectionApex from "@/components/GameStats/Apex/LifetimeOverviewSection";
-import RenderedLegends from "@/components/GameStats/Apex/RenderedLegends";
-import Awards from "@/components/GameStats/Division-2/Awards";
-import LifetimeOverviewSectionDivision2 from "@/components/GameStats/Division-2/LifetimeOverviewSection";
-import OtherSections from "@/components/GameStats/Division-2/OtherSections";
+import RankSection from "../components/Apex/RankSection";
+import SteamAliasSection from "../components/Apex/SteamAliasSection";
+import LifetimeOverviewSectionApex from "../components/Apex/LifetimeOverviewSection";
+import RenderedLegends from "../components/Apex/RenderedLegends";
+import Awards from "../components/Division-2/Awards";
+import LifetimeOverviewSectionDivision2 from "../components/Division-2/LifetimeOverviewSection";
+import OtherSections from "../components/Division-2/OtherSections";
+import PlayDetailsSection from "../components/Division-2/PlayDetailsSection";
+import LifetimeOverviewSectionSplitgate from "../components/Splitgate/LifetimeOverviewSection";
+import Playlists from "../components/Splitgate/Playlists";
+import Weapons from "../components/Splitgate/Weapons";
 import { Radiation } from 'lucide-react';
-import PlayDetailsSection from "@/components/GameStats/Division-2/PlayDetailsSection";
-import LifetimeOverviewSectionSplitgate from "@/components/GameStats/Splitgate/LifetimeOverviewSection";
-import Playlists from "@/components/GameStats/Splitgate/Playlists";
-import Weapons from "@/components/GameStats/Splitgate/Weapons";
 
 
 export default function getGameProps(gameName, PlayerData, platform, ign){

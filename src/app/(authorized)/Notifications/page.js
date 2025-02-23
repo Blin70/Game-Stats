@@ -1,6 +1,6 @@
 import { getNotifications } from "@/app/utils/server-actions/userActions";
 import { Clock3 } from 'lucide-react';
-import DiscardNotificationBtn from "@/components/DiscardNotificationBtn";
+import DiscardNotificationBtn from "./components/DiscardNotificationBtn";
 
 const Notifications = async () => {
     const notifications = await getNotifications();

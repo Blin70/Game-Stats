@@ -1,9 +1,9 @@
-import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
-import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
-import { CurrentlySupportedGames } from "../../SupportedGames/page";
+import ResetPasswordModal from "./components/ResetPasswordModal";
+import DeleteAccountModal from "./components/DeleteAccountModal";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
-import LinkAccount from "@/components/AccountLinking/LinkAccount";
+import LinkAccountForm from "./components/LinkAccountForm";
 
 
 const Settings = async () => {
@@ -28,7 +28,7 @@ const Settings = async () => {
           </div>
         </section>
 
-       <LinkAccount CurrentlySupportedGames={await CurrentlySupportedGames()} />
+       <LinkAccountForm CurrentlySupportedGames={await getCurrentlySupportedGames()} />
 
         <section className="space-y-5">
           <h1 className="text-2xl font-semibold">Security Settings</h1>

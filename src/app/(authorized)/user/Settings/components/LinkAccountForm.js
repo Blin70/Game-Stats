@@ -1,13 +1,13 @@
 "use client"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { LinkAccount as Link } from "@/app/utils/server-actions/linkingActions";
+import { LinkAccount } from "@/app/utils/server-actions/linkingActions";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 
 
-const LinkAccount = ({ CurrentlySupportedGames }) => {
+const LinkAccountForm = ({ CurrentlySupportedGames }) => {
 
   const renderedGameOptions = CurrentlySupportedGames.map((game) => {
     return(
@@ -18,7 +18,7 @@ const LinkAccount = ({ CurrentlySupportedGames }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const res = await Link(formData);
+    const res = await LinkAccount(formData);
 
     toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
   }
@@ -45,4 +45,4 @@ const LinkAccount = ({ CurrentlySupportedGames }) => {
   )
 }
 
-export default LinkAccount;
+export default LinkAccountForm;

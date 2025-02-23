@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input"
-import { CurrentlySupportedGames } from "../../SupportedGames/page";
+import { Input } from "@/components/ui/input";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
 import { redirect } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
@@ -8,7 +8,7 @@ import { createClient } from "@/app/utils/supabase/server";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {
-    const isSupported = (await CurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
+    const isSupported = (await getCurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
     
     if(!isSupported) redirect('/unauthorized');
 

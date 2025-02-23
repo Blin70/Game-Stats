@@ -15,7 +15,7 @@ const DropdownModal = ({ children, triggerIcon, triggerText, triggerStyle, title
                 if(!inputValue.trim() || /[a-zA-Z]/.test(inputValue) && inputValue != 'none'){      //Doenst include whitespaces, letters, and it isnt 'none'
                     toast.error("Invalid Input. Enter a valid ban duration or 'none' to remove the ban")
                     return;
-                }
+                } 
                 const banRes = await action(user, inputValue);
                 toast[Object.keys(banRes)[0]]?.(Object.values(banRes)[0]);
                 break;

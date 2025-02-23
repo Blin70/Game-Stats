@@ -6,25 +6,12 @@ import valorantImage from "/public/icons/valorantImage.jpg";
 import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
-import { createClient } from "@/app/utils/supabase/server";
 import { Circle } from "lucide-react";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
 
-
-const CurrentlySupportedGames = async () => {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.from('games').select('*');
-
-  if(error){
-    console.error("Error while getting games from supabase", error);
-    return [];
-  }
-
-  return data;
-}
 
 const SupportedGames = async () => {
-  const supportedGames = await CurrentlySupportedGames();
+  const supportedGames = await getCurrentlySupportedGames();
 
   const Games = [
     ...(supportedGames),
@@ -73,4 +60,3 @@ const SupportedGames = async () => {
 }
 
 export default SupportedGames;
-export { CurrentlySupportedGames };

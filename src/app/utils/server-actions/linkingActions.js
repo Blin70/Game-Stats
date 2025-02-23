@@ -5,6 +5,19 @@ import { getCurrentUser } from "./userActions";
 import { revalidatePath } from "next/cache";
 import { sendNotification } from "./userActions";
 
+export async function getLinkedAccounts(userId) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url)').eq('user_id', userId);
+
+  if(error){
+    console.error('[getLinkedAccounts] Supabase error while getting Linked Accounts', error)
+    return [];
+  }
+
+  return data;
+}
+
 export async function LinkAccount(formData) {
   const supabase = createClient();
 

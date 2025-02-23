@@ -1,29 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
-import EditProfileModal from "@/components/modals/EditInfo";
+import EditProfileModal from "./components/EditProfileModal";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
-import { createClient } from "@/app/utils/supabase/server";
 import { getCurrentUser } from "@/app/utils/server-actions/userActions";
-import UnlinkAccountForm from "@/components/AccountLinking/UnlinkAccountForm";
+import UnlinkAccountForm from "./components/UnlinkAccountForm";
+import { getLinkedAccounts } from "@/app/utils/server-actions/linkingActions";
 
 const Profile = async () => {
-  const supabase = createClient();
   const user = await getCurrentUser();
-
-  const LinkedAccounts = async () => {
-    const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url)').eq('user_id', user.id);
-
-    if(error){
-      console.error('Error while getting Linked Accounts', error)
-      return [];
-    }
-
-    return data;
-  }
-
-  const linkedAccounts = await LinkedAccounts();
+  const linkedAccounts = await getLinkedAccounts(user.id);
   
   const renderedLinkedAccounts = linkedAccounts.map((i, index) => (
     <div key={index} className="max-w-2xl w-5/12 justify-between items-center flex rounded-lg p-4 m-4 bg-gray-100 shadow-md">
