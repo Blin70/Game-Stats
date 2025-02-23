@@ -1,14 +1,14 @@
-import RankSection from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Apex/RankSection";
-import SteamAliasSection from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Apex/SteamAliasSection";
-import LifetimeOverviewSectionApex from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Apex/LifetimeOverviewSection";
-import RenderedLegends from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Apex/RenderedLegends";
-import Awards from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Division-2/Awards";
-import LifetimeOverviewSectionDivision2 from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Division-2/LifetimeOverviewSection";
-import OtherSections from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Division-2/OtherSections";
-import PlayDetailsSection from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Division-2/PlayDetailsSection";
-import LifetimeOverviewSectionSplitgate from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Splitgate/LifetimeOverviewSection";
-import Playlists from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Splitgate/Playlists";
-import Weapons from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/Splitgate/Weapons";
+import RankSection from "../components/Apex/RankSection";
+import SteamAliasSection from "../components/Apex/SteamAliasSection";
+import LifetimeOverviewSectionApex from "../components/Apex/LifetimeOverviewSection";
+import RenderedLegends from "../components/Apex/RenderedLegends";
+import Awards from "../components/Division-2/Awards";
+import LifetimeOverviewSectionDivision2 from "../components/Division-2/LifetimeOverviewSection";
+import OtherSections from "../components/Division-2/OtherSections";
+import PlayDetailsSection from "../components/Division-2/PlayDetailsSection";
+import LifetimeOverviewSectionSplitgate from "../components/Splitgate/LifetimeOverviewSection";
+import Playlists from "../components/Splitgate/Playlists";
+import Weapons from "../components/Splitgate/Weapons";
 import { Radiation } from 'lucide-react';
 
 

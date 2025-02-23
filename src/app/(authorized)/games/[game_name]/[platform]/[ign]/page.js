@@ -1,4 +1,4 @@
-import RefreshStatsBtn from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/RefreshStatsBtn";
+import RefreshStatsBtn from "./components/RefreshStatsBtn";
 import { CurrentlySupportedGames } from "@/app/(authorized)/SupportedGames/page";
 import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
@@ -6,10 +6,10 @@ import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
-import GameBackgroundImage from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/GameBackgroundImage";
-import StatTabs from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/StatTabs";
-import IgnNotFound from "@/app/(authorized)/games/[game_name]/[platform]/[ign]/components/IgnNotFound";
-import getGameProps from "@/lib/getGameProps";
+import GameBackgroundImage from "./components/GameBackgroundImage";
+import StatTabs from "./components/StatTabs";
+import IgnNotFound from "./components/IgnNotFound";
+import getGameProps from "./lib/getGameProps";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
