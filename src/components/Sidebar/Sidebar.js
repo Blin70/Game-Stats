@@ -11,6 +11,7 @@ import ModeToggle from "./ModeToggle";
 import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { ChartNoAxesCombined, Bell, Info, Settings, LogOut, User} from 'lucide-react';
 import { toast } from "sonner";
+import LinkedAccountsSection from "./LinkedAccountsSection";
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -51,6 +52,7 @@ const Sidebar = () => {
               <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
             </Link>
           </CommandGroup>
+          <LinkedAccountsSection userId={user.id} />
           {user?.role == 'service_role'
             &&(
               <CommandGroup heading="Administation">

@@ -8,7 +8,7 @@ import { sendNotification } from "./userActions";
 export async function getLinkedAccounts(userId) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url)').eq('user_id', userId);
+  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url, deprecated)').eq('user_id', userId);
 
   if(error){
     console.error('[getLinkedAccounts] Supabase error while getting Linked Accounts', error)
