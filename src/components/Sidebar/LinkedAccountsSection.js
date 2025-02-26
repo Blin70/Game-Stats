@@ -21,7 +21,7 @@ const LinkedAccountsSection = ({ userId }) => {
     }, [userId])
     
     const renderedLinkedAccounts = linkedAccounts.filter((account => !account.games.deprecated)).map((account) => (
-        <Link key={account.id} href={'#'}>
+        <Link key={account.id} href={`/games/${account.games.alias}/${account.platform}/${account.in_game_username}`}>
             <CommandItems text={account.in_game_username} icon={<Image src={account.games.icon_url} width={36} height={36} alt={`${account.game_name} Logo`} className="size-9 mr-3 rounded-full" />} className={"grayscale aria-selected:grayscale-0 transition duration-500 ease-in-out"} />
         </Link>
     ))

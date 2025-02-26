@@ -5,9 +5,13 @@ import { LinkAccount } from "@/app/utils/server-actions/linkingActions";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
+import { getGamePlatforms } from "@/app/utils/server-actions/userActions";
+import { useState } from "react";
 
 
 const LinkAccountForm = ({ CurrentlySupportedGames }) => {
+  const [availablePlatforms, setAvailablePlatforms] = useState([]);
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
 
   const renderedGameOptions = CurrentlySupportedGames.map((game) => {
     return(
@@ -15,8 +19,22 @@ const LinkAccountForm = ({ CurrentlySupportedGames }) => {
     );
   })
 
+  const renderedPlatformOptions = availablePlatforms?.map((platform, index) => (
+    <SelectItem key={index} value={platform}>{platform}</SelectItem>
+  ))
+
+  const handleGameChange = async (Game) => {
+    setSelectedPlatform(null);
+    const GamePlatforms = await getGamePlatforms(Game, 'name');
+
+    setAvailablePlatforms(GamePlatforms.platforms);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    if(!availablePlatforms.includes(selectedPlatform)) return toast.error('Invalid platform selected');
+
     const formData = new FormData(event.currentTarget);
     const res = await LinkAccount(formData);
 
@@ -27,13 +45,21 @@ const LinkAccountForm = ({ CurrentlySupportedGames }) => {
     <section className="space-y-5">
       <h1 className="text-2xl font-semibold">Linked Accounts</h1>
       <div className="text-2xl font-semibold bg-gray-100 rounded-lg p-6">
-        <form onSubmit={handleSubmit} className="grid grid-cols-[20%,40%,15%] gap-5">
-          <Select name="SelectedGame">
+        <form onSubmit={handleSubmit} className="grid grid-cols-[20%,10%,40%,15%] gap-5">
+          <Select name="SelectedGame" onValueChange={handleGameChange}>
             <SelectTrigger>
               <SelectValue placeholder="Select Game"/>
             </SelectTrigger>
             <SelectContent>
               {renderedGameOptions}
+            </SelectContent>
+          </Select>
+          <Select name="SelectedPlatform" disabled={!availablePlatforms?.length} value={selectedPlatform} onValueChange={(platform) => setSelectedPlatform(platform)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Platform"/>
+            </SelectTrigger>
+            <SelectContent>
+              {renderedPlatformOptions}
             </SelectContent>
           </Select>
           <Input placeholder="Enter your game username" name="username" id="username" autoComplete='off' className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0" />

@@ -97,3 +97,20 @@ export async function getCurrentlySupportedGames(){
 
   return data;
 }
+
+
+export async function getGamePlatforms(game_name, searchField){
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from('games').select('name, game_platforms(platform)').eq(searchField, game_name).single();
+
+  if(error){
+    console.error("[getGamePlatforms] Supabase error while getting game platforms", error);
+    return { name: null, platforms: [] };
+  }
+
+  return {
+    name: data?.name,
+    platforms: data?.game_platforms?.map(p => p.platform)
+  };
+}

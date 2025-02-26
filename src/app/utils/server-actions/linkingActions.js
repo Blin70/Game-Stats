@@ -8,7 +8,7 @@ import { sendNotification } from "./userActions";
 export async function getLinkedAccounts(userId) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url, deprecated)').eq('user_id', userId);
+  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url, deprecated, alias)').eq('user_id', userId);
 
   if(error){
     console.error('[getLinkedAccounts] Supabase error while getting Linked Accounts', error)
@@ -25,11 +25,12 @@ export async function LinkAccount(formData) {
 
   const game = formData.get('SelectedGame');
   const ign = formData.get('username');
+  const platform = formData.get('SelectedPlatform');
 
-  if(!game || !ign) return { error: 'Missing fields'};
+  if(!game || !ign || !platform) return { error: 'Missing fields'};
 
   const { error } = await supabase.from('linkedAccounts').insert(
-    { user_id: id, game_name: game, in_game_username: ign }
+    { user_id: id, game_name: game, in_game_username: ign, platform }
   )
 
   if(error){

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
-import { createClient } from "@/app/utils/supabase/server";
+import { getGamePlatforms } from "@/app/utils/server-actions/userActions";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {
@@ -12,11 +12,7 @@ const UsernameEntry = async ({ params: { game_name } }) => {
     
     if(!isSupported) redirect('/unauthorized');
 
-    const supabase = createClient();
-
-    const { data: GameData, error } = await supabase.from('games').select('name, platforms').eq('alias', game_name).single()
-
-    if(error) console.error("Error while getting data for the game from supabase", error);
+    const GameData = await getGamePlatforms(game_name, 'alias');
 
     const possiblePlatforms = {
         "ubi":{
@@ -41,7 +37,7 @@ const UsernameEntry = async ({ params: { game_name } }) => {
         }
     }
 
-    const renderedPlatforms = GameData.platforms.map((platform, index) => (
+    const renderedPlatforms = GameData?.platforms?.map((platform, index) => (
         <SelectItem key={index} value={platform} className="font-semibold">
             {possiblePlatforms[platform].icon} {possiblePlatforms[platform].name} 
         </SelectItem>
