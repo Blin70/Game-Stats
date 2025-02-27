@@ -2,13 +2,12 @@
 
 import { createClient } from "../supabase/server";
 import { getCurrentUser } from "./userActions";
-import { revalidatePath } from "next/cache";
 import { sendNotification } from "./userActions";
 
 export async function getLinkedAccounts(userId) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url)').eq('user_id', userId);
+  const { data, error } = await supabase.from('linkedAccounts').select('*,games:game_name(icon_url, deprecated, alias)').eq('user_id', userId);
 
   if(error){
     console.error('[getLinkedAccounts] Supabase error while getting Linked Accounts', error)
@@ -25,12 +24,13 @@ export async function LinkAccount(formData) {
 
   const game = formData.get('SelectedGame');
   const ign = formData.get('username');
+  const platform = formData.get('SelectedPlatform');
 
-  if(!game || !ign) return { error: 'Missing fields'};
+  if(!game || !ign || !platform) return { error: 'Missing fields'};
 
-  const { error } = await supabase.from('linkedAccounts').insert(
-    { user_id: id, game_name: game, in_game_username: ign }
-  )
+  const { data, error } = await supabase.from('linkedAccounts').insert(
+    { user_id: id, game_name: game, in_game_username: ign, platform }
+  ).select('*,games:game_name(icon_url, deprecated, alias)').eq('user_id', id).single();
 
   if(error){
     if(error.code === '23505') return { warning: 'This account is already linked' };
@@ -41,22 +41,18 @@ export async function LinkAccount(formData) {
 
   sendNotification(id, 'Account Connection', 'Account linked!', `Your ${game} (@${ign}) account has been successfully linked to your profile.`);
 
-  revalidatePath('/user/Profile');
-  return { success: 'Account linked successfully'}
+  return { success: 'Account linked successfully', account: data };
 }
 
-export async function UnlinkAccount(formData) {
+export async function UnlinkAccount(AccountId) {
   const supabase = createClient();
 
-  const linkedAccountId = formData.get('linkedAccountId');
-
-  const { error } = await supabase.from('linkedAccounts').delete().eq('id', linkedAccountId);
+  const { error } = await supabase.from('linkedAccounts').delete().eq('id', AccountId);
 
   if(error){
-    console.error("Error while unlinking account", error);
+    console.error("[UnlinkAccount] Error while unlinking account", error);
     return { error: 'Error while unlinking account' };
   }
 
-  revalidatePath('/user/Profile');
   return { success: 'Account unlinked'};
 }
