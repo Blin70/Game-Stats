@@ -29,9 +29,9 @@ export async function LinkAccount(formData) {
 
   if(!game || !ign || !platform) return { error: 'Missing fields'};
 
-  const { error } = await supabase.from('linkedAccounts').insert(
+  const { data, error } = await supabase.from('linkedAccounts').insert(
     { user_id: id, game_name: game, in_game_username: ign, platform }
-  )
+  ).select('*,games:game_name(icon_url, deprecated, alias)').eq('user_id', id).single();
 
   if(error){
     if(error.code === '23505') return { warning: 'This account is already linked' };
@@ -42,8 +42,7 @@ export async function LinkAccount(formData) {
 
   sendNotification(id, 'Account Connection', 'Account linked!', `Your ${game} (@${ign}) account has been successfully linked to your profile.`);
 
-  revalidatePath('/user/Profile');
-  return { success: 'Account linked successfully'}
+  return { success: 'Account linked successfully', account: data };
 }
 
 export async function UnlinkAccount(formData) {
@@ -58,6 +57,5 @@ export async function UnlinkAccount(formData) {
     return { error: 'Error while unlinking account' };
   }
 
-  revalidatePath('/user/Profile');
   return { success: 'Account unlinked'};
 }

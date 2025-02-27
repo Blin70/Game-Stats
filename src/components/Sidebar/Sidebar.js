@@ -52,7 +52,7 @@ const Sidebar = () => {
               <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
             </Link>
           </CommandGroup>
-          <LinkedAccountsSection userId={user.id} />
+          <LinkedAccountsSection />
           {user?.role == 'service_role'
             &&(
               <CommandGroup heading="Administation">

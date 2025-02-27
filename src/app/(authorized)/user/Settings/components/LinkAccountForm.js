@@ -7,11 +7,13 @@ import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import { getGamePlatforms } from "@/app/utils/server-actions/userActions";
 import { useState } from "react";
+import { useLinkedAccounts } from "@/app/context/linkedAccountsContext";
 
 
 const LinkAccountForm = ({ CurrentlySupportedGames }) => {
   const [availablePlatforms, setAvailablePlatforms] = useState([]);
-  const [selectedPlatform, setSelectedPlatform] = useState(null);
+  const [selectedPlatform, setSelectedPlatform] = useState("");
+  const { setLinkedAccounts } = useLinkedAccounts();
 
   const renderedGameOptions = CurrentlySupportedGames.map((game) => {
     return(
@@ -37,6 +39,8 @@ const LinkAccountForm = ({ CurrentlySupportedGames }) => {
 
     const formData = new FormData(event.currentTarget);
     const res = await LinkAccount(formData);
+
+    if(res.success) setLinkedAccounts(prev => [...prev, res.account]);
 
     toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
   }
