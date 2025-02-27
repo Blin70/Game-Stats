@@ -2,7 +2,6 @@
 
 import { createClient } from "../supabase/server";
 import { getCurrentUser } from "./userActions";
-import { revalidatePath } from "next/cache";
 import { sendNotification } from "./userActions";
 
 export async function getLinkedAccounts(userId) {
@@ -45,15 +44,13 @@ export async function LinkAccount(formData) {
   return { success: 'Account linked successfully', account: data };
 }
 
-export async function UnlinkAccount(formData) {
+export async function UnlinkAccount(AccountId) {
   const supabase = createClient();
 
-  const linkedAccountId = formData.get('linkedAccountId');
-
-  const { error } = await supabase.from('linkedAccounts').delete().eq('id', linkedAccountId);
+  const { error } = await supabase.from('linkedAccounts').delete().eq('id', AccountId);
 
   if(error){
-    console.error("Error while unlinking account", error);
+    console.error("[UnlinkAccount] Error while unlinking account", error);
     return { error: 'Error while unlinking account' };
   }
 
