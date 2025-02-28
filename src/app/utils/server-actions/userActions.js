@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "../supabase/server";
-import { revalidatePath } from "next/cache";
 
 export async function getUserFromSession() {//using getSession returns a warning on the terminal console although getSession should be used here
   const supabase = createClient();
@@ -39,52 +38,6 @@ export async function getRole() {
   return role;
 }
 
-export async function sendNotification(user_id, type, title, message) {
-  const supabase = createClient();
-
-  const { error } = await supabase.from('notifications').insert([
-    { 
-      user_id,
-      type,
-      title,
-      message
-    }
-  ]);
-
-  if(error) console.error('[sendNotification] Supabase error while sending notification', error);
-}
-
-export async function getNotifications() {
-  const supabase = createClient();
-
-  const { id } = await getCurrentUser();
-  
-  const { data, error } = await supabase.from('notifications').select('*').eq('user_id', id).order('date', { ascending: false });
-    
-  if(error){
-    console.error('[getNotifications] Supabase error while getting notifications for user', error);
-    return [];
-  }
-
-  return data;
-}
-
-export async function discardNotification(NotificationId) {
-  const supabase = createClient();
-
-  const { error } = await supabase.from('notifications').delete().eq('id', NotificationId);
-
-  if(error){
-    console.error(`[discardNotification] Supabase error while discarding notification with id: ${NotificationId}`, error);
-    return { error: 'Error while discarding notification. Please try again' };
-  }
-
-  return (
-    revalidatePath('/Notifications'),
-    { success: 'Notification discarded successfully' }
-  );
-}
-
 export async function getCurrentlySupportedGames(){
   const supabase = createClient();
 
@@ -97,7 +50,6 @@ export async function getCurrentlySupportedGames(){
 
   return data;
 }
-
 
 export async function getGamePlatforms(game_name, searchField){
   const supabase = createClient();

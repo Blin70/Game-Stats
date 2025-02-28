@@ -1,4 +1,4 @@
-import { getNotifications } from "@/app/utils/server-actions/userActions";
+import { getNotifications } from "@/app/utils/server-actions/notificationActions";
 import { Clock3 } from 'lucide-react';
 import DiscardNotificationBtn from "./components/DiscardNotificationBtn";
 

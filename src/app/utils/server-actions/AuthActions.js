@@ -3,8 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/server";
-import { sendNotification } from "./userActions";
-
+import { sendNotification } from "./notificationActions";
 
 export async function signUp(values) {
   const supabase = createClient();

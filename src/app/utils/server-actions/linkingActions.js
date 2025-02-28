@@ -2,7 +2,7 @@
 
 import { createClient } from "../supabase/server";
 import { getCurrentUser } from "./userActions";
-import { sendNotification } from "./userActions";
+import { sendNotification } from "./notificationActions";
 
 export async function getLinkedAccounts(userId) {
   const supabase = createClient();

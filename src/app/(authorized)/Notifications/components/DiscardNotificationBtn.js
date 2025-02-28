@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { X } from 'lucide-react';
-import { discardNotification } from "@/app/utils/server-actions/userActions";
+import { discardNotification } from "@/app/utils/server-actions/notificationActions";
 import { toast } from "sonner";
 
 
