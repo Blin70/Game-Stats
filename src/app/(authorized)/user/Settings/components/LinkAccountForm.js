@@ -51,7 +51,7 @@ const LinkAccountForm = ({ CurrentlySupportedGames }) => {
       <div className="text-2xl font-semibold bg-gray-100 rounded-lg p-6">
         <form onSubmit={handleSubmit} className="grid grid-cols-[20%,10%,40%,15%] gap-5">
           <Select name="SelectedGame" onValueChange={handleGameChange}>
-            <SelectTrigger>
+            <SelectTrigger className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0">
               <SelectValue placeholder="Select Game"/>
             </SelectTrigger>
             <SelectContent>
@@ -59,7 +59,7 @@ const LinkAccountForm = ({ CurrentlySupportedGames }) => {
             </SelectContent>
           </Select>
           <Select name="SelectedPlatform" disabled={!availablePlatforms?.length} value={selectedPlatform} onValueChange={(platform) => setSelectedPlatform(platform)}>
-            <SelectTrigger>
+            <SelectTrigger className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0">
               <SelectValue placeholder="Platform"/>
             </SelectTrigger>
             <SelectContent>

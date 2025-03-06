@@ -20,7 +20,7 @@ const EditUserButton = ({ user }) => {
     return(
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button className="bg-transparent hover:bg-accent text-black focus-visible:ring-0 focus-visible:ring-offset-0"><Pencil/></Button>
+                    <Button className="bg-transparent hover:bg-accent text-black focus-visible:ring-0 focus-visible:ring-offset-0 gap-0"><Pencil className="!size-6"/></Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
