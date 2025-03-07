@@ -48,10 +48,10 @@ const Sidebar = () => {
           <CommandList className="min-h-fit">
             <CommandGroup heading="Suggestions">
               <Link href='/SupportedGames'>
-                <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="size-8 mr-3" />} />
+                <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="!size-8 mr-3" />} />
               </Link>
               <Link href='/Notifications'>
-                <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
+                <CommandItems text='Notifications' icon={<Bell className="!size-8 mr-3" />} />
               </Link>
             </CommandGroup>
             <LinkedAccountsSection />
@@ -59,19 +59,19 @@ const Sidebar = () => {
               &&(
                 <CommandGroup heading="Administation">
                   <Link href='/admin'>
-                    <CommandItems text='User Management' icon={<User className="size-8 mr-3" />} />            
+                    <CommandItems text='User Management' icon={<User className="!size-8 mr-3" />} />            
                   </Link>
                 </CommandGroup>
               )
             }
             <CommandGroup heading="Account">
               <Link href='/Help'>
-                <CommandItems text='Help' icon={<Info className="size-8 mr-3" />} />
+                <CommandItems text='Help' icon={<Info className="!size-8 mr-3" />} />
               </Link>
               <Link href='/user/Settings'>
-                <CommandItems text='Settings' icon={<Settings className="size-8 mr-3" />} />
+                <CommandItems text='Settings' icon={<Settings className="!size-8 mr-3" />} />
               </Link>
-              <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="size-8 mr-3" />} />
+              <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="!size-8 mr-3" />} />
             </CommandGroup>
           </CommandList>
         </Command>
