@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserPlus } from 'lucide-react';
 import CreateUserForm from "./CreateUserForm";
+import { Button } from "@/components/ui/button";
 
 
 const CreateUser = () => {
@@ -23,7 +24,7 @@ const CreateUser = () => {
                 {field.checkbox && (
                     <div className="flex gap-2 items-center">
                         <Input type="checkbox" id={field.name.toLowerCase() + 'Confirmed'} name={field.name.toLowerCase() + 'Confirmed'} autoComplete="off" className="size-6 accent-black focus-visible:ring-0 focus-visible:ring-offset-0" />
-                        <span className="text-xs text-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0">Confirm {field.name.toLowerCase()}</span>
+                        <span className="text-xs text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0">Confirm {field.name.toLowerCase()}</span>
                     </div>
                 )}
             </div>
@@ -32,8 +33,10 @@ const CreateUser = () => {
 
     return (
         <Dialog>
-            <DialogTrigger>
-                    <UserPlus className="text-black mt-1"/>
+            <DialogTrigger asChild>
+                <Button size="icon" className="bg-transparent hover:bg-accent focus-visible:ring-0 focus-visible:ring-offset-0">
+                    <UserPlus className="text-secondary-foreground !size-6"/>
+                </Button>
             </DialogTrigger>
             <DialogContent aria-describedby={null} className="bg-transparent [&>button]:hidden border-0 shadow-none">
                 <DialogTitle className="hidden">Create New User</DialogTitle>

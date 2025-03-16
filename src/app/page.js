@@ -195,7 +195,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               
               <div className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div className="bg-white p-4 rounded-full mb-4">
+                <div className="bg-background p-4 rounded-full mb-4">
                   <MousePointerClick />
                 </div>
                 <h3 className="text-xl text-white font-semibold mb-2">
@@ -207,7 +207,7 @@ export default async function Home() {
               </div>
 
               <div className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div className="bg-white p-4 rounded-full mb-4">
+                <div className="bg-background p-4 rounded-full mb-4">
                   <Pencil/>
                 </div>
                 <h3 className="text-xl text-white font-semibold mb-2">
@@ -219,7 +219,7 @@ export default async function Home() {
               </div>
 
               <div className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div className="bg-white p-4 rounded-full mb-4">
+                <div className="bg-background p-4 rounded-full mb-4">
                   <Check />
                 </div>
                 <h3 className="text-xl text-white font-semibold mb-2">

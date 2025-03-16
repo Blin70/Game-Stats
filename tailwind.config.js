@@ -48,6 +48,8 @@ module.exports = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+			panel: 'hsl(var(--panel))',
+			"grayed-out": 'hsla(var(--grayed-out))',
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

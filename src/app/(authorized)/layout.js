@@ -13,7 +13,7 @@ export default function RootLayout({children}) {
           <Navbar />
           <div className="flex flex-1 mt-2 overflow-hidden">
             <Sidebar />
-            <main className="flex-1 container mx-auto h-full p-8 pr-2 bg-gray-50 rounded-md overflow-hidden">
+            <main className="flex-1 container mx-auto h-full p-8 pr-2 bg-background rounded-md overflow-hidden">
               <ScrollArea className="h-full pr-6">
                 {children}
               </ScrollArea>

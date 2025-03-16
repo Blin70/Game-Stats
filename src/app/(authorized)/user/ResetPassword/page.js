@@ -98,7 +98,7 @@ const ResetPassword = () => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='password' name='NewPassword' placeholder="Enter New Password" autoComplete='off' className="size-fit rounded-2xl text-2xl" />
+                                    <Input {...field} type='password' name='NewPassword' placeholder="Enter New Password" autoComplete='off' className="size-fit rounded-2xl !text-2xl" />
                                 </FormControl>
                                 <FormMessage className="flex justify-end"/>
                             </FormItem>
@@ -110,7 +110,7 @@ const ResetPassword = () => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='password' name='repeatNewPassword' placeholder='Repeat Password' autoComplete='off' className="size-fit rounded-2xl text-2xl" />
+                                    <Input {...field} type='password' name='repeatNewPassword' placeholder='Repeat Password' autoComplete='off' className="size-fit rounded-2xl !text-2xl" />
                                 </FormControl>
                                 <FormMessage className="flex justify-end"/>
                             </FormItem>

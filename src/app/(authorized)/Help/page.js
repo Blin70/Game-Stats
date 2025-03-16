@@ -15,7 +15,7 @@ const Help = () => {
             </p>
           </div>
           <div className="w-full flex flex-col items-center">
-            <Textarea id="HelpMessage" name="HelpMessage" placeholder="Type your message here." className="w-1/2 h-96 bg-transparent border-black text-black !text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
+            <Textarea id="HelpMessage" name="HelpMessage" placeholder="Type your message here." className="w-1/2 h-96 bg-transparent border-black dark:border-inherit !text-base focus-visible:ring-0 focus-visible:ring-offset-0" />
             <Button className="w-fit mt-5">Send message</Button>
           </div>
 

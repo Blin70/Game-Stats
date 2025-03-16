@@ -75,29 +75,29 @@ const TopGames = async () => {
 
     const renderedTournaments = Tournaments.map((tournament, index) => {
                 return(
-                    <Card key={index} className="w-full max-w-sm min-h-full px-5 py-2 inline-block overflow-hidden ml-4 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <Card key={index} className="w-full max-w-sm min-h-full px-5 py-2 inline-block overflow-hidden ml-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
                         <CardHeader>
-                            <CardTitle className="text-2xl font-bold text-gray-800">{tournament.LeagueName}</CardTitle>
+                            <CardTitle className="text-2xl font-bold text-secondary-foreground">{tournament.LeagueName}</CardTitle>
                         </CardHeader>
                         <CardContent className="font-medium text-lg space-y-6">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-gray-600">{tournament.Date}</span>
-                                <span className="text-xs text-gray-400">Date</span>
+                                <span className="text-sm text-card-foreground">{tournament.Date}</span>
+                                <span className="text-xs text-grayed-out">Date</span>
                             </div>
         
                             <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                                 <span className="text-2xl font-bold text-primary">{tournament.Prizepool}</span>
-                                <span className="text-sm text-gray-500">Prize Pool</span>
+                                <span className="text-sm text-grayed-out">Prize Pool</span>
                             </div>
         
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-gray-600">Teams:</span>
-                                <span className="text-sm font-medium text-gray-800 ml-5">{tournament.Teams}</span>
+                                <span className="text-sm text-grayed-out">Teams:</span>
+                                <span className="text-sm font-medium text-card-foreground ml-5">{tournament.Teams}</span>
                             </div>
         
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-gray-500">Type:</span>
-                                <span className="text-sm font-medium text-gray-800">{tournament.Type}</span>
+                                <span className="text-sm text-grayed-out">Type:</span>
+                                <span className="text-sm font-medium text-card-foreground">{tournament.Type}</span>
                             </div>
                         </CardContent>
                     </Card>
@@ -109,12 +109,12 @@ const TopGames = async () => {
             <div key={index} className="space-y-5">
                 <div className="space-x-5 text-center my-5 w-fit mx-auto">
                     <div className="p-0 space-x-8 rounded-xl py-2 w-fit mx-auto">
-                        <h1 className="mb-2 text-xl inline-block bg-zinc-100 rounded-xl p-4"><strong>Platforms</strong><br/>{game.Platforms}</h1>
-                        <h1 className="mb-2 text-xl inline-block bg-zinc-100 rounded-xl p-4"><strong>Release Date</strong><br/>{game.Released}</h1>
-                        <h1 className="mb-2 text-xl inline-block bg-zinc-100 rounded-xl p-4"><strong>Developer</strong><br/>{game.Developers}</h1>
-                        <h1 className="mb-2 text-xl inline-block bg-zinc-100 rounded-xl p-4"><strong>Rating</strong><br/>{game.Rating}</h1>
-                        <h1 className="mb-2 text-xl inline-block bg-zinc-100 rounded-xl p-4"><strong>Genre</strong><br/>{game.Genres}</h1>
-                        <h1 className="mb-2 text-xl inline-block bg-zinc-100 rounded-xl p-4"><strong>Stores</strong><br/>{game.Stores}</h1>
+                        <h1 className="mb-2 text-xl inline-block bg-secondary text-secondary-foreground rounded-xl p-4"><strong>Platforms</strong><br/>{game.Platforms}</h1>
+                        <h1 className="mb-2 text-xl inline-block bg-secondary text-secondary-foreground rounded-xl p-4"><strong>Release Date</strong><br/>{game.Released}</h1>
+                        <h1 className="mb-2 text-xl inline-block bg-secondary text-secondary-foreground rounded-xl p-4"><strong>Developer</strong><br/>{game.Developers}</h1>
+                        <h1 className="mb-2 text-xl inline-block bg-secondary text-secondary-foreground rounded-xl p-4"><strong>Rating</strong><br/>{game.Rating}</h1>
+                        <h1 className="mb-2 text-xl inline-block bg-secondary text-secondary-foreground rounded-xl p-4"><strong>Genre</strong><br/>{game.Genres}</h1>
+                        <h1 className="mb-2 text-xl inline-block bg-secondary text-secondary-foreground rounded-xl p-4"><strong>Stores</strong><br/>{game.Stores}</h1>
                     </div>
                         <div className="p-4 mx-auto mt-3 text-center">
                             <h1 className="text-3xl mx-auto mb-2"><strong>Game Description </strong></h1>

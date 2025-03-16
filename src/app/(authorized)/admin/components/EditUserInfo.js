@@ -134,7 +134,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                 {field.checkbox && (
                     <div className="flex gap-2 items-center">
                         <Input onChange={handleChange} checked={userData[field.name + 'Confirmed']} type="checkbox" id={field.name + 'Confirmed'} name={field.name + 'Confirmed'} autoComplete="off" className="size-6 accent-black focus-visible:ring-0 focus-visible:ring-offset-0" />
-                        <span className="text-xs text-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0">Confirm {field.name}</span>
+                        <span className="text-xs text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0">Confirm {field.name}</span>
                     </div>
                 )}
             </div>

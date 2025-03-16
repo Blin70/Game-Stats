@@ -58,14 +58,14 @@ const UsernameEntry = async ({ params: { game_name } }) => {
             <h1 className="text-5xl">{GameData.name} Stats</h1>
             <div className="flex space-x-5 items-center">
                 <Select name="SelectedPlatform">
-                    <SelectTrigger className="w-fit space-x-1">
+                    <SelectTrigger className="w-fit space-x-1 focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0">
                         <SelectValue placeholder="Select a platform" />
                     </SelectTrigger>
                     <SelectContent>
                         {renderedPlatforms}
                     </SelectContent>
                 </Select>
-                <Input type="text" name="Username" placeholder="Enter Player Id" className="w-fit h-fit mx-auto rounded-2xl text-3xl p-3" autoComplete="off"  />
+                <Input type="text" name="Username" placeholder="Enter Player Id" className="w-fit h-fit mx-auto rounded-2xl !text-3xl p-3" autoComplete="off"  />
             </div>
         </form>
     );
