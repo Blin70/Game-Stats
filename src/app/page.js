@@ -72,12 +72,7 @@ export default async function Home() {
                   <Button
                     asChild
                     className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                    <Link
-                      href={
-                        user
-                          ? "/SupportedGames"
-                          : "/user/SignIn"
-                      }>
+                    <Link href={user ? "/SupportedGames" : "/user/SignIn"}>
                       Lookup Stats
                     </Link>
                   </Button>
@@ -95,12 +90,7 @@ export default async function Home() {
                   <Button
                     asChild
                     className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                    <Link
-                      href={
-                        user
-                          ? "/user/Profile"
-                          : "/user/SignIn"
-                      }>
+                    <Link href={user ? "/user/Profile" : "/user/SignIn"}>
                       View Leaderboards
                     </Link>
                   </Button>
@@ -118,12 +108,7 @@ export default async function Home() {
                 <Button
                   asChild
                   className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                  <Link
-                    href={
-                      user
-                        ? "/SupportedGames"
-                        : "/user/SignIn"
-                    }>
+                  <Link href={user ? "/SupportedGames" : "/user/SignIn"}>
                     View Progress
                   </Link>
                 </Button>
@@ -158,34 +143,40 @@ export default async function Home() {
               <CarouselPrevious />
               <CarouselNext />
             </Carousel>
+
             <div className="bg-transparent text-white py-4">
-              <h2 className="text-2xl text-center mb-4">What Users Are Saying</h2>
-              <div className="flex space-x-3 justify-center">
-                <Card className="w-fit bg-transparent border text-center p-2">
-                  <CardTitle className="text-lg text-[#e0e0e0]">
-                    Awesome tool to track all my game stats!
-                  </CardTitle>
-                  <CardDescription className="text-md mt-1">
-                    - D1oni
-                  </CardDescription>
-                </Card>
-                <Card className="w-fit bg-transparent border text-center p-2">
-                  <CardTitle className="text-lg text-[#e0e0e0]">
-                    The leaderboard feature is amazing!
-                  </CardTitle>
-                  <CardDescription className="text-md mt-1">
-                    - RiskyW
-                  </CardDescription>
-                </Card>
+              <h2 className="text-2xl text-center mb-4">
+                What Users Are Saying
+              </h2>
+              <div className="flex gap-3 justify-center">
+                {[
+                  {
+                    user: "D1oni",
+                    message: "Awesome tool to track all my game stats!"
+                  },
+                  {
+                    user: "RiskyW",
+                    message: "The leaderboard feature is amazing!"
+                  }
+                ].map((review, index) => (
+                  <Card key={index} className="w-fit bg-transparent border text-center p-2">
+                    <CardTitle className="text-lg text-[#e0e0e0]">
+                      {review.message}
+                    </CardTitle>
+                    <CardDescription className="text-md mt-1">
+                      - {review.user}
+                    </CardDescription>
+                  </Card>
+                ))}
               </div>
-              <Card className="w-fit bg-transparent border text-center mx-auto mt-5 p-2">
-                <CardTitle className="text-lg text-[#e0e0e0]">
-                  I can check my progress in real-time!
-                </CardTitle>
-                <CardDescription className="text-md mt-1">
-                  - Anonymous
-                </CardDescription>
-              </Card>
+                <Card className="w-fit bg-transparent border text-center mx-auto mt-5 p-2">
+                  <CardTitle className="text-lg text-[#e0e0e0]">
+                    I can check my progress in real-time!
+                  </CardTitle>
+                  <CardDescription className="text-md mt-1">
+                    - Anonymous
+                  </CardDescription>
+                </Card>
             </div>
           </div>
           <div className="bg-[#02020c] py-12">
@@ -193,42 +184,37 @@ export default async function Home() {
               How It Works
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              
-              <div className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div className="bg-background p-4 rounded-full mb-4">
-                  <MousePointerClick />
+              {[
+                {
+                  title: "Step 1: Select Game",
+                  description: "Choose your favorite supported game to get started.",
+                  icon: <MousePointerClick />
+                },
+                {
+                  title: "Step 2: Enter Username",
+                  description: "Enter your in-game username to fetch your stats.",
+                  icon: <Pencil />
+                },
+                {
+                  title: "Step 3: View Stats",
+                  description: "Instantly view and track your in-game performance.",
+                  icon: <Check />
+                }
+              ].map((step, index) => (
+                <div
+                  key={index}
+                  className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
+                  <div className="bg-background p-4 rounded-full mb-4">
+                    {step.icon}
+                  </div>
+                  <h3 className="text-xl text-white font-semibold mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-300 text-center">
+                    {step.description}
+                  </p>
                 </div>
-                <h3 className="text-xl text-white font-semibold mb-2">
-                  Step 1: Select Game
-                </h3>
-                <p className="text-gray-300 text-center">
-                  Choose your favorite supported game to get started.
-                </p>
-              </div>
-
-              <div className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div className="bg-background p-4 rounded-full mb-4">
-                  <Pencil/>
-                </div>
-                <h3 className="text-xl text-white font-semibold mb-2">
-                  Step 2: Enter Username
-                </h3>
-                <p className="text-gray-300 text-center">
-                  Enter your in-game username to fetch your stats.
-                </p>
-              </div>
-
-              <div className="bg-[#0f3460] p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div className="bg-background p-4 rounded-full mb-4">
-                  <Check />
-                </div>
-                <h3 className="text-xl text-white font-semibold mb-2">
-                  Step 3: View Stats
-                </h3>
-                <p className="text-gray-300 text-center">
-                  Instantly view and track your in-game performance.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
