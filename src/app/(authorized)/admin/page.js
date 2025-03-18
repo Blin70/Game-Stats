@@ -12,19 +12,18 @@ const AdminDashboard = async () => {
     
     const supabase = createClient();
 
-
     const { data, error } = await supabase.from('profiles').select('*');
     if(error) console.error("Error while fetching users from table", error);
 
-    const renderedUsers = data?.map((item) => (
-        <TableRow key={item.id} className="h-10 text-xl">
-            <TableCell>{item.id.slice(0, 8)+"....."}</TableCell>
-            <TableCell>{item.name}</TableCell>
-            <TableCell>{item.email}</TableCell>
-            <TableCell>{item.phone || '-'}</TableCell>
-            <TableCell>{item.joined.slice(0,10)}</TableCell>
-            <TableCell>{item.role}</TableCell>
-            <TableCell><EditUserButton user={item} /></TableCell>
+    const renderedUsers = data?.map((user) => (
+        <TableRow key={user.id} className="h-10 text-xl">
+            <TableCell>{user.id.slice(0, 8)+"....."}</TableCell>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.phone || '-'}</TableCell>
+            <TableCell>{user.joined.slice(0,10)}</TableCell>
+            <TableCell>{user.role}</TableCell>
+            <TableCell><EditUserButton user={user} /></TableCell>
         </TableRow>
     ));
 

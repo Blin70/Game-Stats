@@ -25,14 +25,14 @@ const SupportedGames = async () => {
 
     const renderedGames = Games.map((i, index)=>{
         return(
-            <Card key={index} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">
+            <Card key={index} className="shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">
                 <CardHeader className="p-0">
                     <Image src={i.image_url} width={i.image_url.width || 500} height={i.image_url.height || 375} alt={i.name} className="w-full h-40 object-cover" />  {/*Adjust the 'size' when making the website responsive*/}
                 </CardHeader>
                 <CardContent className="p-4">
                     <CardTitle className="text-xl font-bold">{i.name}</CardTitle>
-                    <p className="mt-2 text-gray-600">Track your stats for this game.</p>
-                    <Button asChild className="mt-4 text-white px-4 py-2 rounded-lg">
+                    <p className="mt-2 text-grayed-out">Track your stats for this game.</p>
+                    <Button asChild className="mt-4 px-4 py-2 rounded-lg">
                       <Link href={`/games/${i.alias}`}>View Stats</Link>
                     </Button>
                     <label className="flex items-center float-right gap-1 mt-6 font-medium leading-loose tracking-tight">

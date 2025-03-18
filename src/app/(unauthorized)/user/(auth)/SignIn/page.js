@@ -56,7 +56,7 @@ const SignIn = () => {
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='text' name='Email' placeholder='Email' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" autoComplete='off' />
+                                    <Input {...field} type='text' name='Email' placeholder='Email' className="h-14 w-4/6 rounded-2xl mx-auto !text-2xl" autoComplete='off' />
                                 </FormControl>
                                 <FormMessage className="flex justify-end mr-28" />
                             </FormItem>
@@ -68,7 +68,7 @@ const SignIn = () => {
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='password' name='Password' placeholder='Password' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" autoComplete='off' />
+                                    <Input {...field} type='password' name='Password' placeholder='Password' className="h-14 w-4/6 rounded-2xl mx-auto !text-2xl" autoComplete='off' />
                                 </FormControl>
                                 <FormMessage className="flex justify-end mr-28" />
                             </FormItem>

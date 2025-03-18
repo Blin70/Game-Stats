@@ -109,8 +109,6 @@ const EditProfileModal = () => {
         </div>
     ))
 
-
-    // WHEN YOU IMPLEMENT DARK MODE, JUST ADD THE CLASSNAME "dark" TO 'Tabs' IF THE USER HAS DARKMODE TURNED ON.
     return(
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild className="float-right mr-5">

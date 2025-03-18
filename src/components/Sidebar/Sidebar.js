@@ -12,6 +12,7 @@ import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { ChartNoAxesCombined, Bell, Info, Settings, LogOut, User} from 'lucide-react';
 import { toast } from "sonner";
 import LinkedAccountsSection from "./LinkedAccountsSection";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -28,7 +29,7 @@ const Sidebar = () => {
   };
   
   return (
-    <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] max-h-screen px-3 py-1 overflow-hidden break-words rounded-md bg-gray-50">
+    <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] max-h-screen px-3 py-1 overflow-hidden break-words rounded-md bg-background">
       <div className="flex items-center w-full py-3">
         <Avatar className="inline-block size-16">
           <Link href='/user/Profile'>
@@ -42,37 +43,39 @@ const Sidebar = () => {
         </div>
       </div>
       <Separator />
-      <Command className="bg-transparent">
-        <CommandList className="min-h-full">
-          <CommandGroup heading="Suggestions">
-            <Link href='/SupportedGames'>
-              <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="size-8 mr-3" />} />
-            </Link>
-            <Link href='/Notifications'>
-              <CommandItems text='Notifications' icon={<Bell className="size-8 mr-3" />} />
-            </Link>
-          </CommandGroup>
-          <LinkedAccountsSection />
-          {user?.role == 'service_role'
-            &&(
-              <CommandGroup heading="Administation">
-                <Link href='/admin'>
-                  <CommandItems text='User Management' icon={<User className="size-8 mr-3" />} />            
-                </Link>
-              </CommandGroup>
-            )
-          }
-          <CommandGroup heading="Account">
-            <Link href='/Help'>
-              <CommandItems text='Help' icon={<Info className="size-8 mr-3" />} />
-            </Link>
-            <Link href='/user/Settings'>
-              <CommandItems text='Settings' icon={<Settings className="size-8 mr-3" />} />
-            </Link>
-            <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="size-8 mr-3" />} />
-          </CommandGroup>
-        </CommandList>
-      </Command>
+      <ScrollArea className="h-full">
+        <Command className="bg-transparent">
+          <CommandList className="min-h-fit">
+            <CommandGroup heading="Suggestions">
+              <Link href='/SupportedGames'>
+                <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="!size-8 mr-3" />} />
+              </Link>
+              <Link href='/Notifications'>
+                <CommandItems text='Notifications' icon={<Bell className="!size-8 mr-3" />} />
+              </Link>
+            </CommandGroup>
+            <LinkedAccountsSection />
+            {user?.role == 'service_role'
+              &&(
+                <CommandGroup heading="Administation">
+                  <Link href='/admin'>
+                    <CommandItems text='User Management' icon={<User className="!size-8 mr-3" />} />            
+                  </Link>
+                </CommandGroup>
+              )
+            }
+            <CommandGroup heading="Account">
+              <Link href='/Help'>
+                <CommandItems text='Help' icon={<Info className="!size-8 mr-3" />} />
+              </Link>
+              <Link href='/user/Settings'>
+                <CommandItems text='Settings' icon={<Settings className="!size-8 mr-3" />} />
+              </Link>
+              <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="!size-8 mr-3" />} />
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </ScrollArea>
       <ModeToggle />
     </div>
   );

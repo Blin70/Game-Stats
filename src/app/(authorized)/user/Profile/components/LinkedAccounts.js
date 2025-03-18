@@ -19,7 +19,7 @@ const LinkedAccounts = () => {
     }
 
     const renderedLinkedAccounts = linkedAccounts.map((i, index) => (
-        <div key={index} className="max-w-2xl w-5/12 justify-between items-center flex rounded-lg p-4 m-4 bg-gray-100 shadow-md">
+        <div key={index} className="max-w-2xl w-5/12 justify-between items-center flex rounded-lg p-4 m-4 bg-panel shadow-md">
              <div className="flex items-center space-x-4">
                 <Image src={i.games.icon_url} width='70' height='70' alt="Game Icon" className="rounded-full" />
 
@@ -30,7 +30,7 @@ const LinkedAccounts = () => {
             </div>
                 
             <div className="h-full flex flex-col justify-between">
-                <p className="text-sm text-gray-500">Linked on: {i.linked_at.slice(0,10)}</p>
+                <p className="text-sm text-grayed-out">Linked on: {i.linked_at.slice(0,10)}</p>
                 <Button onClick={() => handleUnlinkAccount(i.id)} variant="outline" className="w-fit h-8 ml-auto">Unlink</Button>
             </div>
         </div>
@@ -45,8 +45,8 @@ const LinkedAccounts = () => {
                 renderedLinkedAccounts
                 )
                 : (
-                    <div className="m-5 p-5 w-full bg-gray-100 shadow-md rounded-lg text-center">
-                        <h1 className="text-gray-500">You havent linked any game accounts yet</h1>
+                    <div className="m-5 p-5 w-full bg-panel shadow-md rounded-lg text-center">
+                        <h1 className="text-grayed-out">You havent linked any game accounts yet</h1>
                         <Link href="/user/Settings">
                             <Button className="mt-5">Link a Game Account</Button>
                         </Link>

@@ -66,7 +66,7 @@ const SignUp = () => {
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='text' name='Name' placeholder='Name' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" autoComplete='off' />
+                                    <Input {...field} type='text' name='Name' placeholder='Name' className="h-14 w-4/6 rounded-2xl mx-auto !text-2xl" autoComplete='off' />
                                 </FormControl>
                                 <FormMessage className="flex justify-end mr-28" />
                             </FormItem>
@@ -78,7 +78,7 @@ const SignUp = () => {
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='text' name='Email' placeholder='Email' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" autoComplete='off' />
+                                    <Input {...field} type='text' name='Email' placeholder='Email' className="h-14 w-4/6 rounded-2xl mx-auto !text-2xl" autoComplete='off' />
                                 </FormControl>
                                 <FormMessage className="flex justify-end mr-28" />
                             </FormItem>
@@ -90,7 +90,7 @@ const SignUp = () => {
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='password' name='Password' placeholder='Password' autoComplete='off' className="h-14 w-4/6 rounded-2xl mx-auto text-2xl" />
+                                    <Input {...field} type='password' name='Password' placeholder='Password' autoComplete='off' className="h-14 w-4/6 rounded-2xl mx-auto !text-2xl" />
                                 </FormControl>
                                 <FormMessage className="flex justify-end mr-28" />
                             </FormItem>
