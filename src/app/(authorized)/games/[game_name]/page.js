@@ -12,7 +12,7 @@ const UsernameEntry = async ({ params: { game_name } }) => {
     
     if(!isSupported) redirect('/unauthorized');
 
-    const GameData = await getGamePlatforms(game_name, 'alias');
+    const gameData = await getGamePlatforms(game_name, 'alias');
 
     const possiblePlatforms = {
         "ubi":{
@@ -37,7 +37,7 @@ const UsernameEntry = async ({ params: { game_name } }) => {
         }
     }
 
-    const renderedPlatforms = GameData?.platforms?.map((platform, index) => (
+    const renderedPlatforms = gameData?.platforms?.map((platform, index) => (
         <SelectItem key={index} value={platform} className="font-semibold">
             {possiblePlatforms[platform].icon} {possiblePlatforms[platform].name} 
         </SelectItem>
@@ -47,15 +47,15 @@ const UsernameEntry = async ({ params: { game_name } }) => {
     const submitUsername = async (formData) => {
         "use server";
 
-        const Username = formData.get('Username');
-        const Platform = formData.get('SelectedPlatform');
+        const username = formData.get('Username');
+        const platform = formData.get('SelectedPlatform');
 
-        redirect(`/games/${game_name}/${Platform}/${encodeURIComponent(Username)}`)
+        redirect(`/games/${game_name}/${platform}/${encodeURIComponent(username)}`)
     }
 
     return (
         <form action={submitUsername} className="h-fit w-fit mx-auto p-4 text-center mt-40 space-y-4">
-            <h1 className="text-5xl">{GameData.name} Stats</h1>
+            <h1 className="text-5xl">{gameData.name} Stats</h1>
             <div className="flex space-x-5 items-center">
                 <Select name="SelectedPlatform">
                     <SelectTrigger className="w-fit space-x-1 focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0">

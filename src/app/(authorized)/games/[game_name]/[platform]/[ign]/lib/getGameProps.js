@@ -12,87 +12,87 @@ import Weapons from "../components/Splitgate/Weapons";
 import { Radiation } from 'lucide-react';
 
 
-export default function getGameProps(gameName, PlayerData, platform, ign){
-    if(!PlayerData) return null;
+export default function getGameProps(gameName, playerData, platform, ign){
+    if(!playerData) return null;
 
     switch(gameName){
         case 'apex': {
             const rankKeys = ['lifetimePeakRankScore', 'peakRankScore', 'rankScore'];
             const coreStatsKeys = ['level', 'kills', 'damage', 'wins'];
             
-            let AllTimeStats = PlayerData?.categorizedStats?.overview[0]?.stats;
+            let allTimeStats = playerData?.categorizedStats?.overview[0]?.stats;
 
-            AllTimeStats = Object.fromEntries(
-                Object.entries(AllTimeStats).filter(([key]) => key !== 'arenaRankScore')
+            allTimeStats = Object.fromEntries(
+                Object.entries(allTimeStats).filter(([key]) => key !== 'arenaRankScore')
             );
 
-            const rankStats = Object.fromEntries(Object.entries(AllTimeStats).filter(([key]) => rankKeys.includes(key)));
-            const coreStats = Object.entries(AllTimeStats).filter(([key]) => coreStatsKeys.includes(key));
-            const otherStats = Object.entries(AllTimeStats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
+            const rankStats = Object.fromEntries(Object.entries(allTimeStats).filter(([key]) => rankKeys.includes(key)));
+            const coreStats = Object.entries(allTimeStats).filter(([key]) => coreStatsKeys.includes(key));
+            const otherStats = Object.entries(allTimeStats).filter(([key]) => !rankKeys.includes(key) && !coreStatsKeys.includes(key));
 
             return {
-                RankSection: <RankSection Ranks={rankStats} />,
-                SteamAliasSection: PlayerData.steamUsername ? <SteamAliasSection steamUsername={PlayerData.steamUsername} /> : null,
-                LifetimeOverviewSection: <LifetimeOverviewSectionApex CurrentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />,
-                RenderedLegends: PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend} /> : null,
-                RenderedSomeLegends: PlayerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={PlayerData.categorizedStats.legend.slice(0, 4)} /> : null,
+                rankSection: <RankSection ranks={rankStats} />,
+                steamAliasSection: playerData.steamUsername ? <SteamAliasSection steamUsername={playerData.steamUsername} /> : null,
+                lifetimeOverviewSection: <LifetimeOverviewSectionApex currentRank={rankStats.rankScore} coreStats={coreStats} otherStats={otherStats} />,
+                renderedLegends: playerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={playerData.categorizedStats.legend} /> : null,
+                renderedSomeLegends: playerData?.categorizedStats?.legend ? <RenderedLegends legendsArray={playerData.categorizedStats.legend.slice(0, 4)} /> : null,
             };
         }
         
         case 'division-2': {
-            const GroupedCategories = {};
+            const groupedCategories = {};
 
-            Object.entries(PlayerData?.categorizedStats?.overview[0]?.stats).forEach((i) => {
-                if (!GroupedCategories[i[1].category]) {
-                    GroupedCategories[i[1].category] = { [i[0]]: i[1] };
+            Object.entries(playerData?.categorizedStats?.overview[0]?.stats).forEach((i) => {
+                if (!groupedCategories[i[1].category]) {
+                    groupedCategories[i[1].category] = { [i[0]]: i[1] };
                 } else {
-                    GroupedCategories[i[1].category][i[0]] = i[1];
+                    groupedCategories[i[1].category][i[0]] = i[1];
                 }
             });
 
            const generalKeys = ['killsPvP', 'killsNpc', 'killsSkill', 'headshots', 'itemsLooted', 'eCreditBalance'];
-           const generalStats = Object.entries(GroupedCategories?.general).filter(([key]) => generalKeys.includes(key));
+           const generalStats = Object.entries(groupedCategories?.general).filter(([key]) => generalKeys.includes(key));
 
            return {
-                Awards: <Awards stats={{
-                    rankDz: GroupedCategories?.darkZone?.rankDZ,
-                    commendationCount: GroupedCategories?.general?.commendationCount,
-                    commendationScore: GroupedCategories?.general?.commendationScore,
-                    killsSpecializationDemolitionist: GroupedCategories?.general?.killsSpecializationDemolitionist,
-                    killsSpecializationSurvivalist: GroupedCategories?.general?.killsSpecializationSurvivalist,
-                    killsSpecializationSharpshooter: GroupedCategories?.general?.killsSpecializationSharpshooter,
-                    latestConflictRank: GroupedCategories?.conflictPvp?.latestConflictRank
+                awards: <Awards stats={{
+                    rankDz: groupedCategories?.darkZone?.rankDZ,
+                    commendationCount: groupedCategories?.general?.commendationCount,
+                    commendationScore: groupedCategories?.general?.commendationScore,
+                    killsSpecializationDemolitionist: groupedCategories?.general?.killsSpecializationDemolitionist,
+                    killsSpecializationSurvivalist: groupedCategories?.general?.killsSpecializationSurvivalist,
+                    killsSpecializationSharpshooter: groupedCategories?.general?.killsSpecializationSharpshooter,
+                    latestConflictRank: groupedCategories?.conflictPvp?.latestConflictRank
                 }} />,
-                LifetimeOverviewSection: <LifetimeOverviewSectionDivision2 stats={generalStats} playtime={GroupedCategories?.general?.timePlayed} />,
-                DarkZoneSection: <OtherSections stats={Object.entries(GroupedCategories?.darkZone)} Title='Dark Zone' Icon={<Radiation className="size-9" />} />,
-                PvESection: <OtherSections stats={Object.entries(GroupedCategories?.pve)} Title='PvE' />,
-                PlayDetailsSection: <PlayDetailsSection stats={Object.entries(GroupedCategories?.kills)} />
+                lifetimeOverviewSection: <LifetimeOverviewSectionDivision2 stats={generalStats} playtime={groupedCategories?.general?.timePlayed} />,
+                darkZoneSection: <OtherSections stats={Object.entries(groupedCategories?.darkZone)} title='Dark Zone' icon={<Radiation className="size-9" />} />,
+                pVeSection: <OtherSections stats={Object.entries(groupedCategories?.pve)} title='PvE' />,
+                playDetailsSection: <PlayDetailsSection stats={Object.entries(groupedCategories?.kills)} />
             };
         }
 
         case 'splitgate': {
-            const GroupedCategories = {};
+            const groupedCategories = {};
 
-            Object.entries(PlayerData?.categorizedStats?.overview[0]?.stats).forEach((i) => {
-                if (!GroupedCategories[i[1].category]) {
-                    GroupedCategories[i[1].category] = { [i[0]]: i[1] };
+            Object.entries(playerData?.categorizedStats?.overview[0]?.stats).forEach((i) => {
+                if (!groupedCategories[i[1].category]) {
+                    groupedCategories[i[1].category] = { [i[0]]: i[1] };
                 } else {
-                    GroupedCategories[i[1].category][i[0]] = i[1];
+                    groupedCategories[i[1].category][i[0]] = i[1];
                 }
             });
 
             const overviewStatsKeys = ['kills', 'assists', 'deaths', 'damageDealt', 'kd', 'headshotAccuracy'];
 
             const overviewStats = {
-                ...GroupedCategories.game,
-                ...Object.fromEntries(Object.entries(GroupedCategories.combat).filter(([key]) => overviewStatsKeys.includes(key)))
+                ...groupedCategories.game,
+                ...Object.fromEntries(Object.entries(groupedCategories.combat).filter(([key]) => overviewStatsKeys.includes(key)))
             }
 
             return{
-                LifetimeOverviewSection: <LifetimeOverviewSectionSplitgate stats={Object.entries(overviewStats)} playtime={GroupedCategories?.game?.timePlayed} />,
-                OverviewPlaylists: <Playlists playlists={PlayerData?.categorizedStats?.playlist?.slice(0,12)} length={6} />,
-                Playlists: <Playlists playlists={PlayerData?.categorizedStats?.playlist} />,
-                Weapons: <Weapons game={gameName} platform={platform} ign={ign} />
+                lifetimeOverviewSection: <LifetimeOverviewSectionSplitgate stats={Object.entries(overviewStats)} playtime={groupedCategories?.game?.timePlayed} />,
+                overviewPlaylists: <Playlists playlists={playerData?.categorizedStats?.playlist?.slice(0,12)} length={6} />,
+                playlists: <Playlists playlists={playerData?.categorizedStats?.playlist} />,
+                weapons: <Weapons game={gameName} platform={platform} ign={ign} />
             }
         }
 

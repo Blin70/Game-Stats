@@ -6,10 +6,10 @@ import Division2Tabs from "./Division-2/Division2Tabs";
 import SplitgateTabs from "./Splitgate/SplitgateTabs";
 
 
-const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
-    const [ activeTab, setActiveTab ] = useState(Object.keys(CategorizedStats)[0]);
+const StatTabs = ({ categorizedStats, gameProps, gameName }) => {
+    const [ activeTab, setActiveTab ] = useState(Object.keys(categorizedStats)[0]);
 
-    const renderedTabOptions = Object.keys(CategorizedStats).map((option, index) => (
+    const renderedTabOptions = Object.keys(categorizedStats).map((option, index) => (
         <li key={index} onClick={() => setActiveTab(option)} className={`${activeTab === option && "text-white/100 border-b-2"} capitalize h-fit cursor-pointer hover:scale-105 hover:text-white/100`}>{option}</li>
     ))
 
@@ -20,10 +20,10 @@ const StatTabs = ({ CategorizedStats, GameProps, gameName }) => {
           <ul className="flex gap-6 text-white/80">{renderedTabOptions}</ul>
         </div>
 
-        {gameName === "apex" && <ApexLegendsTabs activeTab={activeTab} RankSection={GameProps?.RankSection} SteamAliasSection={GameProps?.SteamAliasSection} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} RenderedSomeLegends={GameProps?.RenderedSomeLegends} RenderedLegends={GameProps?.RenderedLegends} />}
+        {gameName === "apex" && <ApexLegendsTabs activeTab={activeTab} rankSection={gameProps?.rankSection} steamAliasSection={gameProps?.steamAliasSection} lifetimeOverviewSection={gameProps?.lifetimeOverviewSection} renderedSomeLegends={gameProps?.renderedSomeLegends} renderedLegends={gameProps?.renderedLegends} />}
         {gameName === "csgo" && <h1>Section in developement</h1>}
-        {gameName === "division-2" && <Division2Tabs Awards={GameProps?.Awards} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} DarkZoneSection={GameProps?.DarkZoneSection} PvESection={GameProps?.PvESection} PlayDetailsSection={GameProps?.PlayDetailsSection} /> }
-        {gameName === "splitgate" && <SplitgateTabs activeTab={activeTab} LifetimeOverviewSection={GameProps?.LifetimeOverviewSection} OverviewPlaylists={GameProps?.OverviewPlaylists} Playlists={GameProps?.Playlists} Weapons={GameProps?.Weapons} />}
+        {gameName === "division-2" && <Division2Tabs awards={gameProps?.awards} lifetimeOverviewSection={gameProps?.lifetimeOverviewSection} darkZoneSection={gameProps?.darkZoneSection} pVeSection={gameProps?.pVeSection} playDetailsSection={gameProps?.playDetailsSection} /> }
+        {gameName === "splitgate" && <SplitgateTabs activeTab={activeTab} lifetimeOverviewSection={gameProps?.lifetimeOverviewSection} overviewPlaylists={gameProps?.overviewPlaylists} playlists={gameProps?.playlists} weapons={gameProps?.weapons} />}
       </>
     );
 }

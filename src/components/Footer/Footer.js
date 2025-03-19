@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 const Footer = ({ user }) => {
 
-    const CompanyItems = [
+    const companyItems = [
       {sendTo: "#", text: "About Us"},
       {sendTo: "#", text: "Careers"},
       {sendTo: !user ? "/user/SignIn" : "/Help", text: !user ? undefined : "Help"}
@@ -21,7 +21,7 @@ const Footer = ({ user }) => {
       );
     });
 
-    const QuickLinks = [
+    const quickLinks = [
       { sendTo: "#", text: "Leaderboards" },
       { sendTo: "/SupportedGames", text: "Supported Games" },
       { sendTo: "/user/Profile", text: "Profile" }
@@ -62,7 +62,7 @@ const Footer = ({ user }) => {
                     <li><Link href='/user/SignIn' className="hover:text-white">Sign In</Link></li>
                     <li><Link href='/user/SignUp' className="hover:text-white">Sign Up</Link></li>                
                 </>
-                :  QuickLinks
+                :  quickLinks
                 }
               </ul>
             </div>
@@ -70,7 +70,7 @@ const Footer = ({ user }) => {
             <div>
               <h3 className="text-xl font-semibold mb-4">Company</h3>
               <ul className="text-gray-400 space-y-2">
-                {CompanyItems}
+                {companyItems}
               </ul>
             </div>
 

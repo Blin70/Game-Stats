@@ -34,13 +34,13 @@ export async function sendNotification(user_id, type, title, message) {
     if(error) console.error('[sendNotification] Supabase error while sending notification', error);
 }
 
-export async function discardNotification(NotificationId) {
+export async function discardNotification(notificationId) {
     const supabase = createClient();
   
-    const { error } = await supabase.from('notifications').delete().eq('id', NotificationId);
+    const { error } = await supabase.from('notifications').delete().eq('id', notificationId);
   
     if(error){
-      console.error(`[discardNotification] Supabase error while discarding notification with id: ${NotificationId}`, error);
+      console.error(`[discardNotification] Supabase error while discarding notification with id: ${notificationId}`, error);
       return { error: 'Error while discarding notification. Please try again' };
     }
   

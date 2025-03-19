@@ -93,7 +93,7 @@ const EditProfileModal = () => {
         } 
     }
 
-    const AccountFields = [
+    const accountFields = [
         { name: 'name', inputType: 'text' },
         { name: 'email', inputType: 'text' },
     ]
@@ -130,7 +130,7 @@ const EditProfileModal = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                {renderedFields(AccountFields)}
+                                {renderedFields(accountFields)}
                             </CardContent>
                             <CardFooter>
                                 <Button onClick={handleAccChanges}>Save changes</Button>

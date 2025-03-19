@@ -20,60 +20,60 @@ const TopGames = async () => {
     const cookieStore = cookies();
     const indexCookie = cookieStore.get('selectedGame')?.value || '0';
 
-    let GameName = 'valorant';
-    let TournamentGameName;
+    let gameName = 'valorant';
+    let tournamentGameName;
 
    switch(indexCookie){
     case '0':
-        GameName = 'valorant';
-        TournamentGameName = GameName;
+        gameName = 'valorant';
+        tournamentGameName = gameName;
         break;
     case '1':
-        GameName = 'starcraft-brood-war';
-        TournamentGameName = GameName;
+        gameName = 'starcraft-brood-war';
+        tournamentGameName = gameName;
         break;
     case '2':
-        GameName = 'starcraft-2';
-        TournamentGameName = GameName;
+        gameName = 'starcraft-2';
+        tournamentGameName = gameName;
         break;
     case '3':
-        GameName = 'rocket-league'
-        TournamentGameName = 'rl';
+        gameName = 'rocket-league'
+        tournamentGameName = 'rl';
         break;
     case '4':
-        GameName = 'tom-clancys-rainbow-six-siege-2'
-        TournamentGameName = 'r6siege';
+        gameName = 'tom-clancys-rainbow-six-siege-2'
+        tournamentGameName = 'r6siege';
         break;
     case '5':
-        GameName = 'pubg-mobile'
-        TournamentGameName = 'pubg';
+        gameName = 'pubg-mobile'
+        tournamentGameName = 'pubg';
         break;
     case '6':
-        GameName = 'overwatch'
-        TournamentGameName = 'ow';
+        gameName = 'overwatch'
+        tournamentGameName = 'ow';
         break;
     case '7':
-        GameName = 'league-of-legends'
-        TournamentGameName = 'lol';
+        gameName = 'league-of-legends'
+        tournamentGameName = 'lol';
         break;
     case '8':
-        GameName = 'dota-2'
-        TournamentGameName = 'dota2';
+        gameName = 'dota-2'
+        tournamentGameName = 'dota2';
         break;
     case '9':
-        GameName = 'counter-strike-global-offensive'
-        TournamentGameName = 'csgo'
+        gameName = 'counter-strike-global-offensive'
+        tournamentGameName = 'csgo'
         break;
     case '10':
-        GameName = 'call-of-duty-modern-warfare'
-        TournamentGameName = 'codmw';
+        gameName = 'call-of-duty-modern-warfare'
+        tournamentGameName = 'codmw';
         break;
    }
 
-    const GameInfo = await RawgApi(GameName);
-    const Tournaments = await PandaScoreApi(TournamentGameName, 6);
+    const gameInfo = await RawgApi(gameName);
+    const tournaments = await PandaScoreApi(tournamentGameName, 6);
 
-    const renderedTournaments = Tournaments.map((tournament, index) => {
+    const renderedTournaments = tournaments.map((tournament, index) => {
                 return(
                     <Card key={index} className="w-full max-w-sm min-h-full px-5 py-2 inline-block overflow-hidden ml-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
                         <CardHeader>
@@ -104,7 +104,7 @@ const TopGames = async () => {
                 );
     })
 
-    const renderedGameInfo = GameInfo.map((game, index) => {
+    const renderedGameInfo = gameInfo.map((game, index) => {
         return(
             <div key={index} className="space-y-5">
                 <div className="space-x-5 text-center my-5 w-fit mx-auto">
@@ -129,7 +129,7 @@ const TopGames = async () => {
         );
     })
 
-    const TheGames = [
+    const theGames = [
       {name: "valorant", image: valorantImage},
       {name: "starcraft-brood-war", image: starcraftBroodWarImage},
       {name: "starcraft-2", image: starcraft2Image},
@@ -146,8 +146,8 @@ const TopGames = async () => {
 
     return (
        <div className="container mx-auto px-36 py-4 space-y-8">
-        <h1 className="text-center font-bold text-5xl">{GameInfo[0].Name}</h1>
-            <Carousel TheGames={TheGames} />
+        <h1 className="text-center font-bold text-5xl">{gameInfo[0].Name}</h1>
+            <Carousel theGames={theGames} />
             {renderedGameInfo}
        </div>
     )

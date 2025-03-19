@@ -20,8 +20,8 @@ const DropdownModal = ({ children, triggerIcon, triggerText, triggerStyle, title
                 toast[Object.keys(banRes)[0]]?.(Object.values(banRes)[0]);
                 break;
             case 'delete':
-                const DeleteRes = await action(user);
-                toast[Object.keys(DeleteRes)[0]]?.(Object.values(DeleteRes)[0]);
+                const deleteRes = await action(user);
+                toast[Object.keys(deleteRes)[0]]?.(Object.values(deleteRes)[0]);
                 break;
         }
     }

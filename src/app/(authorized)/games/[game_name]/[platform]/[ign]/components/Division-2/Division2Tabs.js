@@ -1,16 +1,15 @@
-const Division2Tabs = ({ Awards, LifetimeOverviewSection, DarkZoneSection, PvESection, PlayDetailsSection }) => {
+const Division2Tabs = ({ awards, lifetimeOverviewSection, darkZoneSection, pVeSection, playDetailsSection }) => {
     
-
     return(
         <div className="grid grid-cols-[25%,75%] space-x-4 mt-6 text-white/90">
             <aside>
-                {Awards}
+                {awards}
             </aside>
             <main className="space-y-5">
-                {LifetimeOverviewSection}
-                {DarkZoneSection}
-                {PvESection}
-                {PlayDetailsSection}
+                {lifetimeOverviewSection}
+                {darkZoneSection}
+                {pVeSection}
+                {playDetailsSection}
             </main>
         </div>
     );

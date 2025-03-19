@@ -15,7 +15,7 @@ import { useUser } from "@/app/context/userContext";
 import { createClient } from "@/app/utils/supabase/client";
 
 const formSchema = z.object({
-    NewPassword: z.string().nonempty({
+    newPassword: z.string().nonempty({
         message: 'Password field cannot be empty'
     }).min(8,{
         message: 'Password must be at least 8 characters.'
@@ -23,7 +23,7 @@ const formSchema = z.object({
     repeatNewPassword: z.string().nonempty({
         message: 'Repeat password field cannot be empty'
     })
-}).refine((data) => data.NewPassword === data.repeatNewPassword, {
+}).refine((data) => data.newPassword === data.repeatNewPassword, {
     message: "Passwords don't match",
     path: ["repeatNewPassword"]
 });
@@ -39,7 +39,7 @@ const ResetPassword = () => {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            NewPassword: "",
+            newPassword: "",
             repeatNewPassword: ""
         }
     })
@@ -49,29 +49,29 @@ const ResetPassword = () => {
             const verifyResetOTP = async () => {        
                 const supabase = createClient(); // cant put these in server actions bcz session context is only available in the browser.
                 
-                const { data: OTPData, error: OTPError } = await supabase.auth.verifyOtp({ type, token_hash });
+                const { data: otpData, error: otpError } = await supabase.auth.verifyOtp({ type, token_hash });
                 
-                if(OTPError){
-                    if(OTPError.code === 'otp_expired'){
+                if(otpError){
+                    if(otpError.code === 'otp_expired'){
                         toast.error('Invalid or expired reset link.')
                         return router.push('/');
                     }
                 
-                    console.error('[ResetPassword] Supabase error while verifying hash code', OTPError)
+                    console.error('[ResetPassword] Supabase error while verifying hash code', otpError)
                     toast.error('Unexpected error. Please try again')
                     return router.push('/');
                 }
 
                 
-                const { error: SessionError } = await supabase.auth.setSession(OTPData.session);
+                const { error: sessionError } = await supabase.auth.setSession(otpData.session);
                 
-                if(SessionError){
-                    console.error('[ResetPassword] Supabase error while setting session', SessionError);
+                if(sessionError){
+                    console.error('[ResetPassword] Supabase error while setting session', sessionError);
                     toast.error('Unexpected error. Please try again');
                     return router.push('/');
                 }
                 
-                setUser(OTPData.user)
+                setUser(otpData.user)
                 setIsVerified(true)
             }
 
