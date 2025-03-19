@@ -5,10 +5,10 @@ const Legend = ({ legend }) => {
 
   if(Object.keys(legend.stats).length === 0 ) return;
 
-  const LegendCoreStatsKeys = ['kills', 'damage', 'wins'];
+  const legendCoreStatsKeys = ['kills', 'damage', 'wins'];
     
-  const LegendCoreStats = Object.entries(legend.stats).filter(([key]) => LegendCoreStatsKeys.includes(key));
-  const LegendOtherStats = Object.entries(legend.stats).filter(([key]) => !LegendCoreStatsKeys.includes(key));
+  const legendCoreStats = Object.entries(legend.stats).filter(([key]) => legendCoreStatsKeys.includes(key));
+  const legendOtherStats = Object.entries(legend.stats).filter(([key]) => !legendCoreStatsKeys.includes(key));
     
   return(
     <div className="rounded-2xl bg-[#1e1e1e] mt-5 first:mt-0">
@@ -18,10 +18,10 @@ const Legend = ({ legend }) => {
       </div>
       <div className="p-5">
         <div className="flex justify-center gap-10">
-          {renderedCoreStats(LegendCoreStats)}
+          {renderedCoreStats(legendCoreStats)}
         </div>
         <div className="grid grid-cols-4 gap-7 w-full mt-7 gap-y-10">
-          {renderedOtherStats(LegendOtherStats)}
+          {renderedOtherStats(legendOtherStats)}
         </div>
       </div>
     </div>

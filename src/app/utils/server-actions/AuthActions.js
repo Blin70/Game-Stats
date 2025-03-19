@@ -18,7 +18,7 @@ export async function signUp(values) {
     },
   };
 
-  const { data: UserData, error } = await supabase.auth.signUp(data);
+  const { data: userData, error } = await supabase.auth.signUp(data);
 
   if(error){
     if(error.code === 'user_already_exists') return { error: 'This user already exists' }
@@ -27,7 +27,7 @@ export async function signUp(values) {
     return { error: "Something went wrong. Please try again"}
   }
 
-  sendNotification(UserData?.user?.id, "New User", "Welcome to Game Stats!", "Track your game stats, compare leaderboards, and improve your skills. Start by searching for your in-game name!");
+  sendNotification(userData?.user?.id, "New User", "Welcome to Game Stats!", "Track your game stats, compare leaderboards, and improve your skills. Start by searching for your in-game name!");
 
   revalidatePath("/");
   return redirect("/user/Profile");

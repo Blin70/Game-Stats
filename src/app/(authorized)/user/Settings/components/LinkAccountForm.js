@@ -10,12 +10,12 @@ import { useState } from "react";
 import { useLinkedAccounts } from "@/app/context/linkedAccountsContext";
 
 
-const LinkAccountForm = ({ CurrentlySupportedGames }) => {
+const LinkAccountForm = ({ currentlySupportedGames }) => {
   const [availablePlatforms, setAvailablePlatforms] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const { setLinkedAccounts } = useLinkedAccounts();
 
-  const renderedGameOptions = CurrentlySupportedGames.map((game) => {
+  const renderedGameOptions = currentlySupportedGames.map((game) => {
     return(
       <SelectItem key={game.name} value={game.name}>{game.name}</SelectItem>
     );
@@ -25,11 +25,11 @@ const LinkAccountForm = ({ CurrentlySupportedGames }) => {
     <SelectItem key={index} value={platform}>{platform}</SelectItem>
   ))
 
-  const handleGameChange = async (Game) => {
+  const handleGameChange = async (game) => {
     setSelectedPlatform(null);
-    const GamePlatforms = await getGamePlatforms(Game, 'name');
+    const gamePlatforms = await getGamePlatforms(game, 'name');
 
-    setAvailablePlatforms(GamePlatforms.platforms);
+    setAvailablePlatforms(gamePlatforms.platforms);
   }
 
   const handleSubmit = async (event) => {

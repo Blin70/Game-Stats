@@ -6,10 +6,10 @@ import { discardNotification } from "@/app/utils/server-actions/notificationActi
 import { toast } from "sonner";
 
 
-const DiscardNotificationBtn = ({ NotificationId }) => {
+const DiscardNotificationBtn = ({ notificationId }) => {
 
     const handleDiscard = async () => {
-        const res = await discardNotification(NotificationId);
+        const res = await discardNotification(notificationId);
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
 

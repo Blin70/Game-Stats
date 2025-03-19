@@ -8,7 +8,7 @@ const Notifications = async () => {
     const renderedNotifications = notifications?.map((notification, index) => (
         <div key={index} className="grid grid-cols-[auto,1fr,auto] bg-panel max-w-3xl w-full shadow-md rounded-lg p-6 gap-4">
             <div>
-                <DiscardNotificationBtn NotificationId={notification.id} />
+                <DiscardNotificationBtn notificationId={notification.id} />
             </div>
 
             <div className="flex flex-col">

@@ -115,13 +115,13 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
         } 
     }
 
-    const UserFields = [
+    const userFields = [
         { name: 'email', checkbox: true },
         { name: 'name', checkbox: false },
         { name: 'phone', checkbox: true },
     ]
 
-    const SensitiveFields = [
+    const sensitiveFields = [
         { name: 'password', checkbox: false },
         { name: 'role', checkbox: false },
     ]
@@ -129,7 +129,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
     const renderedFields = (fields) => fields.map((field, index) => (
         <div key={index} className="my-2">
             <label htmlFor={field.name} className="capitalize">{field.name}</label>
-            <div className={`grid grid-cols-${fields === SensitiveFields ? '[60%,40%]' : '[65%,35%]'} ${field.checkbox && 'gap-10'}`}>
+            <div className={`grid grid-cols-${fields === sensitiveFields ? '[60%,40%]' : '[65%,35%]'} ${field.checkbox && 'gap-10'}`}>
                 <Input onChange={handleChange} value={userData[field.name]} id={field.name} name={field.name} {...field.name === 'password' && { placeholder:"[Encrypted]" }} autoComplete="off" className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0" />
                 {field.checkbox && (
                     <div className="flex gap-2 items-center">
@@ -162,7 +162,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                                 <CardDescription>Make changes to the users account</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                {renderedFields(UserFields)}
+                                {renderedFields(userFields)}
                             </CardContent>
                             <CardFooter>
                                 <DialogClose asChild>
@@ -178,7 +178,7 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                                 <CardDescription>Make changes to the users account</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                {renderedFields(SensitiveFields)}
+                                {renderedFields(sensitiveFields)}
                             </CardContent>
                             <CardFooter>
                                 <DialogClose asChild>

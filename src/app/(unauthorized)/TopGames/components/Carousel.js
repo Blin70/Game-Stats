@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
-const Carousel = ({ TheGames }) => {
+const Carousel = ({ theGames }) => {
     const router = useRouter();
     const pathname = usePathname();
     const [api, setApi] = useState();
@@ -30,7 +30,7 @@ const Carousel = ({ TheGames }) => {
         };
     }, [api, pathname, router]);
     
-    const renderedCarouselItems = TheGames.map((game, index) => {
+    const renderedCarouselItems = theGames.map((game, index) => {
         return( 
             <CnCarouselItem key={index} className="pt-1">
                 <Image alt="gameimage" src={game.image} className="w-full h-[400px] object-fill rounded-lg shadow-md" />

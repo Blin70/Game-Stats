@@ -28,7 +28,7 @@ const Settings = async () => {
           </div>
         </section>
 
-       <LinkAccountForm CurrentlySupportedGames={await getCurrentlySupportedGames()} />
+       <LinkAccountForm currentlySupportedGames={await getCurrentlySupportedGames()} />
 
         <section className="space-y-5">
           <h1 className="text-2xl font-semibold">Security Settings</h1>

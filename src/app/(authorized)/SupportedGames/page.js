@@ -13,7 +13,7 @@ import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActio
 const SupportedGames = async () => {
   const supportedGames = await getCurrentlySupportedGames();
 
-  const Games = [
+  const games = [
     ...(supportedGames),
     {name: "Valorant", image_url: valorantImage},
     {name: "GTA V", image_url: gtaImage},
@@ -23,7 +23,7 @@ const SupportedGames = async () => {
 
   const supportedGamesNames = supportedGames.map(game => game.name)
 
-    const renderedGames = Games.map((i, index)=>{
+    const renderedGames = games.map((i, index)=>{
         return(
             <Card key={index} className="shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-200">
                 <CardHeader className="p-0">
