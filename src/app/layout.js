@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import Navbar from "@/components/Navbar/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem enableColorScheme>
+          <Navbar />
           {children}
           <Toaster position="bottom-right" />
         </ThemeProvider>

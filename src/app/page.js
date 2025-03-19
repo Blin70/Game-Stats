@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getUserFromSession } from "./utils/server-actions/userActions";
-import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
@@ -23,7 +22,6 @@ export default async function Home() {
 
     return (
       <>
-        <Navbar />
         <div className="w-full flex flex-col">
           <div className="relative h-[50vh] w-full flex-shrink-0 bg-gradient-to-r from-[#0a1020] via-[#150025]">
             <Image
