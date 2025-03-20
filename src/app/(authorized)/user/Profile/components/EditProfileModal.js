@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { sendNotification } from "@/app/utils/server-actions/notificationActions";
 
@@ -132,7 +132,10 @@ const EditProfileModal = () => {
                             <CardContent className="space-y-2">
                                 {renderedFields(accountFields)}
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className="space-x-2">
+                                <DialogClose asChild>
+                                    <Button onClick={() => setInfo(prevInfo => ({ ...prevInfo, name: user?.user_metadata?.first_name, email: user?.email }))} variant="secondary">Cancel</Button>
+                                </DialogClose>
                                 <Button onClick={handleAccChanges}>Save changes</Button>
                             </CardFooter>
                         </Card>
@@ -148,7 +151,10 @@ const EditProfileModal = () => {
                             <CardContent className="space-y-2">
                                 {renderedFields(phoneField)}
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className="space-x-2">
+                                <DialogClose asChild>
+                                    <Button onClick={() => setInfo(prevInfo => ({...prevInfo, phone: user?.phone || '' }))} variant="secondary">Cancel</Button>
+                                </DialogClose>
                                 <Button onClick={handlePhoneChange}>Save phone number</Button>
                             </CardFooter>
                         </Card>

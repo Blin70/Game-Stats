@@ -164,7 +164,10 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                             <CardContent>
                                 {renderedFields(userFields)}
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className="space-x-2">
+                                <DialogClose asChild>
+                                    <Button variant="secondary">Cancel</Button>
+                                </DialogClose>
                                 <DialogClose asChild>
                                     <Button onClick={handleUpdateUserDetails}>Save changes</Button>
                                 </DialogClose>
@@ -180,7 +183,10 @@ const EditUserInfo = ({ user, revalidatePage, AdminUpdateEmail, AdminUpdateName,
                             <CardContent>
                                 {renderedFields(sensitiveFields)}
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className="space-x-2">
+                                <DialogClose asChild>
+                                    <Button variant="secondary">Cancel</Button>
+                                </DialogClose>
                                 <DialogClose asChild>
                                     <Button onClick={handleSaveSensitiveData}>Save changes</Button>
                                 </DialogClose>

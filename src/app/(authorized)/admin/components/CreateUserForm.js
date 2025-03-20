@@ -1,6 +1,7 @@
 "use client"
 
 import { CardContent, CardFooter } from "@/components/ui/card";
+import { DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AdminCreateUser } from "@/app/utils/server-actions/adminActions";
 import { toast } from "sonner";
@@ -21,7 +22,10 @@ const CreateUserForm = ({ renderedFields }) => {
             <CardContent>
                 {renderedFields}
             </CardContent>
-            <CardFooter>
+            <CardFooter className="space-x-2">
+                <DialogClose asChild>
+                    <Button variant="secondary">Cancel</Button>
+                </DialogClose>
                 <Button type='submit'>Create user</Button>
             </CardFooter>
         </form>
