@@ -66,3 +66,24 @@ export async function getGamePlatforms(game_name, searchField){
     platforms: data?.game_platforms?.map(p => p.platform)
   };
 }
+
+export async function updateProfile(updateFields) {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.updateUser(updateFields)
+
+  if(error){
+    if(error.code === "over_email_send_rate_limit") return { error: error.message };
+
+    console.error("[updateProfile] Supabase error while updating profile", error);
+    return { error: "Error while updating profile. Please try again!"};
+  }
+
+  if(updateFields.email){
+    return Object.keys(updateFields).length === 1
+      ? { info: "Please check your email to confirm email change." }
+      : { success: "Account updated successfully! Please check your email to confirm the email change." };
+  }
+
+  return { success: "Account updated successfully!" };
+}
