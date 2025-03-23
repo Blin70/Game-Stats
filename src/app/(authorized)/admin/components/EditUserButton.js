@@ -5,8 +5,8 @@ import DropdownModal from "./DropdownModal";
 import { DialogDescription } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import EditUserInfo from "./EditUserInfo";
-import { AdminDeleteUser, AdminBanUser, AdminUpdateEmail, AdminUpdateName, AdminUpdatePhone, AdminUpdatePassword, AdminUpdateRole, ConfirmEmailorPhone, UnconfirmEmailorPhone } from "@/app/utils/server-actions/adminActions";
+import EditUserModal from "./EditUserModal";
+import { AdminDeleteUser, AdminBanUser } from "@/app/utils/server-actions/adminActions";
 import { revalidatePath } from "next/cache";
 
 const EditUserButton = ({ user }) => {
@@ -27,7 +27,7 @@ const EditUserButton = ({ user }) => {
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <EditUserInfo user={user} revalidatePage={revalidatePage} AdminUpdateEmail={AdminUpdateEmail} AdminUpdateName={AdminUpdateName} AdminUpdatePhone={AdminUpdatePhone} AdminUpdatePassword={AdminUpdatePassword} AdminUpdateRole={AdminUpdateRole} ConfirmEmailorPhone={ConfirmEmailorPhone} UnconfirmEmailorPhone={UnconfirmEmailorPhone} /><br/>
+                    <EditUserModal user={user} revalidatePage={revalidatePage} /><br/>
                     <DropdownModal triggerStyle="w-full" user={user} title='Ban User' action={AdminBanUser} actionText='Ban' actionType='ban' buttonVariant='destructive' triggerText='Ban User' triggerIcon={<Ban/>}>
                             <div className="space-y-2 space-x-2 flex items-center">
                                 <CircleX className="inline-block shrink-0"/>
