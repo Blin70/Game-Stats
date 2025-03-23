@@ -1,5 +1,5 @@
 import { Table,TableBody, TableCaption, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
-import CreateUser from "./components/CreateUser";
+import CreateUserModal from "./components/CreateUserModal";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { getRole } from "@/app/utils/server-actions/userActions";
 import EditUserButton from "./components/EditUserButton";
@@ -39,7 +39,7 @@ const AdminDashboard = async () => {
                         <TableHead className="w-3/12 text-center">Phone</TableHead>
                         <TableHead className="w-2/12 text-center">Joined</TableHead>
                         <TableHead className="w-2/12 text-center">Role</TableHead>
-                        <TableHead className="w-2/12 text-center"><CreateUser /></TableHead>
+                        <TableHead className="w-2/12 text-center"><CreateUserModal /></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

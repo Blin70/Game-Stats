@@ -55,18 +55,18 @@ const EditProfileForm = () => {
         }));
     }
 
-    const forms = [
+    const renderedFields = [
         { name: 'name' },
         { name: 'email' },
         { name: 'phone' },
-    ].map((form, index) => (
+    ].map((fieldConfig, index) => (
         <FormField 
           key={index}
           control={form.control}
-          name={form.name}
+          name={fieldConfig.name}
           render={({field}) => (
             <FormItem>
-                <FormLabel className="capitalize">{form.name}</FormLabel>
+                <FormLabel className="capitalize">{fieldConfig.name}</FormLabel>
                 <FormControl>
                     <Input type="text" {...field} />
                 </FormControl>
@@ -79,7 +79,7 @@ const EditProfileForm = () => {
     return(
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-                {forms}
+                {renderedFields}
                 <DialogFooter className="float-start !mt-5">
                     <DialogClose asChild>
                         <Button variant="secondary">Cancel</Button>

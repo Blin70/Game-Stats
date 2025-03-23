@@ -4,33 +4,24 @@ import { createAdmin } from "@/app/utils/supabase/admin";
 import { revalidatePath } from "next/cache";
 
 
-export async function AdminCreateUser(formData){
+export async function AdminCreateUser(userData){
   const supabaseAdmin = createAdmin();
-  
-  const inputValues = {
-    email: formData.get('Email'),
-    password: formData.get('Password'),
-    phone: formData.get('Phone'),
-    name: formData.get('Name'),
-    role: formData.get('Role'),
-    emailConfirmed: formData.get('emailConfirmed'),
-    phoneConfirmed: formData.get('phoneConfirmed'),
-  };
 
   const optionFields = {
-    ...(inputValues.email && { email: inputValues.email }),
-    ...(inputValues.password && { password: inputValues.password }),
-    ...(inputValues.phone && { phone: inputValues.phone }),
-    ...(inputValues.name && { user_metadata: { first_name: inputValues.name }}),
-    ...(inputValues.role && { role: inputValues.role }),
-    ...(inputValues.emailConfirmed && { email_confirm: true }),
-    ...(inputValues.phoneConfirmed && { phone_confirm: true })
+    email: userData.email,
+    user_metadata: { first_name: userData.name },
+    password: userData.password,
+    role: userData.role,
+    ...(userData.phone && { phone: userData.phone }),
+    ...(userData.emailConfirmed && { email_confirm: true }),
+    ...(userData.phoneConfirmed && { phone_confirm: true })
   }
   
   const { error } = await supabaseAdmin.auth.admin.createUser(optionFields);
 
   if(error){
     if(error.code === 'email_exists') return { error: 'A user with this email already exists' }
+    if(error.code === 'phone_exists') return { error: 'This phone number is already linked to a user' }
 
     console.error("[AdminCreateUser] Supabase error: ", error)
     return { error: 'Error while creating a new user' };
