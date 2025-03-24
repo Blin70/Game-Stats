@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { signIn } from "@/app/utils/server-actions/AuthActions";
+import { signIn } from "@/app/utils/server-actions/authActions";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

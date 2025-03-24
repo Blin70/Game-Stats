@@ -2,7 +2,7 @@
 
 import { useUser } from "@/app/context/userContext";
 import { Button } from "@/components/ui/button";
-import { sendPasswordResetEmail } from "@/app/utils/server-actions/AuthActions";
+import { sendPasswordResetEmail } from "@/app/utils/server-actions/authActions";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
 

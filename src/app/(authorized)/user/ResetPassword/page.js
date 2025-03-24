@@ -1,6 +1,6 @@
 'use client'
 
-import { changePassword } from "@/app/utils/server-actions/AuthActions";
+import { changePassword } from "@/app/utils/server-actions/authActions";
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";

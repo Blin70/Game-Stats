@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useUser } from "@/app/context/userContext";
-import { signOut } from "@/app/utils/server-actions/AuthActions";
+import { signOut } from "@/app/utils/server-actions/authActions";
 import { Command, CommandGroup, CommandList } from "@/components/ui/command";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
