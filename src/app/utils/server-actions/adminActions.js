@@ -4,7 +4,7 @@ import { createAdmin } from "@/app/utils/supabase/admin";
 import { revalidatePath } from "next/cache";
 
 
-export async function AdminCreateUser(userData){
+export async function adminCreateUser(userData){
   const supabaseAdmin = createAdmin();
 
   const optionFields = {
@@ -31,7 +31,7 @@ export async function AdminCreateUser(userData){
   return { success: 'New user created successfully'}
 }
 
-export async function AdminDeleteUser(user){
+export async function adminDeleteUser(user){
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(user.id)
@@ -45,7 +45,7 @@ export async function AdminDeleteUser(user){
   return { success: `Successfully deleted user with email: ${user.email}` }
 }
 
-export async function AdminBanUser(user, input) {
+export async function adminBanUser(user, input) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
@@ -61,7 +61,7 @@ export async function AdminBanUser(user, input) {
   return { success: `Successfully banned user with email: ${user.email}` };
 }
 
-export async function AdminUpdateEmail(user, input) {
+export async function adminUpdateEmail(user, input) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
@@ -74,7 +74,7 @@ export async function AdminUpdateEmail(user, input) {
   } 
 }
 
-export async function AdminUpdateName(user, input) {
+export async function adminUpdateName(user, input) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
@@ -87,7 +87,7 @@ export async function AdminUpdateName(user, input) {
   }
 }
 
-export async function AdminUpdatePhone(user, input) {
+export async function adminUpdatePhone(user, input) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
@@ -100,7 +100,7 @@ export async function AdminUpdatePhone(user, input) {
   } 
 }
 
-export async function AdminUpdatePassword(user, input) {
+export async function adminUpdatePassword(user, input) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
@@ -113,7 +113,7 @@ export async function AdminUpdatePassword(user, input) {
   } 
 }
 
-export async function AdminUpdateRole(user, input) {
+export async function adminUpdateRole(user, input) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
@@ -126,7 +126,7 @@ export async function AdminUpdateRole(user, input) {
   }
 }
 
-export async function ConfirmEmailorPhone(user, type) {
+export async function confirmEmailOrPhone(user, type) {
   const supabaseAdmin = createAdmin();
 
   const updateFields = {
@@ -142,7 +142,7 @@ export async function ConfirmEmailorPhone(user, type) {
   } 
 }
 
-export async function UnconfirmEmailorPhone(user, type) {
+export async function unconfirmEmailOrPhone(user, type) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.rpc('unconfirm_user_email_or_phone', {

@@ -6,7 +6,7 @@ import { DialogDescription } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import EditUserModal from "./EditUserModal";
-import { AdminDeleteUser, AdminBanUser } from "@/app/utils/server-actions/adminActions";
+import { adminDeleteUser, adminBanUser } from "@/app/utils/server-actions/adminActions";
 import { revalidatePath } from "next/cache";
 
 const EditUserButton = ({ user }) => {
@@ -28,7 +28,7 @@ const EditUserButton = ({ user }) => {
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <EditUserModal user={user} revalidatePage={revalidatePage} /><br/>
-                    <DropdownModal triggerStyle="w-full" user={user} title='Ban User' action={AdminBanUser} actionText='Ban' actionType='ban' buttonVariant='destructive' triggerText='Ban User' triggerIcon={<Ban/>}>
+                    <DropdownModal triggerStyle="w-full" user={user} title='Ban User' action={adminBanUser} actionText='Ban' actionType='ban' buttonVariant='destructive' triggerText='Ban User' triggerIcon={<Ban/>}>
                             <div className="space-y-2 space-x-2 flex items-center">
                                 <CircleX className="inline-block shrink-0"/>
                                 <h5 className="text-sm font-medium inline-block">This will revoke the user&apos;s access and prevent the user from logging in</h5>
@@ -39,7 +39,7 @@ const EditUserButton = ({ user }) => {
                             </div>
                     </DropdownModal><br/>
 
-                    <DropdownModal triggerStyle='text-red-500 focus:text-red-500' user={user} title='Delete User' action={AdminDeleteUser} actionText='Delete' actionType='delete' buttonVariant='destructive' triggerText='Delete User' triggerIcon={<Trash/>}>
+                    <DropdownModal triggerStyle='text-red-500 focus:text-red-500' user={user} title='Delete User' action={adminDeleteUser} actionText='Delete' actionType='delete' buttonVariant='destructive' triggerText='Delete User' triggerIcon={<Trash/>}>
                         <div className="space-y-2">
                             <TriangleAlert className="inline-block" /> 
                             <h5 className="text-sm font-medium inline-block ml-2">Deleting a user is irreversible</h5>

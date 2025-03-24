@@ -1,6 +1,6 @@
 "use client"
 
-import { AdminUpdateEmail, AdminUpdateName, AdminUpdatePassword, AdminUpdatePhone, AdminUpdateRole, ConfirmEmailorPhone, UnconfirmEmailorPhone } from "@/app/utils/server-actions/adminActions";
+import { adminUpdateEmail, adminUpdateName, adminUpdatePassword, adminUpdatePhone, adminUpdateRole, confirmEmailOrPhone, unconfirmEmailOrPhone } from "@/app/utils/server-actions/adminActions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -47,36 +47,36 @@ const EditUserModal = ({ user, revalidatePage }) => {
         if(values.email === user.email && values.name === user.name && values.phone === user.phone && values.emailConfirmed === user.email_confirmed && values.phoneConfirmed === user.phone_confirmed) return;
 
         if(user.email !== values.email){
-            const res = AdminUpdateEmail(user, values.email);
+            const res = adminUpdateEmail(user, values.email);
             toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
         }
 
         if(user.email_confirmed !== values.emailConfirmed){
             if(!user.email_confirmed && values.emailConfirmed){
-                const res = ConfirmEmailorPhone(user, 'email');
+                const res = confirmEmailOrPhone(user, 'email');
                 toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }else{
-                const res = UnconfirmEmailorPhone(user, 'email');
+                const res = unconfirmEmailOrPhone(user, 'email');
                 toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }
         }
 
         if(user.name !== values.name){
-            const res = AdminUpdateName(user, values.name);
+            const res = adminUpdateName(user, values.name);
             toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
         }
 
         if(user.phone !== values.phone){
-            const res = AdminUpdatePhone(user, values.phone);
+            const res = adminUpdatePhone(user, values.phone);
             toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
         }
 
         if(user.phone_confirmed !== values.phoneConfirmed){
             if(!user.phone_confirmed && values.phoneConfirmed){
-                const res = ConfirmEmailorPhone(user, 'phone');
+                const res = confirmEmailOrPhone(user, 'phone');
                 toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }else{
-                const res = UnconfirmEmailorPhone(user, 'phone');
+                const res = unconfirmEmailOrPhone(user, 'phone');
                 toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
             }
         }
@@ -101,12 +101,12 @@ const EditUserModal = ({ user, revalidatePage }) => {
         if(values.password === '' && values.role === user.role) return;
         
         if(values.password !== ''){
-            const res = AdminUpdatePassword(user, values.password);
+            const res = adminUpdatePassword(user, values.password);
             toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
         }
         
         if(values.role !== user.role){
-            const res = AdminUpdateRole(user, values.role);
+            const res = adminUpdateRole(user, values.role);
             toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
         }
 

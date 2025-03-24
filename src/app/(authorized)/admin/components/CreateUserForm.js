@@ -1,7 +1,7 @@
 "use client"
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { AdminCreateUser } from "@/app/utils/server-actions/adminActions";
+import { adminCreateUser } from "@/app/utils/server-actions/adminActions";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -45,7 +45,7 @@ const CreateUserForm = () => {
     })
 
     const onSubmit = async (userData) => {
-        const res = await AdminCreateUser(userData);
+        const res = await adminCreateUser(userData);
 
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
