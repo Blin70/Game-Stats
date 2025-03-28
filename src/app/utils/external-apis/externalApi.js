@@ -115,6 +115,29 @@ export async function GameSegments(game, platform, userIdentifier, segment, queu
 
 }
 
+export async function getGameNews(appId){
+  const access_key = process.env.STEAM_API_KEY;
+
+  const options = {
+    method: 'GET',
+    next: { tags: ['GameNews'] }
+  }
+
+  const returnThis = [];
+
+  await fetch(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appId}&maxlength=300&count=5&format=json&key=${access_key}`, options)
+    .then(res => res.json())
+    .then(res => res.appnews.newsitems.map((i) => returnThis.push({
+      ...i,
+      'date': new Date(i.date * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+      'author': i.author || 'Unknown',
+      'contents': i.contents.replace(/<\/?[^>]+(>|$)/g, "").replace(/{STEAM_CLAN_IMAGE}\/[^\s]+/g, '') || 'Not Available',
+    })))
+    .catch(err => console.error(err));
+
+  return returnThis;
+}
+
 export async function PandaScoreApi(game, size) {
     const access_key = process.env.PANDASCORE_API_ACCESS_KEY;
   

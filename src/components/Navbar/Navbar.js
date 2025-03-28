@@ -15,9 +15,9 @@ const Navbar = () => {
                         <Image alt="Logo" src={Logo} className="h-full w-fit" priority />
                     </Link>
                 </div>
-                <div className="flex h-full w-full text-2xl space-x-20 items-center ">
+                <div className="flex h-full w-full text-2xl space-x-20 items-center">
                     <Link href='/TopGames'>Top Games</Link>
-                    <Link href='#'>Leaderboards</Link>
+                    <Link href='/news'>News</Link>
                 </div>
                 <div className="flex items-center w-full relative">
                     <Input type="text" name="SearchBar" autoComplete="off" className="w-full text-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
