@@ -79,17 +79,17 @@ export default async function Home() {
 
               <Card className="w-[300px] mt-5 bg-transparent border-0 text-[#cacaca]">
                 <CardHeader>
-                  <CardTitle>Leaderboards</CardTitle>
+                  <CardTitle>Latest In Gaming</CardTitle>
                   <CardDescription>
-                    Compare your ranking with top players.
+                    Stay updated with news, trends, and updates from your favorite games.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex justify-center">
                   <Button
                     asChild
                     className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                    <Link href={user ? "/user/Profile" : "/user/SignIn"}>
-                      View Leaderboards
+                    <Link href="/news">
+                      Read More
                     </Link>
                   </Button>
                 </CardContent>
