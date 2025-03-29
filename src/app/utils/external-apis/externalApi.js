@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+import { cache } from "react";
 
 export async function TRNProfile(game, platform, userIdentifier) {
   const access_key = process.env.TRN_API_KEY;
@@ -115,7 +116,9 @@ export async function GameSegments(game, platform, userIdentifier, segment, queu
 
 }
 
-export async function getGameNews(appId){
+const newsCache = new Map();
+
+export const getGameNews = cache(async (gameId) => {
   const access_key = process.env.STEAM_API_KEY;
 
   const options = {
@@ -123,19 +126,42 @@ export async function getGameNews(appId){
     next: { tags: ['GameNews'] }
   }
 
-  const returnThis = [];
+  let returnThis = [];
 
-  await fetch(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appId}&maxlength=300&count=5&format=json&key=${access_key}`, options)
+  await fetch(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${gameId}&maxlength=-1&count=5&format=json&key=${access_key}`, options)
     .then(res => res.json())
-    .then(res => res.appnews.newsitems.map((i) => returnThis.push({
-      ...i,
-      'date': new Date(i.date * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
-      'author': i.author || 'Unknown',
-      'contents': i.contents.replace(/<\/?[^>]+(>|$)/g, "").replace(/{STEAM_CLAN_IMAGE}\/[^\s]+/g, '') || 'Not Available',
-    })))
-    .catch(err => console.error(err));
+    .then(res => res.appnews.newsitems.map((i) => {
+      const article = {
+        ...i,
+        gameId,
+        date: new Date(i.date * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+        author: i.author || 'Unknown',
+        contents: i.contents.replace(/<\/?[^>]+(>|$)/g, "").replace(/{STEAM_CLAN_IMAGE}\/[^\s]+/g, '') || 'Not Available',
+      }
+
+      newsCache.set(i.gid, article)
+      returnThis.push(article)
+    }))
+    .catch(err => {
+      console.error(err)
+      returnThis = [];
+    })
 
   return returnThis;
+});
+
+export const getNewsArticle = async (gId) => {
+  if (newsCache.has(gId)) {
+    return newsCache.get(gId);
+  }
+  
+  //fallback, refetch all news
+  await getGameNews(730);
+  await getGameNews(677620);
+  await getGameNews(1172470);
+  await getGameNews(2221490);
+
+  return newsCache.get(gId) || null;
 }
 
 export async function PandaScoreApi(game, size) {

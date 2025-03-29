@@ -25,7 +25,7 @@ const News = async () => {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm text-muted-foreground leading-relaxed text-wrap overflow-hidden">
-                    {i.contents}
+                    {i.contents.length > 300 ? i.contents.slice(0, 300) + '...'  : i.contents}
                 </CardContent>
             </div>
             <CardFooter className="pt-4 flex justify-between text-sm font-medium leading-none text-muted-foreground/75">
