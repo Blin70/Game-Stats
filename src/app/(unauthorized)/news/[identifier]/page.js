@@ -1,4 +1,4 @@
-const specificNews = async ({ params }) => {
+const NewsArticle = async ({ params }) => {
 
     return(
         <div>
@@ -7,4 +7,4 @@ const specificNews = async ({ params }) => {
     )
 }
 
-export default specificNews;
+export default NewsArticle;

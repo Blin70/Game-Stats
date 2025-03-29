@@ -1,9 +1,8 @@
 import { getGameNews } from "@/app/utils/external-apis/externalApi";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
-const news = async () => {
+const News = async () => {
     const news = [
       ...(await getGameNews(730)),
       ...(await getGameNews(677620)),
@@ -29,17 +28,17 @@ const news = async () => {
                     {i.contents}
                 </CardContent>
             </div>
-            <CardFooter className="pt-4 flex justify-between text-xs text-muted-foreground/75">
-                <Label className="font-medium">{i.date}</Label>
-                <Label className="italic">By {i.author}</Label>
+            <CardFooter className="pt-4 flex justify-between text-sm font-medium leading-none text-muted-foreground/75">
+                <span>{i.date}</span>
+                <span className="italic">By {i.author}</span>
             </CardFooter>
         </Card>
     ))
 
     return(
         <div className="container mx-auto px-[8%] py-8 rounded-lg">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Latest Game News
+            <h1 className="text-4xl/tight md:text-5xl/tight lg:text-6xl/tight font-bold text-center mb-3 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                Latest Gaming News
             </h1>
             <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Stay updated with the latest news and updates from your favorite games
@@ -51,4 +50,4 @@ const news = async () => {
     );
 }
 
-export default news;
+export default News;
