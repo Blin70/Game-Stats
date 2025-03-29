@@ -136,7 +136,7 @@ export const getGameNews = cache(async (gameId) => {
         gameId,
         date: new Date(i.date * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
         author: i.author || 'Unknown',
-        contents: i.contents.replace(/<\/?[^>]+(>|$)/g, "").replace(/{STEAM_CLAN_IMAGE}\/[^\s]+/g, '') || 'Not Available',
+        contents: i.contents.replace(/<\/?[^>]+(>|$)/g, "").replace(/{STEAM_CLAN_IMAGE}\/[^\s]+/g, '').trim() || 'Not Available',
       }
 
       newsCache.set(i.gid, article)

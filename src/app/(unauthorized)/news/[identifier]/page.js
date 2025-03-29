@@ -55,7 +55,7 @@ const NewsArticle = async ({ params }) => {
         <p className="whitespace-pre-wrap">{article.contents}</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-10 pt-6 border-t gap-4 text-sm text-muted-foreground">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-10 pt-6 border-t border-t-muted-foreground dark:border-t-inherit gap-4 text-sm text-muted-foreground">
         <div className="flex items-center">
           {article.feedname && (
             <span>Source: {article.feedname}</span>
