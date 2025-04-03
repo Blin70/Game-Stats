@@ -1,9 +1,8 @@
-import Image from "next/image";
 import EditProfileModal from "./components/EditProfileModal";
 import { Separator } from "@/components/ui/separator";
-import defaultProfilePic from "/public/icons/default_profile_pic.png";
 import { getCurrentUser } from "@/app/utils/server-actions/userActions";
 import LinkedAccounts from "./components/LinkedAccounts";
+import ProfileImage from "./components/ProfileImage";
 
 const Profile = async () => {
   const user = await getCurrentUser();
@@ -24,7 +23,7 @@ const Profile = async () => {
     return (
       <div className="pl-2">
         <div className="w-full h-fit mt-5 mx-auto text-center">
-            <Image className="size-48 mx-auto cursor-pointer" alt="Profile" src={defaultProfilePic} priority />
+            <ProfileImage user={user} />
             <h1 className="text-4xl font-bold pt-5">{user.user_metadata.first_name}</h1>
             <h1 className="text-grayed-out text-lg pt-3">Joined {user.created_at.slice(0,10)}</h1>
         </div>

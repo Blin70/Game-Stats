@@ -13,6 +13,7 @@ import { ChartNoAxesCombined, Bell, Info, Settings, LogOut, User} from 'lucide-r
 import { toast } from "sonner";
 import LinkedAccountsSection from "./LinkedAccountsSection";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Image from "next/image";
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -33,8 +34,10 @@ const Sidebar = () => {
       <div className="flex items-center w-full py-3">
         <Avatar className="inline-block size-16">
           <Link href='/user/Profile'>
-            <AvatarImage src={defaultProfilePic.src} />
-            <AvatarFallback>s</AvatarFallback>
+            <AvatarImage src={user?.user_metadata?.avatar_url} />
+            <AvatarFallback>
+              <Image src={defaultProfilePic} alt="Default profile picture" />
+            </AvatarFallback>
           </Link>
         </Avatar>
         <div className="inline-block ml-2">
