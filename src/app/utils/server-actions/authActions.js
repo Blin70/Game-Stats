@@ -111,6 +111,8 @@ export async function changePassword(newPassword) {
   });
 
   if (error) {
+    if(error.code === 'same_password') return { error: 'New password cannot be the same as the old password' }
+
     console.error("[changePassword] Supabase error while changing the users password", error);
     return { error: 'Error while changing password. Please try again' };
   }

@@ -81,7 +81,7 @@ const ResetPassword = () => {
     }, [token_hash, type, router])
 
     const onSubmit = async (values) => {
-        const res = await changePassword(values.NewPassword) || { success: 'Password changed successfully' };
+        const res = await changePassword(values.newPassword) || { success: 'Password changed successfully' };
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
     }
 
@@ -94,11 +94,11 @@ const ResetPassword = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                     <FormField 
                         control={form.control}
-                        name="NewPassword"
+                        name="newPassword"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input {...field} type='password' name='NewPassword' placeholder="Enter New Password" autoComplete='off' className="size-fit rounded-2xl !text-2xl" />
+                                    <Input {...field} type='password' name='newPassword' placeholder="Enter New Password" autoComplete='off' className="size-fit rounded-2xl !text-2xl" />
                                 </FormControl>
                                 <FormMessage className="flex justify-end"/>
                             </FormItem>

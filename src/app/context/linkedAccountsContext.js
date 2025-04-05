@@ -12,11 +12,11 @@ export const LinkedAccountsProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchLinkedAccounts = async () => {
-            const linkedAccounts = await getLinkedAccounts(user.id);
+            const linkedAccounts = await getLinkedAccounts(user?.id);
             setLinkedAccounts(linkedAccounts);
         };
         fetchLinkedAccounts();
-    }, [user.id]);
+    }, [user?.id]);
     
     return (
         <LinkedAccountsContext.Provider value={{ linkedAccounts, setLinkedAccounts }}>
