@@ -3,19 +3,16 @@ import CreateUserModal from "./components/CreateUserModal";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { getRole } from "@/app/utils/server-actions/userActions";
 import EditUserButton from "./components/EditUserButton";
-import { createClient } from "@/app/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { adminGetUsers } from "@/app/utils/server-actions/adminActions";
 
 const AdminDashboard = async () => {
     const role = await getRole();
     if(role != "service_role") redirect('/unauthorized')
     
-    const supabase = createClient();
+    const users = await adminGetUsers();
 
-    const { data, error } = await supabase.from('profiles').select('*');
-    if(error) console.error("Error while fetching users from table", error);
-
-    const renderedUsers = data?.map((user) => (
+    const renderedUsers = users?.map((user) => (
         <TableRow key={user.id} className="h-10 text-xl">
             <TableCell>{user.id.slice(0, 8)+"....."}</TableCell>
             <TableCell>{user.name}</TableCell>

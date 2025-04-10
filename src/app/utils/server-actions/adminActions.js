@@ -3,6 +3,15 @@
 import { createAdmin } from "@/app/utils/supabase/admin";
 import { revalidatePath } from "next/cache";
 
+export async function adminGetUsers() {
+  const supabaseAdmin = createAdmin();
+
+  const { data, error } = await supabaseAdmin.from('profiles').select('*');
+    
+  if(error) return console.error("[adminGetUsers] Supabase error while fetching users from table", error);
+
+  return data;
+}
 
 export async function adminCreateUser(userData){
   const supabaseAdmin = createAdmin();
@@ -23,7 +32,7 @@ export async function adminCreateUser(userData){
     if(error.code === 'email_exists') return { error: 'A user with this email already exists' }
     if(error.code === 'phone_exists') return { error: 'This phone number is already linked to a user' }
 
-    console.error("[AdminCreateUser] Supabase error: ", error)
+    console.error("[adminCreateUser] Supabase error: ", error)
     return { error: 'Error while creating a new user' };
   } 
   
@@ -37,7 +46,7 @@ export async function adminDeleteUser(user){
   const { error } = await supabaseAdmin.auth.admin.deleteUser(user.id)
       
   if(error){
-    console.error('[AdminDeleteUser] Supabase error while deleting user', error);
+    console.error('[adminDeleteUser] Supabase error while deleting user', error);
     return { error: 'Error while deleting user' }
   }
 
@@ -53,7 +62,7 @@ export async function adminBanUser(user, input) {
   )
 
   if(error){
-    console.error('[AdminBanUser] Supabase error while banning user', error);
+    console.error('[adminBanUser] Supabase error while banning user', error);
     return { error: 'Error while banning user' };
   }
 
@@ -69,7 +78,7 @@ export async function adminUpdateEmail(user, input) {
   )
 
   if(error){
-    console.error("[AdminUpdateEmail] Supabase error while updating user email", error);
+    console.error("[adminUpdateEmail] Supabase error while updating user email", error);
     return { error: 'Error while updating user email. Please try again later.' };
   } 
 }
@@ -82,7 +91,7 @@ export async function adminUpdateName(user, input) {
   )  
   
   if(error){
-    console.error("[AdminUpdateName] Supabase error while updating user name", error);
+    console.error("[adminUpdateName] Supabase error while updating user name", error);
     return { error: 'Error while updating user name. Please try again later.' };
   }
 }
@@ -95,7 +104,7 @@ export async function adminUpdatePhone(user, input) {
   )
 
   if(error){
-    console.error("[AdminUpdatePhone] Supabase error while updating the users phone number", error);
+    console.error("[adminUpdatePhone] Supabase error while updating the users phone number", error);
     return { error: 'Error while updating the users phone number. Please try again later.' };
   } 
 }
@@ -119,7 +128,7 @@ export async function adminUpdatePassword(user, input) {
   )
   
   if(error){
-    console.error("[AdminUpdatePassword] Supabase error while updating user password", error);
+    console.error("[adminUpdatePassword] Supabase error while updating user password", error);
     return { error: 'Error while updating user password. Please try again later.' };
   } 
 }
@@ -132,7 +141,7 @@ export async function adminUpdateRole(user, input) {
   )
   
   if(error){
-    console.error("[AdminUpdateRole] Supabase error while updating user role", error);
+    console.error("[adminUpdateRole] Supabase error while updating user role", error);
     return { error: 'Error while updating user role. Please try again later.' };
   }
 }
@@ -148,7 +157,7 @@ export async function confirmEmailOrPhone(user, type) {
   const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id, updateFields);
 
   if(error){
-    console.error(`[ConfirmEmailorPhone] Supabase error while confirming the users ${type}`, error)
+    console.error(`[confirmEmailOrPhone] Supabase error while confirming the users ${type}`, error)
     return { error: `Error while confirming the users ${type}. Please try again later.` };
   } 
 }
@@ -162,7 +171,7 @@ export async function unconfirmEmailOrPhone(user, type) {
   })
 
   if(error){
-    console.error(`[UnconfirmEmailorPhone] Supabase error while unconfirming the users ${type}`, error)
+    console.error(`[unconfirmEmailOrPhone] Supabase error while unconfirming the users ${type}`, error)
     return { error: `Error while unconfirming the users ${type}. Please try again later.` };
   } 
 }
