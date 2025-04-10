@@ -100,6 +100,17 @@ export async function adminUpdatePhone(user, input) {
   } 
 }
 
+export async function adminRemovePhoneNumber(userId) {
+  const supabaseAdmin = createAdmin();
+
+  const { error } = await supabaseAdmin.rpc('remove_user_phone_number', { user_id: userId });
+
+  if(error){
+    console.error("[adminRemovePhoneNumber] Supabase error while removing the users phone number", error);
+    return { error: 'Error while removing the users phone number. Please try again later.' };
+  }
+}
+
 export async function adminUpdatePassword(user, input) {
   const supabaseAdmin = createAdmin();
 

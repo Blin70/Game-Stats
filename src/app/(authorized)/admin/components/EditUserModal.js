@@ -1,6 +1,6 @@
 "use client"
 
-import { adminUpdateEmail, adminUpdateName, adminUpdatePassword, adminUpdatePhone, adminUpdateRole, confirmEmailOrPhone, unconfirmEmailOrPhone } from "@/app/utils/server-actions/adminActions";
+import { adminRemovePhoneNumber, adminUpdateEmail, adminUpdateName, adminUpdatePassword, adminUpdatePhone, adminUpdateRole, confirmEmailOrPhone, unconfirmEmailOrPhone } from "@/app/utils/server-actions/adminActions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -67,6 +67,11 @@ const EditUserModal = ({ user, revalidatePage }) => {
         }
 
         if(user.phone !== values.phone){
+            if(values.phone === ''){
+                const res = adminRemovePhoneNumber(user.id);
+                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+            }
+
             const res = adminUpdatePhone(user, values.phone);
             toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
         }

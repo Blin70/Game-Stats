@@ -67,13 +67,19 @@ export async function getGamePlatforms(game_name, searchField){
   };
 }
 
-export async function updateProfile(updateFields) {
+export async function updateProfile(updateFields, userId) {
   const supabase = createClient();
 
-  const { error } = await supabase.auth.updateUser(updateFields)
+  if(updateFields['phone'] === ""){
+    const res = await removePhoneNumber(userId);
+    if(res?.error) return { error: "Error while removing phone number. Please try again!" };
+  }
+
+  const { data, error } = await supabase.auth.updateUser(updateFields)
 
   if(error){
     if(error.code === "over_email_send_rate_limit") return { error: error.message };
+    if(error.code === "phone_exists") return { error: "This phone number is already linked to a user. Please use another phone number!" };
 
     console.error("[updateProfile] Supabase error while updating profile", error);
     return { error: "Error while updating profile. Please try again!"};
@@ -81,11 +87,11 @@ export async function updateProfile(updateFields) {
 
   if(updateFields.email){
     return Object.keys(updateFields).length === 1
-      ? { info: "Please check your email to confirm email change." }
-      : { success: "Account updated successfully! Please check your email to confirm the email change." };
+      ? { info: "Please check your email to confirm the email change.", user: data.user }
+      : { success: "Account updated successfully! Please check your email to confirm the email change.", user: data.user };
   }
 
-  return { success: "Account updated successfully!" };
+  return { success: "Account updated successfully!", user: data.user };
 }
 
 export async function getImages(bucketName, folderPath, options) {
@@ -140,4 +146,15 @@ export async function deleteImages(bucketName, paths) {
   }
 
   return data;
+}
+
+export async function removePhoneNumber(userId) {
+  const supabase = createClient();
+
+  const { error } = await supabase.rpc('remove_user_phone_number', { user_id: userId });
+
+  if(error){
+    console.error('[removePhoneNumber] Supabase error while removing phone number', error);
+    return { error };
+  }
 }

@@ -43,16 +43,12 @@ const EditProfileForm = () => {
 
         if(Object.keys(update).length === 0) return;
 
-        const res = await updateProfile(update);
+        const res = await updateProfile(update, user.id);
         toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
 
         if(res.error) return;
 
-        setUser(prev => ({
-            ...prev, 
-            ...(update.data && { user_metadata: {...prev.user_metadata, first_name: update.data.first_name} }),
-            ...(update.phone && { phone: update.phone })
-        }));
+        setUser(res.user);
     }
 
     const renderedFields = [
