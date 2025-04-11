@@ -2,7 +2,8 @@
 
 import { toast } from "sonner";
 import ImageUpload from "./ImageUpload";
-import { uploadImage, getPublicImageUrl, updateProfile, deleteImages, getImages } from "@/app/utils/server-actions/userActions";
+import { updateProfile } from "@/app/utils/server-actions/userActions";
+import { getImages, uploadImage, getPublicImageUrl, deleteImages } from "@/app/utils/server-actions/imageActions";
 import { useUser } from "@/app/context/userContext";
 
 const ProfileImage = ({ user }) => {
