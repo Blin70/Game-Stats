@@ -70,43 +70,34 @@ export async function adminBanUser(user, input) {
   return { success: `Successfully banned user with email: ${user.email}` };
 }
 
-export async function adminUpdateEmail(user, input) {
+export async function adminUpdateUser(updateFields, userId) {
   const supabaseAdmin = createAdmin();
 
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
-    { email: input }
-  )
-
-  if(error){
-    console.error("[adminUpdateEmail] Supabase error while updating user email", error);
-    return { error: 'Error while updating user email. Please try again later.' };
-  } 
-}
-
-export async function adminUpdateName(user, input) {
-  const supabaseAdmin = createAdmin();
-
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
-    { user_metadata: { first_name: input } }
-  )  
-  
-  if(error){
-    console.error("[adminUpdateName] Supabase error while updating user name", error);
-    return { error: 'Error while updating user name. Please try again later.' };
+  if(updateFields['phone'] === ""){
+    const res = await adminRemovePhoneNumber(userId)
+    if(res?.error) return res.error;
   }
-}
 
-export async function adminUpdatePhone(user, input) {
-  const supabaseAdmin = createAdmin();
+  if(updateFields['email_confirm'] === false){
+    const res = await adminUnconfirmEmailOrPhone(userId, 'email')
+    if(res?.error) return res.error;
+  }
 
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
-    { phone: input }
-  )
+  if(updateFields['phone_confirm'] === false){
+    const res = await adminUnconfirmEmailOrPhone(userId, 'phone')
+    if(res?.error) return res.error;
+  }
+
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, updateFields)
 
   if(error){
-    console.error("[adminUpdatePhone] Supabase error while updating the users phone number", error);
-    return { error: 'Error while updating the users phone number. Please try again later.' };
-  } 
+    if(error.code === "phone_exists") return { error: "This phone number is already linked to a user. Please use another phone number!" };
+
+    console.error("[adminUpdateUser] Supabase error while updating user", error);
+    return { error: "Error while updating user. Please try again!"};
+  }
+
+  return { success: "User updated successfully!" };
 }
 
 export async function adminRemovePhoneNumber(userId) {
@@ -120,53 +111,11 @@ export async function adminRemovePhoneNumber(userId) {
   }
 }
 
-export async function adminUpdatePassword(user, input) {
-  const supabaseAdmin = createAdmin();
-
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
-    { password: input }
-  )
-  
-  if(error){
-    console.error("[adminUpdatePassword] Supabase error while updating user password", error);
-    return { error: 'Error while updating user password. Please try again later.' };
-  } 
-}
-
-export async function adminUpdateRole(user, input) {
-  const supabaseAdmin = createAdmin();
-
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id,
-    { role: input }
-  )
-  
-  if(error){
-    console.error("[adminUpdateRole] Supabase error while updating user role", error);
-    return { error: 'Error while updating user role. Please try again later.' };
-  }
-}
-
-export async function confirmEmailOrPhone(user, type) {
-  const supabaseAdmin = createAdmin();
-
-  const updateFields = {
-    ...(type === 'email' && { email_confirm: true }),
-    ...(type === 'phone' && { phone_confirm: true })
-  }
-
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id, updateFields);
-
-  if(error){
-    console.error(`[confirmEmailOrPhone] Supabase error while confirming the users ${type}`, error)
-    return { error: `Error while confirming the users ${type}. Please try again later.` };
-  } 
-}
-
-export async function unconfirmEmailOrPhone(user, type) {
+export async function adminUnconfirmEmailOrPhone(userId, type) {
   const supabaseAdmin = createAdmin();
 
   const { error } = await supabaseAdmin.rpc('unconfirm_user_email_or_phone', {
-    user_id: user.id,
+    user_id: userId,
     confirmation_type: type 
   })
 

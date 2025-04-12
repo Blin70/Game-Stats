@@ -1,6 +1,6 @@
 "use client"
 
-import { adminRemovePhoneNumber, adminUpdateEmail, adminUpdateName, adminUpdatePassword, adminUpdatePhone, adminUpdateRole, confirmEmailOrPhone, unconfirmEmailOrPhone } from "@/app/utils/server-actions/adminActions";
+import { adminUpdateUser } from "@/app/utils/server-actions/adminActions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -43,51 +43,23 @@ const EditUserModal = ({ user, revalidatePage }) => {
         phoneConfirmed: user.phone_confirmed
     }
 
-    const onUserSubmit = (values) => {
-        if(values.email === user.email && values.name === user.name && values.phone === user.phone && values.emailConfirmed === user.email_confirmed && values.phoneConfirmed === user.phone_confirmed) return;
-
-        if(user.email !== values.email){
-            const res = adminUpdateEmail(user, values.email);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+    const onUserSubmit = async (values) => {
+        const update = {
+            ...(values.email !== user.email && { email: values.email }),
+            ...(values.emailConfirmed !== user.email_confirmed && { email_confirm: values.emailConfirmed }),
+            ...(values.name !== user.name && { user_metadata: { first_name: values.name } }),
+            ...(values.phone !== user.phone && { phone: values.phone }),
+            ...(values.phoneConfirmed !== user.phone_confirmed && { phone_confirm: values.phoneConfirmed }),
         }
 
-        if(user.email_confirmed !== values.emailConfirmed){
-            if(!user.email_confirmed && values.emailConfirmed){
-                const res = confirmEmailOrPhone(user, 'email');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-            }else{
-                const res = unconfirmEmailOrPhone(user, 'email');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-            }
-        }
+        if(Object.keys(update).length === 0) return;
 
-        if(user.name !== values.name){
-            const res = adminUpdateName(user, values.name);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-        }
+        const res = await adminUpdateUser(update, user.id);
+        toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
 
-        if(user.phone !== values.phone){
-            if(values.phone === ''){
-                const res = adminRemovePhoneNumber(user.id);
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-            }
-
-            const res = adminUpdatePhone(user, values.phone);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-        }
-
-        if(user.phone_confirmed !== values.phoneConfirmed){
-            if(!user.phone_confirmed && values.phoneConfirmed){
-                const res = confirmEmailOrPhone(user, 'phone');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-            }else{
-                const res = unconfirmEmailOrPhone(user, 'phone');
-                toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-            }
-        }
+        if(res.error) return;
 
         setIsOpen(false);
-        toast.success('User updated successfully');
         revalidatePage();
     }
 
@@ -102,21 +74,20 @@ const EditUserModal = ({ user, revalidatePage }) => {
         role: user.role
     }
 
-    const onSensitiveDataSubmit = (values) => {
-        if(values.password === '' && values.role === user.role) return;
-        
-        if(values.password !== ''){
-            const res = adminUpdatePassword(user, values.password);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
-        }
-        
-        if(values.role !== user.role){
-            const res = adminUpdateRole(user, values.role);
-            toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+    const onSensitiveDataSubmit = async (values) => {
+        const update = {
+            ...(values.password !== '' && { password: values.password }),
+            ...(values.role !== user.role && { role: values.role })
         }
 
+        if(Object.keys(update).length === 0) return;
+
+        const res = await adminUpdateUser(update, user.id)
+        toast[Object.keys(res)[0]]?.(Object.values(res)[0]);
+
+        if(res.error) return;
+
         setIsOpen(false);
-        toast.success('User updated successfully');
         revalidatePage();
     }
     
