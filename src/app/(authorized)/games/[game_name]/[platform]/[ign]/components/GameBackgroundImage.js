@@ -1,16 +1,8 @@
 import Image from "next/image";
-import { createClient } from "@/app/utils/supabase/server";
+import { getGameBackgroundImage } from "@/app/utils/server-actions/gameActions";
 
 const GameBackgroundImage = async ({ game_name }) => {
-  const supabase = createClient();
-
-  const bgImage = (
-    await supabase
-      .from("games")
-      .select("background_img")
-      .eq("alias", game_name)
-      .single()
-  ).data.background_img;
+  const bgImage = await getGameBackgroundImage(game_name);
 
   return (
     <Image

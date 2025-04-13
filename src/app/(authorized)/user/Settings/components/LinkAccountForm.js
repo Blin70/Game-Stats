@@ -5,7 +5,7 @@ import { LinkAccount } from "@/app/utils/server-actions/linkingActions";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
-import { getGamePlatforms } from "@/app/utils/server-actions/userActions";
+import { getGamePlatforms } from "@/app/utils/server-actions/gameActions";
 import { useState } from "react";
 import { useLinkedAccounts } from "@/app/context/linkedAccountsContext";
 

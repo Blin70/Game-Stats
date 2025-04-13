@@ -7,7 +7,7 @@ import gtaImage from "/public/icons/gtaImage.jpg";
 import assassinscreedImage from "/public/icons/assassinscreedImage.jpg";
 import eafcImage from "/public/icons/eafcImage.jpg";
 import { Circle } from "lucide-react";
-import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/gameActions";
 
 
 const SupportedGames = async () => {

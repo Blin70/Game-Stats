@@ -1,10 +1,9 @@
 import { Input } from "@/components/ui/input";
-import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
+import { getCurrentlySupportedGames, getGamePlatforms } from "@/app/utils/server-actions/gameActions";
 import { redirect } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
-import { getGamePlatforms } from "@/app/utils/server-actions/userActions";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {

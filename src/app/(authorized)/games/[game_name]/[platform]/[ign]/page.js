@@ -1,5 +1,5 @@
 import RefreshStatsBtn from "./components/RefreshStatsBtn";
-import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/gameActions";
 import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
 import Image from "next/image";

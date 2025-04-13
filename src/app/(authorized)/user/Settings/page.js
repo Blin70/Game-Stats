@@ -1,6 +1,6 @@
 import ResetPasswordModal from "./components/ResetPasswordModal";
 import DeleteAccountModal from "./components/DeleteAccountModal";
-import { getCurrentlySupportedGames } from "@/app/utils/server-actions/userActions";
+import { getCurrentlySupportedGames } from "@/app/utils/server-actions/gameActions";
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import LinkAccountForm from "./components/LinkAccountForm";
