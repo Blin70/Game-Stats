@@ -2,16 +2,16 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
-  const renderedInfo = ['name', 'email', 'phone'].map((i) => {
+  const renderedInfo = Array.from({ length: 3 }).map((_, index) => {
     return (
-      <div key={i} className="space-y-2">
+      <div key={index} className="space-y-2">
         <Skeleton className="w-14 h-5" />
         <Skeleton className="w-36 h-7 ml-1" />
       </div>
     );
   });
 
-  const renderedLinkedAccounts = [0, 1].map((i, index) => (
+  const renderedLinkedAccounts = Array.from({ length: 2 }).map((_, index) => (
     <div key={index} className="max-w-2xl w-5/12 justify-between items-center flex rounded-lg p-4 m-4 bg-panel">
       <div className="flex items-center space-x-4">
         <Skeleton className="size-16 rounded-full" />

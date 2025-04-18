@@ -1,23 +1,22 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
-    
-    const renderedGames = [0, 1, 2, 3, 4, 5, 6, 7].map((i, index) => (
-      <div key={index} className="rounded-lg bg-panel">
-        <Skeleton className="w-full h-40 object-cover" />
-        <div className="p-4">
-          <Skeleton className="w-36 h-7" />
-          <Skeleton className="w-60 h-6 mt-2" />
-          <div className="flex items-center justify-between mt-4">
-            <Skeleton className="w-28 h-10 rounded-lg" />
-            <div className="flex items-center gap-1">
-                <Skeleton className="size-3 rounded-full" />
-                <Skeleton className="w-24 h-5" />
-            </div>
+  const renderedGames = Array.from({ length: 8 }).map((_, index) => (
+    <div key={index} className="rounded-lg bg-panel">
+      <Skeleton className="w-full h-40 object-cover" />
+      <div className="p-4">
+        <Skeleton className="w-36 h-7" />
+        <Skeleton className="w-60 h-6 mt-2" />
+        <div className="flex items-center justify-between mt-4">
+          <Skeleton className="w-28 h-10 rounded-lg" />
+          <div className="flex items-center gap-1">
+            <Skeleton className="size-3 rounded-full" />
+            <Skeleton className="w-24 h-5" />
           </div>
         </div>
       </div>
-    ));
+    </div>
+  ));
 
   return (
     <div>
