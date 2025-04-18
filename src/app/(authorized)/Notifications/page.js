@@ -7,18 +7,16 @@ const Notifications = async () => {
 
     const renderedNotifications = notifications?.map((notification, index) => (
         <div key={index} className="grid grid-cols-[auto,1fr,auto] bg-panel max-w-3xl w-full shadow-md rounded-lg p-6 gap-4">
-            <div>
-                <DiscardNotificationBtn notificationId={notification.id} />
-            </div>
+            <DiscardNotificationBtn notificationId={notification.id} />
 
-            <div className="flex flex-col">
+            <div className="flex flex-col space-y-2">
                 <span className="px-2 py-1 text-xs font-medium bg-primary text-primary-foreground rounded w-fit">
                     {notification.type}
                 </span>
-                <h3 className="mt-2 font-semibold text-xl">
+                <h3 className="font-semibold text-xl">
                     {notification.title}
                 </h3>
-                <p className="mt-2 text-grayed-out">
+                <p className="text-grayed-out">
                     {notification.message}
                 </p>
             </div>
