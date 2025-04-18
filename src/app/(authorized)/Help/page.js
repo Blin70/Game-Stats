@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -8,7 +7,7 @@ const Help = () => {
 
     return (
       <>
-          <div className="text-center py-12 ">
+          <div className="text-center py-12">
             <h1 className="text-5xl font-bold">Need Help?</h1>
             <p className="mt-4 text-lg">
               Find answers to common questions or contact us for support.
@@ -25,7 +24,7 @@ const Help = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger>How do I change my password?</AccordionTrigger>
                 <AccordionContent>
-                To change your password, go to the Settings page and click on 'Reset Password'. Follow the instructions to update your credentials
+                To change your password, go to the Settings page and click on &apos;Reset Password&apos;. Follow the instructions to update your credentials
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
@@ -37,13 +36,13 @@ const Help = () => {
               <AccordionItem value="item-3">
                 <AccordionTrigger>How do I contact?</AccordionTrigger>
                 <AccordionContent>
-                For further assistance, use the 'Contact Us' button on this page. Provide as much detail as possible for quicker resolution.                
+                For further assistance, use the &apos;Contact Us&apos; button on this page. Provide as much detail as possible for quicker resolution.                
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
                 <AccordionTrigger>My stats are incorrect, what should I do?</AccordionTrigger>
                 <AccordionContent>
-                If your stats appear incorrect, double-check your game username and ensure it's entered correctly. Contact support if issues persist.
+                If your stats appear incorrect, double-check your game username and ensure it&apos;s entered correctly. Contact support if issues persist.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
