@@ -51,9 +51,7 @@ const NewsArticle = async ({ params }) => {
         )}
       </div>
 
-      <div>
-        <p className="whitespace-pre-wrap">{article.contents}</p>
-      </div>
+      <p className="break-words wrap-anywhere">{article.contents}</p>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-10 pt-6 border-t border-t-muted-foreground dark:border-t-inherit gap-4 text-sm text-muted-foreground">
         <div className="flex items-center">

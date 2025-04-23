@@ -36,7 +36,7 @@ const News = async () => {
     ))
 
     return(
-        <div className="container mx-auto px-[8%] py-8 rounded-lg">
+        <div className="container mx-auto px-[8%] py-8">
             <h1 className="text-4xl/tight md:text-5xl/tight lg:text-6xl/tight font-bold text-center mb-3 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 Latest Gaming News
             </h1>

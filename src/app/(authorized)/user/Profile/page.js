@@ -35,6 +35,7 @@ const Profile = async () => {
           </div>
           <EditProfileModal />
         </div>
+        <h1 className="text-2xl font-bold">Linked Accounts</h1>
         <LinkedAccounts />
       </div>
     );

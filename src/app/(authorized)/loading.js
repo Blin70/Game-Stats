@@ -1,7 +1,9 @@
-const loading = () => {
-    return(
-        <h1 className="text-7xl h-fit w-fit mx-auto content-center">Loading... from authorized layout</h1>
-    );
-}
+import { LoaderCircle } from "lucide-react";
 
-export default loading;
+export default function Loading() {
+  return (
+    <div className="w-full h-5/6 absolute flex items-center justify-center">
+      <LoaderCircle className="animate-spin size-16" />
+    </div>
+  );
+}

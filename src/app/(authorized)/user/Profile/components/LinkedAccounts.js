@@ -37,23 +37,20 @@ const LinkedAccounts = () => {
     ));
 
     return (
-        <>
-            <h1 className="text-2xl font-bold">Linked Accounts</h1>
-            <div className="w-full justify-center flex flex-wrap">
-                {linkedAccounts.length > 0
-                ? (
-                renderedLinkedAccounts
-                )
-                : (
-                    <div className="m-5 p-5 w-full bg-panel shadow-md rounded-lg text-center">
-                        <h1 className="text-grayed-out">You havent linked any game accounts yet</h1>
-                        <Link href="/user/Settings">
-                            <Button className="mt-5">Link a Game Account</Button>
-                        </Link>
-                    </div>
-                )}
-            </div>
-        </>
+      <div className="w-full justify-center flex flex-wrap">
+        {linkedAccounts.length > 0 ? (
+          renderedLinkedAccounts
+        ) : (
+          <div className="m-5 p-5 w-full bg-panel shadow-md rounded-lg text-center">
+            <h1 className="text-grayed-out">
+              You havent linked any game accounts yet
+            </h1>
+            <Link href="/user/Settings">
+              <Button className="mt-5">Link a Game Account</Button>
+            </Link>
+          </div>
+        )}
+      </div>
     );
 }
 
