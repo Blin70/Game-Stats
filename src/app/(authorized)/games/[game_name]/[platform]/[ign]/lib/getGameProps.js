@@ -1,14 +1,14 @@
-import RankSection from "../components/Apex/RankSection";
-import SteamAliasSection from "../components/Apex/SteamAliasSection";
-import LifetimeOverviewSectionApex from "../components/Apex/LifetimeOverviewSection";
-import RenderedLegends from "../components/Apex/RenderedLegends";
-import Awards from "../components/Division-2/Awards";
-import LifetimeOverviewSectionDivision2 from "../components/Division-2/LifetimeOverviewSection";
-import OtherSections from "../components/Division-2/OtherSections";
-import PlayDetailsSection from "../components/Division-2/PlayDetailsSection";
-import LifetimeOverviewSectionSplitgate from "../components/Splitgate/LifetimeOverviewSection";
-import Playlists from "../components/Splitgate/Playlists";
-import Weapons from "../components/Splitgate/Weapons";
+import RankSection from "../components/apexLegends/RankSection";
+import SteamAliasSection from "../components/apexLegends/SteamAliasSection";
+import LifetimeOverviewSectionApex from "../components/apexLegends/LifetimeOverviewSection";
+import RenderedLegends from "../components/apexLegends/RenderedLegends";
+import Awards from "../components/division2/Awards";
+import LifetimeOverviewSectionDivision2 from "../components/division2/LifetimeOverviewSection";
+import OtherSections from "../components/division2/OtherSections";
+import PlayDetailsSection from "../components/division2/PlayDetailsSection";
+import LifetimeOverviewSectionSplitgate from "../components/splitgate/LifetimeOverviewSection";
+import Playlists from "../components/splitgate/Playlists";
+import Weapons from "../components/splitgate/Weapons";
 import { Radiation } from 'lucide-react';
 
 

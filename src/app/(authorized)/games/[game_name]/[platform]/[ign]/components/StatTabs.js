@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react";
-import ApexLegendsTabs from "./Apex/ApexLegendsTabs";
-import Division2Tabs from "./Division-2/Division2Tabs";
-import SplitgateTabs from "./Splitgate/SplitgateTabs";
+import ApexLegendsTabs from "./apexLegends/ApexLegendsTabs";
+import Division2Tabs from "./division2/Division2Tabs";
+import SplitgateTabs from "./splitgate/SplitgateTabs";
 
 
 const StatTabs = ({ categorizedStats, gameProps, gameName }) => {
