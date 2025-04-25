@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {
@@ -66,6 +68,9 @@ const UsernameEntry = async ({ params: { game_name } }) => {
                 </Select>
                 <Input type="text" name="Username" placeholder="Enter Player Id" className="w-fit h-fit mx-auto rounded-2xl !text-3xl p-3" autoComplete="off"  />
             </div>
+            <Button variant="outline" type="submit" className="gap-2 text-2xl font-normal rounded-2xl px-8 py-6 mx-auto border-2 hover:bg-accent/90 transition-all duration-200 active:scale-95">
+                Search <Search className="!size-7" />
+            </Button>
         </form>
     );
 
