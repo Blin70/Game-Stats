@@ -19,7 +19,7 @@ const News = async () => {
             <div className="flex flex-col flex-1">
                 <CardHeader className="pb-3">
                     <CardTitle className="text-2xl font-semibold leading-tight after:contents-[''] hover:after:block after:w-0 after:h-0.5 after:mt-0.5 after:bg-primary after:mx-auto after:transition-all after:duration-300 hover:after:w-40">
-                        <Link href={`/news/${i.gid}`}>
+                        <Link href={`/news/${i.appid}/${i.gid}`}>
                             {i.title}
                         </Link>
                     </CardTitle>

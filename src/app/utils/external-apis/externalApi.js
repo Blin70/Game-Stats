@@ -116,9 +116,7 @@ export async function GameSegments(game, platform, userIdentifier, segment, queu
 
 }
 
-const newsCache = new Map();
-
-export const getGameNews = cache(async (gameId) => {
+export async function getGameNews(gameId) {
   const access_key = process.env.STEAM_API_KEY;
 
   const options = {
@@ -139,7 +137,6 @@ export const getGameNews = cache(async (gameId) => {
         contents: i.contents.replace(/<\/?[^>]+(>|$)/g, "").replace(/{STEAM_CLAN_IMAGE}\/[^\s]+/g, '').trim() || 'Not Available',
       }
 
-      newsCache.set(i.gid, article)
       returnThis.push(article)
     }))
     .catch(err => {
@@ -148,20 +145,15 @@ export const getGameNews = cache(async (gameId) => {
     })
 
   return returnThis;
-});
+};
 
-export const getNewsArticle = async (gId) => {
-  if (newsCache.has(gId)) {
-    return newsCache.get(gId);
+export async function getNewsArticle(appId, gId) {
+  if(!appId || !gId){
+    console.error('Missing required parameters: ', appId, gId);
+    return null;
   }
-  
-  //fallback, refetch all news
-  await getGameNews(730);
-  await getGameNews(677620);
-  await getGameNews(1172470);
-  await getGameNews(2221490);
 
-  return newsCache.get(gId) || null;
+  return await getGameNews(appId).then((news) => news.find((i) => i.gid === gId)) || null;
 }
 
 export async function PandaScoreApi(game, size) {

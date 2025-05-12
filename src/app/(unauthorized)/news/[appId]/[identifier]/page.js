@@ -2,8 +2,8 @@ import { getNewsArticle } from "@/app/utils/external-apis/externalApi";
 import { Circle, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-const NewsArticle = async ({ params }) => {
-  const article = await getNewsArticle(params.identifier);
+const NewsArticle = async ({ params: { appId, identifier } }) => {
+  const article = await getNewsArticle(appId, identifier);
 
   if (!article) {
     return (
