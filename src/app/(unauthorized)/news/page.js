@@ -3,16 +3,17 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import Link from "next/link";
 
 const News = async () => {
-    const news = [
-      ...(await getGameNews(730)),
-      ...(await getGameNews(677620)),
-      ...(await getGameNews(1172470)),
-      ...(await getGameNews(2221490)),
-    ].sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    });
+    const news = await Promise.all([
+      getGameNews(730),
+      getGameNews(677620),
+      getGameNews(1172470),
+      getGameNews(2221490),
+    ]).then((news) => news.flat().sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return dateB - dateA;
+      })
+    );
 
     const renderedNews = news.map((i, index) => (
         <Card key={index} className="flex flex-col max-w-sm border border-border/50 text-center hover:shadow-xl hover:-translate-y-2 hover:bg-accent/5 transition-all duration-200">
