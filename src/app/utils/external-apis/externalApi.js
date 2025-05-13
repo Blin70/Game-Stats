@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { cache } from "react";
 
 export async function TRNProfile(game, platform, userIdentifier) {
   const access_key = process.env.TRN_API_KEY;

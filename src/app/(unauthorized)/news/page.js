@@ -2,6 +2,8 @@ import { getGameNews } from "@/app/utils/external-apis/externalApi";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 const News = async () => {
     const news = await Promise.all([
       getGameNews(730),
