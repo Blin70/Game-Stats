@@ -6,12 +6,13 @@ import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import { notFound } from "next/navigation";
 
 
 const UsernameEntry = async ({ params: { game_name } }) => {
     const isSupported = (await getCurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
     
-    if(!isSupported) redirect('/unauthorized');
+    if(!isSupported) notFound();
 
     const gameData = await getGamePlatforms(game_name, 'alias');
 

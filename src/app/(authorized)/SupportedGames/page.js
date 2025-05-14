@@ -15,10 +15,10 @@ const SupportedGames = async () => {
 
   const games = [
     ...(supportedGames),
-    {name: "Valorant", image_url: valorantImage},
-    {name: "GTA V", image_url: gtaImage},
-    {name: "Assassins Creed 2", image_url: assassinscreedImage},
-    {name: "EA FC 24", image_url: eafcImage}
+    {name: "Valorant", alias: "valorant", image_url: valorantImage},
+    {name: "GTA V", alias: "gta-5", image_url: gtaImage},
+    {name: "Assassins Creed 2", alias: "ac-2", image_url: assassinscreedImage},
+    {name: "EA FC 24", alias: "eafc-24", image_url: eafcImage}
   ];
 
   const supportedGamesNames = supportedGames.map(game => game.name)

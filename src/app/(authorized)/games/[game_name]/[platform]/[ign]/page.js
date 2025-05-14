@@ -1,6 +1,5 @@
 import RefreshStatsBtn from "./components/RefreshStatsBtn";
 import { getCurrentlySupportedGames } from "@/app/utils/server-actions/gameActions";
-import { redirect } from "next/navigation";
 import { TRNProfile } from "@/app/utils/external-apis/externalApi";
 import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
@@ -10,14 +9,14 @@ import GameBackgroundImage from "./components/GameBackgroundImage";
 import StatTabs from "./components/StatTabs";
 import IgnNotFound from "./components/IgnNotFound";
 import getGameProps from "./lib/getGameProps";
+import { notFound } from "next/navigation";
 
 
 const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
   const isSupported = (await getCurrentlySupportedGames()).some((game) => game.alias.toLowerCase() === game_name.toLowerCase() && !game.deprecated);
-  if(!isSupported) redirect('/unauthorized');
-
   const supportedPlatforms = ['steam', 'xbl', 'psn', 'origin', 'ubi'];    
-  if(!supportedPlatforms.includes(platform)) redirect('/unauthorized');
+  
+  if(!isSupported || !supportedPlatforms.includes(platform)) notFound();
 
   const playerData = await TRNProfile(game_name, platform, ign);
 

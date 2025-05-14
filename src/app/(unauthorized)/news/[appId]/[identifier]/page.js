@@ -1,20 +1,12 @@
 import { getNewsArticle } from "@/app/utils/external-apis/externalApi";
 import { Circle, ExternalLink } from "lucide-react";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
 const NewsArticle = async ({ params: { appId, identifier } }) => {
   const article = await getNewsArticle(appId, identifier);
 
-  if (!article) {
-    return (
-      <div className="min-h-[60vh] grid place-items-center">
-        <div className="text-center space-y-4">
-          <h2 className="text-2xl font-semibold">Article not found</h2>
-          <p className="text-muted-foreground">The article you&apos;re looking for doesn&apos;t exist or has been removed.</p>
-        </div>
-      </div>
-    );
-  }
+  if (!article) notFound();
 
   return (
     <article className="container max-w-4xl mx-auto px-4 py-12">
