@@ -11,7 +11,7 @@ const RefreshStatsBtn = () => {
     }
 
     return(
-        <Button onClick={handleClick}>
+        <Button onClick={handleClick} className="transition-transform duration-75 active:scale-95">
             Refresh Stats
         </Button>
     );

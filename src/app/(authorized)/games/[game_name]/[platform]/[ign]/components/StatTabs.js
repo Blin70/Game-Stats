@@ -10,7 +10,7 @@ const StatTabs = ({ categorizedStats, gameProps, gameName }) => {
     const [ activeTab, setActiveTab ] = useState(Object.keys(categorizedStats)[0]);
 
     const renderedTabOptions = Object.keys(categorizedStats).map((option, index) => (
-        <li key={index} onClick={() => setActiveTab(option)} className={`${activeTab === option && "text-white/100 border-b-2"} capitalize h-fit cursor-pointer hover:scale-105 hover:text-white/100`}>{option}</li>
+        <li key={index} onClick={() => setActiveTab(option)} className={`${activeTab === option && "text-white/100 border-b-2"} capitalize h-fit cursor-pointer transition duration-75 hover:scale-105 hover:text-white/100`}>{option}</li>
     ))
 
     return(
