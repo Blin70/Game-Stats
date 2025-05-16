@@ -39,11 +39,11 @@ export default async function Home() {
               </h2>
               {!user ? (
                 <Button asChild className="h-14 w-28 text-xl rounded-2xl mt-5">
-                  <Link href="/user/SignIn">Log In</Link>
+                  <Link href="/user/sign-in">Log In</Link>
                 </Button>
               ) : (
                 <Button asChild className="h-14 w-28 text-xl rounded-2xl mt-5">
-                  <Link href="/user/Profile">Profile</Link>
+                  <Link href="/user/profile">Profile</Link>
                 </Button>
               )}
             </div>
@@ -70,7 +70,7 @@ export default async function Home() {
                   <Button
                     asChild
                     className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                    <Link href={user ? "/games" : "/user/SignIn"}>
+                    <Link href={user ? "/games" : "/user/sign-in"}>
                       Lookup Stats
                     </Link>
                   </Button>
@@ -106,7 +106,7 @@ export default async function Home() {
                 <Button
                   asChild
                   className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                  <Link href={user ? "/games" : "/user/SignIn"}>
+                  <Link href={user ? "/games" : "/user/sign-in"}>
                     View Progress
                   </Link>
                 </Button>

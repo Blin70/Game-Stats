@@ -30,7 +30,7 @@ export async function signUp(values) {
   sendNotification(userData?.user?.id, "New User", "Welcome to Game Stats!", "Track your game stats, compare leaderboards, and improve your skills. Start by searching for your in-game name!");
 
   revalidatePath("/");
-  return redirect("/user/Profile");
+  return redirect("/user/profile");
 }
 
 export async function signIn(values) {
@@ -52,7 +52,7 @@ export async function signIn(values) {
     return { error: 'Something went wrong' };
   }
 
-  redirect("/user/Profile");
+  redirect("/user/profile");
 }
 
 export async function signOut() {
@@ -74,7 +74,7 @@ export async function sendPasswordResetEmail(baseUrl, email, userId) {
 
   const { error } = await supabase.auth.resetPasswordForEmail(email,
     {
-      redirectTo: `${baseUrl}/user/ResetPassword`,
+      redirectTo: `${baseUrl}/user/reset-password`,
     }
   );
 

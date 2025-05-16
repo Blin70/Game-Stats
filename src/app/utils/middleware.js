@@ -30,16 +30,15 @@ export async function checkUserAuthorization(request) {
   if(!user && (
     pathname.startsWith('/admin') ||
     pathname.startsWith('/help') ||
-    pathname.startsWith('/supportedgames') ||
     pathname.startsWith('/games') ||
     (
       pathname.startsWith('/user') &&
-      !pathname.startsWith('/user/signin') &&
-      !pathname.startsWith('/user/signup') &&
-      !pathname.startsWith('/user/resetpassword')
+      !pathname.startsWith('/user/sign-in') &&
+      !pathname.startsWith('/user/sign-up') &&
+      !pathname.startsWith('/user/reset-password')
     )
   )){
-      return NextResponse.redirect(new URL("/user/SignIn", request.nextUrl));
+      return NextResponse.redirect(new URL("/user/sign-in", request.nextUrl));
   }
 
   return NextResponse.next();

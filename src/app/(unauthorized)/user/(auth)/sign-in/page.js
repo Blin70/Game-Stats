@@ -78,7 +78,7 @@ const SignIn = () => {
                 </form>
                 <div className="text-lg mx-auto h-fit w-fit block mt-2 space-x-2">
                     <span>Dont have an account?</span>
-                    <Link href='/user/SignUp'>SignUp</Link>
+                    <Link href='/user/sign-up'>SignUp</Link>
                 </div>
             </div>
         </Form>

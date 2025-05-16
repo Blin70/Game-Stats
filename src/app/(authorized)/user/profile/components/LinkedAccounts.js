@@ -45,7 +45,7 @@ const LinkedAccounts = () => {
             <h1 className="text-grayed-out">
               You havent linked any game accounts yet
             </h1>
-            <Link href="/user/Settings">
+            <Link href="/user/settings">
               <Button className="mt-5">Link a Game Account</Button>
             </Link>
           </div>

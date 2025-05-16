@@ -10,7 +10,7 @@ const Footer = ({ user }) => {
     const companyItems = [
       {sendTo: "#", text: "About Us"},
       {sendTo: "#", text: "Careers"},
-      {sendTo: !user ? "/user/SignIn" : "/Help", text: !user ? undefined : "Help"}
+      {sendTo: !user ? "/user/sign-in" : "/help", text: !user ? undefined : "help"}
     ].map((i, index) => {
       return (
         <li key={index}>
@@ -24,7 +24,7 @@ const Footer = ({ user }) => {
     const quickLinks = [
       { sendTo: "/news", text: "Gaming News" },
       { sendTo: "/games", text: "Games" },
-      { sendTo: "/user/Profile", text: "Profile" }
+      { sendTo: "/user/profile", text: "Profile" }
     ].map((i, index) => {
       return (
         <li key={index}>
@@ -59,8 +59,8 @@ const Footer = ({ user }) => {
               <ul className="text-gray-400 space-y-2">
                 {!user
                 ? <>
-                    <li><Link href='/user/SignIn' className="hover:text-white">Sign In</Link></li>
-                    <li><Link href='/user/SignUp' className="hover:text-white">Sign Up</Link></li>                
+                    <li><Link href='/user/sign-in' className="hover:text-white">Sign In</Link></li>
+                    <li><Link href='/user/sign-up' className="hover:text-white">Sign Up</Link></li>                
                 </>
                 :  quickLinks
                 }

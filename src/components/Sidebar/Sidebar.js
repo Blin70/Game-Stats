@@ -33,7 +33,7 @@ const Sidebar = () => {
     <div className="flex flex-col flex-1 w-[350px] min-w-[350px] max-w-[350px] max-h-screen px-3 py-1 overflow-hidden break-words rounded-md bg-background">
       <div className="flex items-center w-full py-3">
         <Avatar className="inline-block size-16">
-          <Link href='/user/Profile'>
+          <Link href='/user/profile'>
             <AvatarImage src={user?.user_metadata?.avatar_url} />
             <AvatarFallback>
               <Image src={defaultProfilePic} alt="Default profile picture" />
@@ -53,7 +53,7 @@ const Sidebar = () => {
               <Link href='/games'>
                 <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="!size-8 mr-3" />} />
               </Link>
-              <Link href='/Notifications'>
+              <Link href='/notifications'>
                 <CommandItems text='Notifications' icon={<Bell className="!size-8 mr-3" />} />
               </Link>
             </CommandGroup>
@@ -68,10 +68,10 @@ const Sidebar = () => {
               )
             }
             <CommandGroup heading="Account">
-              <Link href='/Help'>
+              <Link href='/help'>
                 <CommandItems text='Help' icon={<Info className="!size-8 mr-3" />} />
               </Link>
-              <Link href='/user/Settings'>
+              <Link href='/user/settings'>
                 <CommandItems text='Settings' icon={<Settings className="!size-8 mr-3" />} />
               </Link>
               <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="!size-8 mr-3" />} />

@@ -24,7 +24,7 @@ const Carousel = ({ theGames }) => {
         })
 
         return () => {
-            if (pathname === '/TopGames') {
+            if (pathname === '/top-games') {
               document.cookie = "selectedGame=; Max-Age=-99999999; path=/";
             }
         };

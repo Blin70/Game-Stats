@@ -100,7 +100,7 @@ const SignUp = () => {
                 </form>
                 <div className="text-lg mx-auto h-fit w-fit block mt-2 space-x-2">
                     <span>Already have an account?</span>
-                    <Link href='/user/SignIn'>SignIn</Link>
+                    <Link href='/user/sign-in'>SignIn</Link>
                 </div>
             </div>
         </Form>

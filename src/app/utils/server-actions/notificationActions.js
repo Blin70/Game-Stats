@@ -45,7 +45,7 @@ export async function discardNotification(notificationId) {
     }
   
     return (
-      revalidatePath('/Notifications'),
+      revalidatePath('/notifications'),
       { success: 'Notification discarded successfully' }
     );
 }
