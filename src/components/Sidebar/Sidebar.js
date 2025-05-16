@@ -50,7 +50,7 @@ const Sidebar = () => {
         <Command className="bg-transparent">
           <CommandList className="min-h-fit">
             <CommandGroup heading="Suggestions">
-              <Link href='/SupportedGames'>
+              <Link href='/games'>
                 <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="!size-8 mr-3" />} />
               </Link>
               <Link href='/Notifications'>

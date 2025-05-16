@@ -23,7 +23,7 @@ const Footer = ({ user }) => {
 
     const quickLinks = [
       { sendTo: "/news", text: "Gaming News" },
-      { sendTo: "/SupportedGames", text: "Supported Games" },
+      { sendTo: "/games", text: "Games" },
       { sendTo: "/user/Profile", text: "Profile" }
     ].map((i, index) => {
       return (

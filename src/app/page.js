@@ -70,7 +70,7 @@ export default async function Home() {
                   <Button
                     asChild
                     className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                    <Link href={user ? "/SupportedGames" : "/user/SignIn"}>
+                    <Link href={user ? "/games" : "/user/SignIn"}>
                       Lookup Stats
                     </Link>
                   </Button>
@@ -106,7 +106,7 @@ export default async function Home() {
                 <Button
                   asChild
                   className="text-[#e0e0e0] bg-slate-950 hover:bg-slate-900">
-                  <Link href={user ? "/SupportedGames" : "/user/SignIn"}>
+                  <Link href={user ? "/games" : "/user/SignIn"}>
                     View Progress
                   </Link>
                 </Button>
