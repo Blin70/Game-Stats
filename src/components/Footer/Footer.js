@@ -10,7 +10,7 @@ const Footer = ({ user }) => {
     const companyItems = [
       {sendTo: "#", text: "About Us"},
       {sendTo: "#", text: "Careers"},
-      {sendTo: !user ? "/user/sign-in" : "/help", text: !user ? undefined : "help"}
+      {sendTo: user ? "/help" : "#", text: user && "Help"}
     ].map((i, index) => {
       return (
         <li key={index}>
