@@ -48,13 +48,13 @@ const Sidebar = () => {
       <Separator />
       <ScrollArea className="h-full">
         <Command className="bg-transparent">
-          <CommandList className="min-h-fit">
+          <CommandList className="min-h-fit group">
             <CommandGroup heading="Suggestions">
               <Link href='/games'>
-                <CommandItems text='Game Stats' icon={<ChartNoAxesCombined className="!size-8 mr-3" />} />
+                <CommandItems href="/games" text='Game Stats' icon={<ChartNoAxesCombined className="!size-8 mr-3" />} />
               </Link>
               <Link href='/notifications'>
-                <CommandItems text='Notifications' icon={<Bell className="!size-8 mr-3" />} />
+                <CommandItems href='/notifications' text='Notifications' icon={<Bell className="!size-8 mr-3" />} />
               </Link>
             </CommandGroup>
             <LinkedAccountsSection />
@@ -62,17 +62,17 @@ const Sidebar = () => {
               &&(
                 <CommandGroup heading="Administation">
                   <Link href='/admin'>
-                    <CommandItems text='User Management' icon={<User className="!size-8 mr-3" />} />            
+                    <CommandItems href='/admin' text='User Management' icon={<User className="!size-8 mr-3" />} />            
                   </Link>
                 </CommandGroup>
               )
             }
             <CommandGroup heading="Account">
               <Link href='/help'>
-                <CommandItems text='Help' icon={<Info className="!size-8 mr-3" />} />
+                <CommandItems href='/help' text='Help' icon={<Info className="!size-8 mr-3" />} />
               </Link>
               <Link href='/user/settings'>
-                <CommandItems text='Settings' icon={<Settings className="!size-8 mr-3" />} />
+                <CommandItems href='/user/settings' text='Settings' icon={<Settings className="!size-8 mr-3" />} />
               </Link>
               <CommandItems onSelect={handleSignOut} text='Log out' icon={<LogOut className="!size-8 mr-3" />} />
             </CommandGroup>
