@@ -1,10 +1,10 @@
-import { GameSegments } from "@/app/utils/external-apis/externalApi";
+import { gameSegments } from "@/app/utils/external-apis/externalApi";
 import { Swords } from 'lucide-react';
 import Image from "next/image";
 import { renderedOtherStats } from "../RenderStats";
 
 const Weapons = async ({ game, platform, ign }) => {
-    const weaponsStats = await GameSegments(game, platform, ign, 'weapon');
+    const weaponsStats = await gameSegments(game, platform, ign, 'weapon');
 
     const renderedWeaponStats = weaponsStats?.res?.data?.slice(0,4)?.map((weapon) => (
         <div key={weapon.attributes.key} className="flex items-center">

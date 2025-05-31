@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { PandaScoreApi } from "@/app/utils/external-apis/externalApi";
-import { RawgApi } from "@/app/utils/external-apis/externalApi";
+import { getTournaments } from "@/app/utils/external-apis/externalApi";
+import { getGameInfo } from "@/app/utils/external-apis/externalApi";
 import Carousel from "./components/Carousel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import valorantImage from '/public/icons/valorantImage.jpg';
@@ -70,8 +70,8 @@ const TopGames = async () => {
         break;
    }
 
-    const gameInfo = await RawgApi(gameName);
-    const tournaments = await PandaScoreApi(tournamentGameName, 6);
+    const gameInfo = await getGameInfo(gameName);
+    const tournaments = await getTournaments(tournamentGameName, 6);
 
     const renderedTournaments = tournaments.map((tournament, index) => {
                 return(

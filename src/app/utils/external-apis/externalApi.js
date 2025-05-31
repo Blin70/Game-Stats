@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 
-export async function TRNProfile(game, platform, userIdentifier) {
+export async function trnProfile(game, platform, userIdentifier) {
   const access_key = process.env.TRN_API_KEY;
 
   const options = {
@@ -72,7 +72,7 @@ export async function refreshPlayerData() {
   revalidateTag("PlayerData");
 }
 
-export async function GameSegments(game, platform, userIdentifier, segment, queue, season) {
+export async function gameSegments(game, platform, userIdentifier, segment, queue, season) {
   const access_key = process.env.TRN_API_KEY;
 
   const options = {
@@ -155,41 +155,41 @@ export async function getNewsArticle(appId, gId) {
   return await getGameNews(appId).then((news) => news.find((i) => i.gid === gId)) || null;
 }
 
-export async function PandaScoreApi(game, size) {
-    const access_key = process.env.PANDASCORE_API_ACCESS_KEY;
+export async function getTournaments(game, size) {
+  const access_key = process.env.PANDASCORE_API_ACCESS_KEY;
   
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        authorization: `Bearer ${access_key}`
-      }
-    };
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      authorization: `Bearer ${access_key}`
+    }
+  };
   
-    const returnThis = [];
+  const returnThis = [];
     
-    await fetch(`https://api.pandascore.co/${game}/tournaments/upcoming?page[size]=${size}`, options)
-      .then(res => res.json())
-      .then(res => res.map((i) => returnThis.push({
-        'Date': [new Date(i.begin_at), new Date(i.end_at)].map(date => date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })).join(' - '),
-        'LeagueName': i.league.name,
-        'Prizepool': i.prizepool?.includes('United States Dollar') ? `$${parseInt(i.prizepool.replace('United States Dollar', '')).toLocaleString()}` : (i.prizepool?.includes('South Korean Won') ? `₩${parseInt(i.prizepool.replace('South Korean Won', '')).toLocaleString()}` : (i.prizepool || '$0')),
-        'Teams': i.teams.map((team)=>team.acronym).join(', ') || 'Not Available',
-        'Type': i.name
-        })))
-    .catch(err => console.error(err));
+  await fetch(`https://api.pandascore.co/${game}/tournaments/upcoming?page[size]=${size}`, options)
+    .then(res => res.json())
+    .then(res => res.map((i) => returnThis.push({
+      'Date': [new Date(i.begin_at), new Date(i.end_at)].map(date => date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })).join(' - '),
+      'LeagueName': i.league.name,
+      'Prizepool': i.prizepool?.includes('United States Dollar') ? `$${parseInt(i.prizepool.replace('United States Dollar', '')).toLocaleString()}` : (i.prizepool?.includes('South Korean Won') ? `₩${parseInt(i.prizepool.replace('South Korean Won', '')).toLocaleString()}` : (i.prizepool || '$0')),
+      'Teams': i.teams.map((team)=>team.acronym).join(', ') || 'Not Available',
+      'Type': i.name
+      })))
+  .catch(err => console.error(err));
   
-    return(returnThis);
+  return(returnThis);
 }
   
-export async function RawgApi(game) {
-    const access_key = process.env.RAWG_API_ACCESS_KEY;
+export async function getGameInfo(game) {
+  const access_key = process.env.RAWG_API_ACCESS_KEY;
     
-    const returnThis = [];
+  const returnThis = [];
   
-    await fetch(`https://api.rawg.io/api/games/${game}?exclude_additions=true&page_size=10&key=${access_key}`, { method: 'GET' })
-      .then(res => res.json())
-      .then(res => returnThis.push({
+  await fetch(`https://api.rawg.io/api/games/${game}?exclude_additions=true&page_size=10&key=${access_key}`, { method: 'GET' })
+    .then(res => res.json())
+    .then(res => returnThis.push({
       'Name': res.name,
       'Rating': Math.round(res.rating * 10)/10,
       'Genres': res.genres && res.genres.length > 0 ? (res.genres.map((genre) => genre.name).length > 3 ? (res.genres.map((genre) => genre.name)).slice(0, 3).join(', ') : res.genres.map((genre) => genre.name).join(', ')) : 'Not Available',
@@ -199,7 +199,7 @@ export async function RawgApi(game) {
       'Developers': res.developers && res.developers.length > 0 ? res.developers.map((i) => i.name).join(', ') : 'Not Available',
       'Description': res.description_raw || 'Not Available'
       }))
-    .catch(err => console.error(err));
+  .catch(err => console.error(err));
   
-    return(returnThis);
+  return(returnThis);
 }

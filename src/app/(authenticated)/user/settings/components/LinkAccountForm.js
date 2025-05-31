@@ -1,7 +1,7 @@
 "use client"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { LinkAccount } from "@/app/utils/server-actions/linkingActions";
+import { linkAccount } from "@/app/utils/server-actions/linkingActions";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
@@ -38,7 +38,7 @@ const LinkAccountForm = ({ currentlySupportedGames }) => {
     if(!availablePlatforms.includes(selectedPlatform)) return toast.error('Invalid platform selected');
 
     const formData = new FormData(event.currentTarget);
-    const res = await LinkAccount(formData);
+    const res = await linkAccount(formData);
 
     if(res.success) setLinkedAccounts(prev => [...prev, res.account]);
 

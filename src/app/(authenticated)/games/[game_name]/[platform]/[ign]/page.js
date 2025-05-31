@@ -1,6 +1,6 @@
 import RefreshStatsBtn from "./components/RefreshStatsBtn";
 import { getCurrentlySupportedGames } from "@/app/utils/server-actions/gameActions";
-import { TRNProfile } from "@/app/utils/external-apis/externalApi";
+import { trnProfile } from "@/app/utils/external-apis/externalApi";
 import Image from "next/image";
 import { SiOrigin, SiSteam, SiPlaystation, SiUbisoft } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
@@ -18,7 +18,7 @@ const UserGameStats = async ({ params: { game_name, platform , ign } }) => {
   
   if(!isSupported || !supportedPlatforms.includes(platform)) notFound();
 
-  const playerData = await TRNProfile(game_name, platform, ign);
+  const playerData = await trnProfile(game_name, platform, ign);
 
   if(Object.keys(playerData) == "err" && playerData?.err?.code === 'CollectorResultStatus::NotFound') {
 
