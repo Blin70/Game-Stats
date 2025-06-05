@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserProvider } from "../context/userContext";
 import { LinkedAccountsProvider } from "../context/linkedAccountsContext";

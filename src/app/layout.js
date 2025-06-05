@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
